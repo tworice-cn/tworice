@@ -1,0 +1,29 @@
+# 全局
+.idea
+logs
+log
+.classpath
+.project
+.settings
+.vscode
+.DS_Store
+.factorypath
+.flattened-pom.xml
+*.ini
+*.imi
+*.log
+*.sst
+*.lock
+*.zip
+
+# 前端
+node_modules/
+dist/
+/tworice-admin-vue/dist/
+
+# 后端
+target
+work
+
+# 暂时不提交
+webapp/

@@ -1,0 +1,322 @@
+*{
+      box-sizing: border-box;
+      
+      /*背景默认颜色*/
+      --bgColor:#fff;
+      /*左侧菜单背景默认颜色*/
+      --asideBg:#fff;
+      /*左侧菜单文字默认颜色*/
+      --asideTextColor:#4E5969; 
+      /*左侧菜单文字选择颜色*/
+      --asideActiveTextColor:#165DFF;
+      /*左侧菜单元素悬浮时背景颜色*/
+      --asideHoverBg:#F2F3F5;
+      /*子菜单背景颜色*/
+      --menuItemBgColor:#fff;
+      /*子菜单鼠标悬浮背景颜色*/
+      --menuItemBgColorHover:#F2F3F5;
+      /*表格表头*/
+      --tableHeaderBgColor:#F2F3F5;
+      --tableHeaderTextColor:#1D2129;
+}
+th{
+      background-color: var(--tableHeaderBgColor)!important;
+      color: var(--tableHeaderTextColor)!important;
+      font-weight: 500!important;
+}
+.app-body{
+      border-radius: 5px;
+      background-color: #fff;
+}
+
+/*左侧菜单*/
+.el-menu{
+      background-color: var(--asideBg)!important;
+      
+      .el-menu-item{
+            color: var(--asideTextColor)!important;
+      }
+
+      .el-menu-item:hover,.el-submenu__title:hover{
+            background-color: var(--asideHoverBg)!important;
+      }
+
+      .is-active{
+            color: var(--asideActiveTextColor)!important;
+      }
+
+      .el-submenu__title{
+            color: var(--asideTextColor)!important;
+      }
+
+
+}
+
+.index-main{
+      height: 100vh;
+      
+      .system-title{
+            padding-left: 10px;
+      }
+      /**界面头部 */
+      .index-header{
+            padding: 0;
+            span{
+                  // padding:25px 0 0 0;
+                  letter-spacing: 3px;
+                  font-size: 14px;
+            }
+            .index-header-box{
+                  width: 100%;
+                  height: 60px;
+                  border-bottom: 1px solid #E5E6EB;
+                  padding: 0 60px 0 20px;
+                  display: flex;
+                  justify-content: space-between;
+
+                  .header-left,.header-right{
+                        display: flex;
+                        height: 100%;
+                        align-items: center;
+
+                        i{
+                              font-size: 20px;
+                              cursor: pointer;
+                              color: #4E5969;
+                        }
+
+                        span{
+                              font-size: 14px;
+                              letter-spacing: 1.5px;
+
+                              i{
+                                    font-size: 16px;
+                              }
+                        }
+                  }
+            }
+            /*角色信息框*/
+            .role-box{
+                  display: none;
+            }
+            .tabs-box{
+                  width: 100%;
+
+                  /**窗口标签 */
+                  .el-tabs__item{
+                        height: 30px;
+                        line-height: 30px;
+                        font-size: 12px;
+                        color: #4E5969!important;
+                        border-radius: 4px;
+                  }
+                  .el-tabs--card>.el-tabs__header .el-tabs__item{
+                        border: none;
+                  }
+                  .el-tabs__item:hover{
+                        color: #000;
+                  }
+                  .el-tabs__item.is-active{
+                        color: var(--themeColor);
+                        background-color: #fff;
+                  }
+            }
+            /*用户名框*/
+            .username-box{
+                  font-size: 0!important;
+                  cursor: pointer;
+                  width: 40px!important;
+                  height: 40px!important;
+                  line-height: 40px!important;
+                  border-radius: 50%!important;
+                  overflow: hidden;
+                  background-image:url('/favicon.ico');
+                  background-size: 50%;
+                  background-position: center;
+                  background-repeat: no-repeat;
+                  .username-drop-down i{
+                        // font-size: 0!important;
+                        color: white!important;
+                        opacity: 0;
+                        user-select: none;
+                  }
+            }
+      }
+      /*用户菜单样式*/
+      .portal-header{
+            display: flex;
+            justify-content: space-between;
+            background-color: #fff!important;
+            border-bottom: 1px solid #e6e6e6;
+            .el-menu{
+                  display: table;
+                  align-items: center;
+                  .portal-menu{
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+                        align-items: center;
+                  }
+            }
+            .portal-avatar{
+                  align-self: center;
+                  width: 100px;
+            }
+      }
+      .el-header{
+            background-color: #F2F3F5;
+      }
+
+      /**界面侧栏 */
+      .index-aside{
+            user-select: none;
+            ul{
+                  height: 100%;
+            }
+      }
+      /**内容 */
+      .index-body{
+            padding: 16px 20px 0;
+            background-color: #F2F3F5;
+      }
+}
+.zhan{
+      width: 30px;
+      height: 1px;
+}
+.el-tabs__header{
+      margin: 0;
+}
+.el-tabs__content{
+      display: none;
+}
+// .el-tooltip{
+//       background-color: rgba(0,0,0,0.5);
+// }
+
+/**菜单折叠 */
+.fold{
+      transition: width 0.5s;
+}
+.unfold{
+transition: width 0.5s;
+      width: 200px;
+}
+
+
+/**标签左右切换按钮 */
+.el-tabs__nav-next, .el-tabs__nav-prev{
+      line-height: 30px;
+      color: rgb(222, 222, 222);
+}
+
+
+/*样式常量*/
+*{
+      /*主题色*/
+      --themeColor:#00A3FF;
+}
+
+/*侧栏图标颜色*/
+.el-submenu__title i{
+      /* color: #FFF; */
+}
+.el-breadcrumb__inner{
+      color: #4E5969!important;
+}
+.el-dropdown i{
+      color: #1F2D3D!important;
+}
+/*主页上方样式*/
+.index-header-box{
+      background-color: var(--bgColor);
+}
+/*LOGO样式*/
+.logo-box{
+      font-weight: 700;
+      color: white;
+}
+/*子菜单背景颜色*/
+.el-submenu .el-menu-item{
+      min-width: 199px;
+      background-color:var(--menuItemBgColor)!important;
+}
+/*子菜单背景鼠标悬浮颜色*/
+.el-submenu .el-menu-item:hover{
+      background-color:var(--menuItemBgColorHover)!important;
+}
+/* 表单校验提示信息 */
+.form-rule{
+      height: 20px;
+      line-height: 20px;
+      font-size: 12px;
+      color: red;
+}
+.el-table--border, .el-table--group{
+      border-radius: 5px;
+      overflow: hidden;
+}
+/**盛放按钮的盒子 */
+.button-box{
+      padding:15px 0 15px 0;
+}
+/*子页面样式*/
+.app-body{
+      padding: 5px 10px;
+}
+/**页码盒子统一样式 */
+.page-box{
+      padding: 20px 0;
+      text-align: right;
+}
+/* 弹出框标题背景色*/
+.el-dialog{
+      border-radius: 12px!important;
+      overflow: hidden;
+}
+.el-dialog__header{
+      background-color: var(--themeColor);
+}
+.el-dialog__close{
+      color: white!important;
+}
+.el-dialog__title{
+      color: white!important;
+}
+/*条件查询样式*/
+.info-search-box .search{
+      height: 60px;
+      display: flex;
+      line-height: 60px;
+      /* width: 1200px; */
+}
+.info-search-box .search .search-item{
+      font-size: 12px;
+      padding:0 15px;
+      color: #666;
+      vertical-align: top;
+      font-weight: 600;
+}
+.info-search-box .search .el-input{
+      width: 200px;
+}
+/*登录页背景*/
+.tworice-login-bg{
+      overflow: hidden;
+      background-image: url('~@/assets/img/loginBg.jpg');
+      background-size: 100%;
+      //font-family: "montserrat";
+      /* animation: bganimation 15s infinite; */
+}
+/**背景动画 */
+@keyframes bganimation{
+      0%{
+          background-position: 0% 50%;
+      }
+      50%{
+          background-position: 100% 50%;
+      }
+      100%{
+          background-position: 0% 50%;
+      }
+}
