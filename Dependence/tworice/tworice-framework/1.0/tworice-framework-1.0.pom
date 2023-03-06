@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>tworice-cloud</artifactId>
+        <groupId>cn.tworice</groupId>
+        <version>1.0</version>
+    </parent>
+    <packaging>pom</packaging>
+    <artifactId>tworice-framework</artifactId>
+
+    <modules>
+        <module>tworice-common</module>
+        <module>tworice-mail</module>
+        <module>tworice-captcha</module>
+        <module>tworice-mybatis</module>
+        <module>tworice-swagger</module>
+        <module>tworice-api</module>
+        <module>tworice-basic</module>
+        <module>tworice-log</module>
+        <module>tworice-notice</module>
+        <module>tworice-upload</module>
+        <module>tworice-dist</module>
+        <module>tworice-auth</module>
+        <module>tworice-feign</module>
+        <module>tworice-regular</module>
+        <module>tworice-minio</module>
+        <module>tworice-pay</module>
+        <module>tworice-file</module>
+        <module>tworice-ip</module>
+        <module>tworice-cryption</module>
+        <module>tworice-banner</module>
+    </modules>
+</project>
