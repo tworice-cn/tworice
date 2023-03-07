@@ -311,15 +311,17 @@ export default {
                   }else{
                         // 在资源列表中寻找该资源
                         this.resources.forEach(item=>{
-                              item.list.forEach(child=>{
-                                    if(child.url==e){
-                                          this.editableTabs.push({
-                                                title: child.name,
-                                                name:e
-                                          });
-                                          return;
-                                    }
-                              })
+                              if(item.list){
+                                    item.list.forEach(child=>{
+                                          if(child.url==e){
+                                                this.editableTabs.push({
+                                                      title: child.name,
+                                                      name:e
+                                                });
+                                                return;
+                                          }
+                                    })
+                              }
                         })
                   }
             },
