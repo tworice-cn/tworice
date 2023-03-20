@@ -13,7 +13,7 @@
                                     {{info.title}}
                               </el-col>
                               <el-col :span="24" class="menu-notice-info">
-                                    发布时间：{{formatDate(info.createTime)}} &nbsp;&nbsp;&nbsp;&nbsp;
+                                    发布时间：{{$utils.formatDate(info.createTime)}} &nbsp;&nbsp;&nbsp;&nbsp;
                                     来源：{{info.adminName==undefined?(info.nickName==undefined?info.author:info.nickName):info.adminName}}
                               </el-col>
                         </el-col>
@@ -51,24 +51,7 @@ export default {
             }
       },
       methods:{
-            /**格式化日期 */ formatDate(time) {
-                  let date = new Date(time);
-                  let month =
-                        date.getMonth() + 1 < 10
-                              ? "0" + (date.getMonth() + 1)
-                              : date.getMonth() + 1;
-                  let day =
-                        date.getDate() < 10
-                              ? "0" + date.getDate()
-                              : date.getDate();
-                  return (
-                        date.getFullYear() +
-                        "-" +
-                        month +
-                        "-" +
-                        day
-                  );
-            },
+            
       },
       mounted() {
             this.$axios.get(this.$url +"admin/notice/info?id="+this.$route.query.id)

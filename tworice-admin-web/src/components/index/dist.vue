@@ -22,7 +22,7 @@
             <el-table @selection-change="handleSelectionChange" size="mini" v-loading="loading" :header-cell-style="$setting.table_header" :stripe="true" :fit="true" :data="tableData" border style="width: 100%">
                   <el-table-column type="selection" width="55"></el-table-column>
                   <el-table-column prop='id' label='编号' width="100"></el-table-column>
-                  <el-table-column prop='createTime' label='日期' :formatter='formatDate'></el-table-column>
+                  <el-table-column prop='createTime' label='日期' :formatter='(row)=>$utils.formatDate(row.createTime)'></el-table-column>
                   <el-table-column prop='name' label='字典名称'></el-table-column>
                   <el-table-column prop='logo' label='字典标识'></el-table-column>
                   <el-table-column prop='description' label='字典描述'></el-table-column>
@@ -41,7 +41,7 @@
             </el-col> 
             <!-- 弹出层 -->
             <!-- 字典编辑页 -->
-            <el-dialog :title="formTitle" :visible.sync="formVisible" width="30%" :before-close="handleClose">
+            <el-dialog :title="formTitle" :visible.sync="formVisible" width="30%" :before-close="$utils.handleClose">
                   <el-form :model="form" :rules="rules" ref="form">
                         <el-form-item label='字典名称' :label-width='formLabelWidth' prop='name'>
                               <el-input placeholder='请输入字典名称' v-model='form.name' @change='isChange = true' size="small"></el-input>
@@ -59,7 +59,7 @@
                   </div>
             </el-dialog>
             <!-- 批量导入 -->
-            <el-dialog title="选择数据表格" :visible.sync="inductsVisible" width="40%" :before-close="handleClose">
+            <el-dialog title="选择数据表格" :visible.sync="inductsVisible" width="40%" :before-close="$utils.handleClose">
                   <el-form size="mini">
                         <el-form-item label="选择表格" :label-width="formLabelWidth"> 
                               <input type="file" class="file-left-input" @change="inductsChange()" ref="inducts" multiple accept=".xls,.xlsx" /> 
@@ -70,7 +70,7 @@
                   </div>
             </el-dialog>
             <!-- 字典内容 -->
-            <el-dialog title="字典数据" v-if="distVisible" :visible.sync="distVisible" width="60%" :before-close="handleClose">
+            <el-dialog title="字典数据" v-if="distVisible" :visible.sync="distVisible" width="60%" :before-close="$utils.handleClose">
                   <DistValue :dist="form.id" :distName="form.name"></DistValue>
                   <div slot="footer" class="dialog-footer">
                         <el-button @click="distVisible=false">取 消</el-button>
@@ -152,37 +152,6 @@ export default {
                   this.distVisible=true;
                   this.form=row;
             },
-            /**格式化日期 */ 
-            formatDate(row) {
-                  let date = new Date(row.createTime);
-                  let month =
-                        date.getMonth() + 1 < 10
-                              ? "0" + (date.getMonth() + 1)
-                              : date.getMonth() + 1;
-                  let day =
-                        date.getDate() < 10
-                              ? "0" + date.getDate()
-                              : date.getDate();
-                  let hours =
-                        date.getHours() < 10
-                              ? "0" + date.getHours()
-                              : date.getHours();
-                  let minutes =
-                        date.getMinutes() < 10
-                              ? "0" + date.getMinutes()
-                              : date.getMinutes();
-                  return (
-                        date.getFullYear() +
-                        "-" +
-                        month +
-                        "-" +
-                        day +
-                        " " +
-                        hours +
-                        ":" +
-                        minutes
-                  );
-            },
             init() {
                   this.toPage();
             },
@@ -220,11 +189,6 @@ export default {
                   this.form = this.$options.data().form;
                   this.formTitle = "新增";
                   this.formVisible = true;
-            },
-            handleClose(done) {
-                  this.$confirm("确认关闭？").then(() => {
-                        done();
-                  });
             },
             submit() {
                   this.$root.loading = true;

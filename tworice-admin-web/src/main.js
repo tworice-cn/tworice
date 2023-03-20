@@ -8,7 +8,9 @@ Vue.config.productionTip = false;
 
 // 全局设置
 import setting from './core/setting.js'
+import utils from './core/utils.js'
 Vue.prototype.$setting=setting;
+Vue.prototype.$utils=utils;
 Vue.prototype.$url = setting.baseURL;
 
 

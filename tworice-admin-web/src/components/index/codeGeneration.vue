@@ -3,10 +3,10 @@
             <el-button type="primary" @click="add">代码生成</el-button>
             
             <!-- 弹出层 -->
-            <el-dialog :title="form.formTitle" :visible.sync="form.formVisible" width="70%" :before-close="cancel">
+            <el-dialog :title="form.formTitle" :visible.sync="form.formVisible" width="70%" :before-close="$utils.handleClose">
                   <el-form :model="form.formData" size="mini" :rules="form.rules" ref="form.formData">
                         <el-form-item label="表名称" :label-width="form.formLabelWidth" prop="tableName">
-                              <el-input placeholder="请输入内容" v-model="form.formData.tableName"></el-input>
+                              <el-input placeholder="请输入内容" v-model="form.formData.tableName" @change="tapTableName"></el-input>
                         </el-form-item>
                         <el-form-item label="表注释" :label-width="form.formLabelWidth" prop="tableComment">
                               <el-input placeholder="请输入内容" v-model="form.formData.tableComment"></el-input>
@@ -54,9 +54,19 @@
                                                 </el-select>
                                           </template>
                                     </el-table-column>
-                                    <el-table-column prop="update" label="更新" width="80">
+                                    <el-table-column prop="update" label="可编辑" width="80">
                                           <template slot-scope="scope">
                                                 <el-checkbox v-model="scope.row.update"></el-checkbox>
+                                          </template>
+                                    </el-table-column>
+                                    <el-table-column prop="table" label="表格展示" width="80">
+                                          <template slot-scope="scope">
+                                                <el-checkbox v-model="scope.row.table"></el-checkbox>
+                                          </template>
+                                    </el-table-column>
+                                    <el-table-column prop="select" label="筛选条件" width="80">
+                                          <template slot-scope="scope">
+                                                <el-checkbox v-model="scope.row.select"></el-checkbox>
                                           </template>
                                     </el-table-column>
                               </el-table>
@@ -114,14 +124,14 @@ export default {
                               tableName: "" /**表名称 */,
                               tableComment:"",/**表注释 */
                               paramTable: [
-                                    { field: "id", name: "编号", type: "int", query:true,queryType:'=',dist:'',update:false},
-                                    { field: "create_time", name: "创建时间", type: "bigint", query:false,queryType:'',dist:'',update:false},
-                                    { field: "update_time", name: "更新时间", type: "bigint", query:false,queryType:'',dist:'',update:false},
-                                    { field: "creator", name: "创建人", type: "varchar(64)", query:true,queryType:'=',dist:'',update:false},
+                                    { field: "id", name: "编号", type: "int", query:true,queryType:'=',dist:'',update:false,table:true,select:true},
+                                    { field: "create_time", name: "创建时间", type: "bigint", query:false,queryType:'',dist:'',update:false,table:true,select:false},
+                                    { field: "update_time", name: "更新时间", type: "bigint", query:false,queryType:'',dist:'',update:false,table:true,select:false},
+                                    { field: "creator", name: "创建人", type: "varchar(64)", query:true,queryType:'=',dist:'',update:false,table:true,select:true},
                               ],
                               pageName: "" /**页面名称 */,
                               url: "/client/",
-                              createServer: false,
+                              createServer: true,
                               createVue:true
                         },
                   },
@@ -133,6 +143,7 @@ export default {
                         "varchar(64)",
                         "varchar(256)",
                         "text",
+                        "longtext"
                   ],
                   /**查询类型 */
                   queryType:[
@@ -148,6 +159,11 @@ export default {
             };
       },
       methods: {
+            tapTableName(e){
+                  let hump=this.$utils.lineToHump(e);
+                  this.form.formData.url='/client/'+hump;
+                  this.form.formData.pageName=hump;
+            },
             queryTypeChange(val){
                   if(val=='字典'){
                         this.initDist();
@@ -216,20 +232,21 @@ export default {
                   this.form.formData.paramTable.forEach((item) => {
                         let fieldHump=utils.lineToHump(item.field);
                         // 构建展示表格
-                        let time='';
-                        if(item.field=='create_time'){
-                              time=":formatter='(row)=>formatDate(row.createTime)'";
-                        }else if(item.field=='update_time'){
-                              time=":formatter='(row)=>formatDate(row.updateTime)'";
+                        if(item.table){
+                              let time='';
+                              if(item.field=='create_time'){
+                                    time=":formatter='(row)=>$utils.formatDate(row.createTime)'";
+                              }else if(item.field=='update_time'){
+                                    time=":formatter='(row)=>$utils.formatDate(row.updateTime)'";
+                              }
+                              table_item += "<el-table-column prop='" + fieldHump + "' label='" + item.name + "' " + time + "></el-table-column>";
                         }
-                        table_item += "<el-table-column prop='" + fieldHump + "' label='" + item.name + "' " + time + "></el-table-column>";
-
                         // 构建表单
-                        if (item.field != "id" && item.field != "create_time" && item.field != 'update_time') {
+                        if (item.update) {
                               if(item.queryType=='数据表'){
                                     form_item += "<el-form-item label='" + item.name + "' :label-width='formLabelWidth' prop='" + fieldHump + "'>"+
                                           "<el-select size='mini' v-model='form."+fieldHump+"' placeholder='请选择' clearable>"+
-                                                "<el-option v-for='item in "+fieldHump+"Dist' :key='item.id' :label='item.content' :value='item.id'></el-option>"
+                                                "<el-option v-for='item in "+fieldHump+"Dist' :key='item.id' :label='item.name' :value='item.id'></el-option>"
                                                 +"</el-select></el-form-item>"
                               }else if(item.queryType=='字典'){
                                     form_item += "<el-form-item label='" + item.name + "' :label-width='formLabelWidth' prop='" + fieldHump + "'>"+
@@ -248,7 +265,7 @@ export default {
                         rules += fieldHump + ":[{ required: true, message: '请输入" + item.name + "', trigger: 'blur' }],";
 
                         // 构建data中的search对象
-                        if(item.query){
+                        if(item.query && item.select){
                               search+=fieldHump+":'',";
                               if(item.queryType=='数据表'){
                                     search_item+="<div class='search-item'>"+item.name+" : "+
@@ -351,7 +368,7 @@ export default {
             },
             /*添加表格条目*/
             addField() {
-                  let field = { field: "", name: "", type: "",query:false,queryType:'',dist:''};
+                  let field = { field: "", name: "", type: "",query:false,queryType:'',dist:'',update:true,table:true,select:true};
                   this.form.formData.paramTable.push(field);
             },
             /* 删除表格条目 */

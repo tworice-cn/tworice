@@ -51,7 +51,7 @@
             </div>
 
             <!-- 弹出层 -->
-            <el-dialog :title="formTitle" :visible.sync="formVisible" width="40%" :before-close="handleClose">
+            <el-dialog :title="formTitle" :visible.sync="formVisible" width="40%" :before-close="$utils.handleClose">
                   <el-form :model="form" size="mini" :rules="rules" ref="form">
                         <el-form-item label="用户名称" :label-width="formLabelWidth" prop="nickName">
                               <el-input placeholder="请输入内容" v-model="form.nickName" @change="isChange = true" :disabled="showAdmin"></el-input>
@@ -68,14 +68,14 @@
                         <el-button type="primary" @click="submit" v-if="!showAdmin">确 定</el-button>
                   </div>
             </el-dialog>
-            <el-dialog title="查看" :visible.sync="showVisible" width="40%" :before-close="handleClose">
+            <el-dialog title="查看" :visible.sync="showVisible" width="40%" :before-close="$utils.handleClose">
                   <el-button type="primary" size="small" @click="delInfo">初始化信息</el-button>
                   <Descriptions :value="descriptionsArr"></Descriptions>
                   <div slot="footer" class="dialog-footer">
                         <el-button @click.native="showVisible=false">关 闭</el-button>
                   </div>
             </el-dialog>
-            <el-dialog title="选择数据表格" :visible.sync="inductsVisible" width="40%" :before-close="handleClose">
+            <el-dialog title="选择数据表格" :visible.sync="inductsVisible" width="40%" :before-close="$utils.handleClose">
                   <el-form size="mini">
                         <el-form-item label="选择表格" :label-width="formLabelWidth">
                               <input type="file" class="file-left-input" @change="inductsChange()" ref="inducts" multiple accept=".xls,.xlsx" />
@@ -189,13 +189,6 @@ export default {
                   this.formVisible = true;
                   this.formTitle = "新增";
                   this.form = this.$options.data().form;
-            },
-            handleClose(done) {
-                  this.$confirm("确认关闭？")
-                        .then(() => {
-                              done();
-                        })
-                        .catch(() => {});
             },
             submit() {
                   this.loading = true;

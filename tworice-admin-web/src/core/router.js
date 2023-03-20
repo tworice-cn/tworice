@@ -64,7 +64,8 @@ const router =
                   path: "/info",
                   name: "信息管理",
                   component: () => import("@/components/index"),
-                  children: [],
+                  children: [
+                  ],
             },
             {
                   path: "/notice",
@@ -151,7 +152,6 @@ const router =
                               component: (resolve) =>
                                     require(["@/components/index/whiteList.vue"], resolve),
                         },
-
                   ],
             },
             {

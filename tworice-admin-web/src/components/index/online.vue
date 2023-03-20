@@ -14,7 +14,7 @@
                         <el-pagination :hide-on-single-page="true" @current-change="changePage" background layout="prev, pager, next" :total="total" :page-size="pageSize"></el-pagination>
                   </div>
             </el-col> <!-- 弹出层 -->
-            <el-dialog :title="formTitle" :visible.sync="formVisible" width="30%" :before-close="handleClose">
+            <el-dialog :title="formTitle" :visible.sync="formVisible" width="30%" :before-close="$utils.handleClose">
                   <el-form :model="form" :rules="rules" ref="form">
                         <el-form-item label='用户Key' :label-width='formLabelWidth' prop='key'>
                               <el-input placeholder='请输入用户Key' v-model='form.key' @change='isChange = true'></el-input>
@@ -28,7 +28,7 @@
                         <el-button type="primary" @click="submit">确 定</el-button>
                   </div>
             </el-dialog>
-            <el-dialog title="选择数据表格" :visible.sync="inductsVisible" width="30%" :before-close="handleClose">
+            <el-dialog title="选择数据表格" :visible.sync="inductsVisible" width="30%" :before-close="$utils.handleClose">
                   <el-form size="mini">
                         <el-form-item label="选择表格" :label-width="formLabelWidth"> <input type="file" class="file-left-input" @change="inductsChange()" ref="inducts" multiple accept=".xls,.xlsx" /> </el-form-item>
                   </el-form>
@@ -87,36 +87,6 @@ export default {
             };
       },
       methods: {
-            /**格式化日期 */ formatDate(row) {
-                  let date = new Date(row.date);
-                  let month =
-                        date.getMonth() + 1 < 10
-                              ? "0" + (date.getMonth() + 1)
-                              : date.getMonth() + 1;
-                  let day =
-                        date.getDate() < 10
-                              ? "0" + date.getDate()
-                              : date.getDate();
-                  let hours =
-                        date.getHours() < 10
-                              ? "0" + date.getHours()
-                              : date.getHours();
-                  let minutes =
-                        date.getMinutes() < 10
-                              ? "0" + date.getMinutes()
-                              : date.getMinutes();
-                  return (
-                        date.getFullYear() +
-                        "-" +
-                        month +
-                        "-" +
-                        day +
-                        " " +
-                        hours +
-                        ":" +
-                        minutes
-                  );
-            },
             init() {
                   this.toPage();
             },
@@ -164,11 +134,6 @@ export default {
                   this.form = this.$options.data().form;
                   this.formTitle = "新增";
                   this.formVisible = true;
-            },
-            handleClose(done) {
-                  this.$confirm("确认关闭？").then(() => {
-                        done();
-                  });
             },
             submit() {
                   this.$root.loading = true;

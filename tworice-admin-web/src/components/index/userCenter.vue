@@ -21,7 +21,7 @@
                   <el-col :span="24" class="info-box" v-if="activeName=='userInfo'">
                         <el-col :span="24" class="info-title">
                               <el-col :span="12" class="title-left">用户信息</el-col>
-                              <el-col :span="12" class="title-right"><i class="el-icon-edit" @click="formVisible=true"> 编辑</i></el-col>
+                              <el-col :span="12" class="title-right"><i class="el-icon-edit" @click="formVisible=true" v-if="isMe"> 编辑</i></el-col>
                         </el-col>
                         <el-col :span="24" class="myinfo-box">
                               <el-descriptions class="margin-top" :column="1" border>
@@ -91,7 +91,7 @@
                               操作记录
                         </el-col>
                         <el-col :span="24" class="info-item" v-for="(item,index) in logList" :key="index">
-                              {{index+1}}. {{item.nickName}}于 {{formatDate(item.time)}} {{item.info}}
+                              {{index+1}}. {{item.nickName}}于 {{$utils.formatDate(item.time)}} {{item.info}}
                         </el-col>
                         <el-col :span="24" class="none-more">- 没有更多了 -</el-col>
                   </el-col>
@@ -105,13 +105,13 @@
                                     {{index+1}}. {{item.title}}
                               </el-col>
                               <el-col :span="8" class="notice-right">
-                                    {{formatDate(item.createTime)}}
+                                    {{$utils.formatDate(item.createTime)}}
                               </el-col>
                         </el-col>
                         <el-col :span="24" class="none-more">- 没有更多了 -</el-col>
                   </el-col>
             </el-col>
-            <el-dialog title="编辑我的信息" :visible.sync="formVisible" width="40%" :before-close="handleClose">
+            <el-dialog title="编辑我的信息" :visible.sync="formVisible" width="40%" :before-close="$utils.handleClose">
                   <el-form :model="adminInfo">
                         <el-form-item label='用户名' :label-width='$setting.formLabelWidth'>
                               <el-input placeholder='请输入用户名' v-model='adminInfo.nickName' size="small"></el-input>
@@ -148,7 +148,6 @@
 </template>
 
 <script>
-import utils from '@/core/utils.js'
 export default {
       name: "",
       props: [],
@@ -220,14 +219,6 @@ export default {
                               }
                         )
                   }
-            },
-            handleClose(done){
-                  this.$confirm("确认关闭？").then(() => {
-                        done();
-                  });
-            },
-            formatDate(e){
-                  return utils.formatDate(e);
             },
             init(){
                   let id = this.$route.params.id;
@@ -329,6 +320,7 @@ export default {
 
 <style lang="less" scoped>
 .user-center{
+      padding: 0 10px;
       cursor: default;
       .top-box{
             height: 200px;

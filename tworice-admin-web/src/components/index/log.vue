@@ -1,5 +1,16 @@
 <template>
       <div class="log app-body">
+            <!-- 条件查询 -->
+            <el-col :span="24" class="info-search-box">
+                  <div class="search">
+                        <div class='search-item'>操作人ID :
+                              <el-input size='mini' v-model='search.adminId' placeholder='请输入操作人ID' clearable></el-input>
+                        </div>
+                        <div class="search-item">
+                              <el-button size="mini" type="primary" @click="submitSearch">查询</el-button>
+                        </div>
+                  </div>
+            </el-col>
             <el-col :span="24" class="button-box">
                   <el-button type="danger" icon="el-icon-delete" size="mini" @click="delList">批量删除</el-button>
                   <el-button type="warning" icon="el-icon-download" size="mini" @click="exportLog">导出日志</el-button>
@@ -7,7 +18,7 @@
             <el-table @selection-change="handleSelectionChange" size="mini" :header-cell-style="$setting.table_header" :stripe="true" :fit="true" :data="tableData" border style="width: 100%">
                   <el-table-column type="selection" width="55"></el-table-column>
                   <el-table-column type="index" label="序号"></el-table-column>
-                  <el-table-column prop="createTime" label="时间" :formatter="(row)=>formatDate(row.createTime)"></el-table-column>
+                  <el-table-column prop="createTime" label="时间" :formatter="(row)=>$utils.formatDate(row.createTime)"></el-table-column>
                   <el-table-column prop="admin" label="操作人"></el-table-column>
                   <el-table-column prop="ipAddr" label="IP地址"></el-table-column>
                   <el-table-column prop="active" label="操作日志" :cell-style="activeStyle"></el-table-column>
@@ -19,7 +30,7 @@
                   </el-table-column>
             </el-table>
             <div class="page-box">
-                  <el-pagination @size-change="handleSizeChange" :small="true" :hide-on-single-page="true" @current-change="changePage" background layout="total, sizes, prev, pager, next" :total="total" :page-size="pageSize"></el-pagination>
+                  <el-pagination @size-change="handleSizeChange" :small="true" :hide-on-single-page="true" @current-change="changePage" background layout="total, sizes, prev, pager, next" :total="total" :page-size="pageSize" :current-page="page+1"></el-pagination>
             </div>
       </div>
 </template>
@@ -35,6 +46,9 @@ export default {
                   page:0,// 页码，从零开始
                   isChange:false,
                   multipleSelection:[],
+                  search:{
+                        adminId:''
+                  }
             }
       },
       methods:{
@@ -76,18 +90,13 @@ export default {
                         })
                   })
             },
+            submitSearch(){
+                  this.page=0;
+                  this.toPage();
+            },
             handleSizeChange(size){
                   this.pageSize=size;
                   this.toPage();
-            },
-            /**格式化日期 */
-            formatDate(row){
-                  let date=new Date(row);
-                  let month=(date.getMonth()+1)<10?'0'+(date.getMonth()+1):(date.getMonth()+1);
-                  let day=date.getDate()<10?'0'+date.getDate():date.getDate();
-                  let hours=date.getHours()<10?'0'+date.getHours():date.getHours();
-                  let minutes=date.getMinutes()<10?'0'+date.getMinutes():date.getMinutes();
-                  return date.getFullYear()+'-'+month+'-'+day+' '+hours+':'+minutes;
             },
             /**批量删除 */
             delList(){
@@ -149,10 +158,21 @@ export default {
             },
             /**请求当前页码的数据 */
             toPage(){
-                  this.$axios.get(this.$url+'/admin/log/adminList?pageSize='+this.pageSize+'&page='+this.page).then(
+                  this.loading = true;
+                  let param = "";
+                  Object.keys(this.search).map((key) => {
+                        if (
+                              this.search[key] != undefined &&
+                              this.search[key] != ""
+                        ) {
+                              param += "&" + key + "=" + this.search[key];
+                        }
+                  });
+                  this.$axios.get(this.$url+'/admin/log/adminList?pageSize='+this.pageSize + '&page='+this.page + param).then(
                         response=>{
                               this.tableData=response.data.data.logList;
                               this.total=response.data.data.total;
+                              this.loading=false;
                         }
                   )
             },

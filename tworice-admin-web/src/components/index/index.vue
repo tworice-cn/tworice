@@ -10,12 +10,7 @@
                                     </i>
                                     <span slot="title" class="system-title">{{$setting.systemName}}</span>
                               </el-menu-item>
-
-                              <el-menu-item index="/admin/home">
-                                    <i class="el-icon-s-home"></i>
-                                    <span slot="title">我的首页</span>
-                              </el-menu-item>
-                              <Menu :menuList="resources"></Menu>
+                              <Menu :menuList="resources" :asideStatus="asideStatus"></Menu>
                         </el-menu>
                   </el-aside>
                   <el-container>
@@ -131,9 +126,17 @@ export default {
       methods:{
             /* 跳转用户中心 */
             showUser(e){
-                  e += '/'+JSON.parse(window.sessionStorage.getItem('admin')).id;
-                  this.handleSelect(e);
-                  this.$router.push(e);
+                  if(e==this.$route.path.substring(0,17)){
+                      this.handleSelect(e);
+                      e += '/'+JSON.parse(window.sessionStorage.getItem('admin')).id;
+                      this.$router.push(e);
+                      window.location.reload();
+                  }else{
+                      this.handleSelect(e);
+                      e += '/'+JSON.parse(window.sessionStorage.getItem('admin')).id;
+
+                      this.$router.push(e);
+                  }
             },
             // 切换侧边菜单状态
             switchAside(){

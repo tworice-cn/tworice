@@ -9,7 +9,7 @@
                         <el-table size="mini" :data="tableData" style="width: 100%;margin-bottom: 20px;" row-key="id" border :tree-props="{children: 'list', hasChildren: 'hasChildren'}" :header-cell-style="$setting.table_header">
                               <el-table-column prop="name" label="资源名称"></el-table-column>
                               <el-table-column prop="url" label="页面路径"></el-table-column>
-                              <el-table-column prop="path" label="请求路径"></el-table-column>
+                              <!-- <el-table-column prop="path" label="请求路径"></el-table-column> -->
                               <el-table-column prop="pid" label="上级ID"></el-table-column>
                               <el-table-column prop="sort" label="排序" sortable></el-table-column>
                               <el-table-column prop="icon" label="图标">
@@ -36,7 +36,7 @@
             </el-col>
 
             <!-- 添加弹窗 -->
-            <el-dialog :title="formTitle" :visible.sync="dialogFormVisible" width="30%" :before-close='handleClose'>
+            <el-dialog :title="formTitle" :visible.sync="dialogFormVisible" width="30%" :before-close='$utils.handleClose'>
                   <el-form :model="form" size="mini" :rules="rules" ref="form">
                         <el-form-item label="资源名称" :label-width="formLabelWidth" prop="name">
                               <el-input v-model="form.name" @change="isChange = true" placeholder="展示名称"></el-input>
@@ -44,9 +44,9 @@
                         <el-form-item label="页面路径" :label-width="formLabelWidth" prop="url">
                               <el-input v-model="form.url" @change="isChange = true" placeholder="Vue路由"></el-input>
                         </el-form-item>
-                        <el-form-item label="请求路径" :label-width="formLabelWidth" prop="path">
+                        <!-- <el-form-item label="请求路径" :label-width="formLabelWidth" prop="path">
                               <el-input v-model="form.path" @change="isChange = true" placeholder="请求接口"></el-input>
-                        </el-form-item>
+                        </el-form-item> -->
                         <el-form-item label="排序" :label-width="formLabelWidth" prop="sort">
                               <el-input v-model="form.sort" @change="isChange = true"></el-input>
                         </el-form-item>
@@ -240,15 +240,6 @@ export default {
                   this.resetForm();
                   this.dialogFormVisible = false;
                   
-            },
-
-            // 取消提交
-            handleClose(done) {
-                  this.$confirm('确认关闭？')
-                  .then(()=> {
-                        done();
-                  })
-                  .catch(()=> {});
             },
             
             // 重置表单和表单验证

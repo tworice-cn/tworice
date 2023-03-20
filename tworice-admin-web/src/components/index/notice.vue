@@ -16,8 +16,8 @@
                   </el-col>
                   <el-table size="mini" border v-loading="noticeLoading" :data="noticeList" stripe style="width: 100%" :header-cell-style="$setting.table_header">
                         <el-table-column type="index" label="序号"></el-table-column>
-                        <el-table-column prop="createTime" label="创建日期" :formatter="(row)=>formatDate(row.createTime)"></el-table-column>
-                        <el-table-column prop="updateTime" label="更新日期" :formatter="(row)=>formatDate(row.updateTime)"></el-table-column>
+                        <el-table-column prop="createTime" label="创建日期" :formatter="(row)=>$utils.formatDate(row.createTime)"></el-table-column>
+                        <el-table-column prop="updateTime" label="更新日期" :formatter="(row)=>$utils.formatDate(row.updateTime)"></el-table-column>
                         <el-table-column prop="title" label="标题"></el-table-column>
                         <el-table-column prop="adminName" label="发布者"></el-table-column>
                         <el-table-column prop="top" label="置顶" width="100">
@@ -48,7 +48,7 @@
             </el-col>
 
             <!-- 弹出层 -->
-            <el-dialog title="通知" :visible.sync="editVisible" width="60%" :before-close="handleClose">
+            <el-dialog title="通知" :visible.sync="editVisible" width="60%" :before-close="$utils.handleClose">
                   <el-form :model="noticeForm">
                         <el-form-item label="标题:">
                               <el-input :validate-event="true" :show-word-limit="true" minlength="2" maxlength="64" v-model="noticeForm.title" size="small" placeholder="请输入通知标题"></el-input>
@@ -66,7 +66,7 @@
                   </span>
             </el-dialog>
 
-            <el-dialog title="通知公告" :visible.sync="showVisible" width="60%" :before-close="handleClose">
+            <el-dialog title="通知公告" :visible.sync="showVisible" width="60%" :before-close="$utils.handleClose">
                   <Descriptions :value="descriptions"></Descriptions>
                   <span slot="footer" class="dialog-footer">
                         <el-button @click="showVisible = false">关 闭</el-button>
@@ -141,8 +141,8 @@ export default {
             showNotice(row){
                   this.descriptions=[];
                   this.descriptions.push({name:'编号',value:row.id});
-                  this.descriptions.push({name:'创建日期',value:this.formatDate(row.createTime)});
-                  this.descriptions.push({name:'更新日期',value:this.formatDate(row.updateTime)});
+                  this.descriptions.push({name:'创建日期',value:this.$utils.formatDate(row.createTime)});
+                  this.descriptions.push({name:'更新日期',value:this.$utils.formatDate(row.updateTime)});
                   this.descriptions.push({name:'发布者',value:row.adminName});
                   this.descriptions.push({name:'标题',value:row.title});
                   this.descriptions.push({name:'内容',value:row.content});
@@ -215,16 +215,6 @@ export default {
                   });
                   this.noticeList=noticeList;
             },
-            handleClose(done) {
-                  
-                  done();
-                  
-            },
-            /**格式化日期 */
-            formatDate(timeStamp){
-                  let date=new Date(timeStamp);
-                  return date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
-            }
       },
       mounted(){
             this.init();

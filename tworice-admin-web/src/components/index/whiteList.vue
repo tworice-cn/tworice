@@ -18,8 +18,8 @@
             <el-table @selection-change="handleSelectionChange" size="mini" v-loading="loading" :header-cell-style="$setting.table_header" :stripe="true" :fit="true" :data="tableData" border style="width: 100%">
                   <el-table-column type="selection" width="55"></el-table-column>
                   <el-table-column prop='id' label='编号' width="55"></el-table-column>
-                  <el-table-column prop='createTime' label='创建时间' :formatter='(row)=>formatDate(row.createTime)'></el-table-column>
-                  <el-table-column prop='updateTime' label='更新时间' :formatter='(row)=>formatDate(row.updateTime)'></el-table-column>
+                  <el-table-column prop='createTime' label='创建时间' :formatter='(row)=>$utils.formatDate(row.createTime)'></el-table-column>
+                  <el-table-column prop='updateTime' label='更新时间' :formatter='(row)=>$utils.formatDate(row.updateTime)'></el-table-column>
                   <el-table-column prop='beginIp' label='开始IP'></el-table-column>
                   <el-table-column prop='endIp' label='结束IP'></el-table-column>
                   <el-table-column label="操作"> <template slot-scope="scope">
@@ -33,7 +33,7 @@
                               :page-size="pageSize"></el-pagination>
                   </div>
             </el-col> <!-- 弹出层 -->
-            <el-dialog :title="formTitle" :visible.sync="formVisible" top="5vh" width="30%" :before-close="handleClose">
+            <el-dialog :title="formTitle" :visible.sync="formVisible" top="5vh" width="30%" :before-close="$utils.handleClose">
                   <el-form :model="form" :rules="rules" ref="form">
                         <el-form-item label='开始IP' :label-width='formLabelWidth' prop='beginIp'>
                               <el-input placeholder='请输入开始IP' v-model='form.beginIp' @change='isChange = true' size='small'></el-input>
@@ -47,7 +47,7 @@
                         <el-button size="mini" type="primary" @click="submit">确 定</el-button>
                   </div>
             </el-dialog>
-            <el-dialog title="选择数据表格" :visible.sync="inductsVisible" width="40%" :before-close="handleClose">
+            <el-dialog title="选择数据表格" :visible.sync="inductsVisible" width="40%" :before-close="$utils.handleClose">
                   <el-form size="mini">
                         <el-form-item label="选择表格" :label-width="formLabelWidth"> <input type="file" class="file-left-input" @change="inductsChange()" ref="inducts" multiple accept=".xls,.xlsx" /> </el-form-item>
                   </el-form>
@@ -132,36 +132,6 @@ export default {
       },
       methods: {
             /**初始化字典 */ initDist() {},
-            /**格式化日期 */ formatDate(timeStamp) {
-                  let date = new Date(timeStamp);
-                  let month =
-                        date.getMonth() + 1 < 10
-                              ? "0" + (date.getMonth() + 1)
-                              : date.getMonth() + 1;
-                  let day =
-                        date.getDate() < 10
-                              ? "0" + date.getDate()
-                              : date.getDate();
-                  let hours =
-                        date.getHours() < 10
-                              ? "0" + date.getHours()
-                              : date.getHours();
-                  let minutes =
-                        date.getMinutes() < 10
-                              ? "0" + date.getMinutes()
-                              : date.getMinutes();
-                  return (
-                        date.getFullYear() +
-                        "-" +
-                        month +
-                        "-" +
-                        day +
-                        " " +
-                        hours +
-                        ":" +
-                        minutes
-                  );
-            },
             handleSizeChange(size) {
                   this.pageSize = size;
                   this.toPage();
@@ -205,11 +175,6 @@ export default {
                   this.form = this.$options.data().form;
                   this.formTitle = "新增";
                   this.formVisible = true;
-            },
-            handleClose(done) {
-                  this.$confirm("确认关闭？").then(() => {
-                        done();
-                  });
             },
             verifyIP(ipAddr){
                   return this.pattern.test(ipAddr);

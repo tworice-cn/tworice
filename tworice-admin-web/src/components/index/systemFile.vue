@@ -12,7 +12,7 @@
             </el-col>
             <el-col :span="24" class="button-box">
                   <el-button size="mini" type="primary" icon="el-icon-document-add" @click="add">上传</el-button>
-                  <el-button size="mini" type="success" icon="el-icon-folder-add" @click="inductsVisible=true">新建文件夹</el-button>
+                  <el-button size="mini" type="success" icon="el-icon-folder-add" @click="createFolder">新建文件夹</el-button>
                   <el-button size="mini" type="danger" icon="el-icon-delete" @click="delList">批量删除</el-button>
             </el-col>
             <el-col :span="24" class="button-box">
@@ -21,7 +21,6 @@
                         <el-breadcrumb-item v-if="info.id!='1'">{{info.name}}</el-breadcrumb-item>
                   </el-breadcrumb>
             </el-col>
-
             <el-table @selection-change="handleSelectionChange" size="mini" v-loading="loading" :header-cell-style="$setting.table_header" :stripe="true" :fit="true" :data="tableData" style="width: 100%">
                   <el-table-column type="selection" width="55"></el-table-column>
                   <el-table-column prop='id' label='类型' width="55" >
@@ -34,7 +33,7 @@
                               <el-link @click="clickFile(scope.row)">{{scope.row.name}}</el-link>
                         </template>
                   </el-table-column>
-                  <el-table-column prop='createTime' label='创建时间' :formatter='(row)=>formatDate(row.createTime)'></el-table-column>
+                  <el-table-column prop='createTime' label='创建时间' :formatter='(row)=>$utils.formatDate(row.createTime)'></el-table-column>
                   <el-table-column prop='nickName' label='创建人'></el-table-column>
                   <el-table-column prop='share' label='分享'>
                         <template slot-scope="scope">
@@ -46,7 +45,7 @@
                   <el-table-column prop='size' label='大小' :formatter='(row)=>changeSize(row.size)' width="80"></el-table-column>
                   <el-table-column label="操作"> <template slot-scope="scope">
                         <el-tooltip content="取消分享">
-                              <el-button v-if="scope.row.type==1&&scope.row.share==1" size="mini" type="danger" icon="el-icon-share" circle @click.native="share(scope.row,0)"></el-button>
+                              <el-button v-if="scope.row.type==1&&scope.row.share==1" size="mini" type="danger" icon="el-icon-share" circle @click.native="cancelShare(scope.row)"></el-button>
                         </el-tooltip>
                         <el-tooltip content="分享文件">
                               <el-button v-if="scope.row.type==1&&scope.row.share==0" size="mini" type="info" icon="el-icon-share" circle @click.native="share(scope.row,1)"></el-button>
@@ -65,7 +64,7 @@
                               :page-size="pageSize"></el-pagination>
                   </div>
             </el-col> <!-- 弹出层 -->
-            <el-dialog title="上传文件" :visible.sync="formVisible" top="5vh" width="30%" :before-close="handleClose">
+            <el-dialog title="上传文件" :visible.sync="formVisible" top="5vh" width="30%" :before-close="$utils.handleClose">
                   <el-form :model="form" :rules="rules" ref="form">
                         <el-upload
                                     class="upload-demo"
@@ -74,13 +73,14 @@
                                     :show-file-list="false"
                                     :action="$url+pageUrlPath+'/add'"
                                     :on-success="toPage"
+                                    :headers="header"
                                     :multiple="false">
                                     <i class="el-icon-upload"></i>
                                     <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
                               </el-upload>
                   </el-form>
             </el-dialog>
-            <el-dialog title="文件夹" :visible.sync="inductsVisible" width="30%" :before-close="handleClose">
+            <el-dialog title="文件夹" :visible.sync="inductsVisible" width="30%" :before-close="$utils.handleClose">
                   <el-form size="mini">
                         <el-input :validate-event="true" :show-word-limit="true" minlength="2" maxlength="12" v-model="form.name" size="mini" placeholder="请输入文件夹名称"></el-input>
                   </el-form>
@@ -95,6 +95,7 @@ export default {
       props: [],
       data() {
             return {
+                  header:{},
                   info:{},
                   startUpload:false,/**是否显示进度条，一般开始上传后开始显示 */
                   progress:0,/**上传进度 */
@@ -171,6 +172,15 @@ export default {
             };
       },
       methods: {
+            createFolder(){
+                  this.form = this.$options.data().form;
+                  this.inductsVisible=true
+            },
+            cancelShare(row){
+                  this.$axios.get(this.$url+this.pageUrlPath+'/cancel?id='+row.id).then(()=>{
+                        this.toPage();
+                  })
+            },
             share(row,type){
                   this.form=row;
                   this.form.share=type;
@@ -228,41 +238,17 @@ export default {
                   return this.form;
             },
             /**初始化字典 */ initDist() {},
-            /**格式化日期 */ formatDate(timeStamp) {
-                  let date = new Date(timeStamp);
-                  let month =
-                        date.getMonth() + 1 < 10
-                              ? "0" + (date.getMonth() + 1)
-                              : date.getMonth() + 1;
-                  let day =
-                        date.getDate() < 10
-                              ? "0" + date.getDate()
-                              : date.getDate();
-                  let hours =
-                        date.getHours() < 10
-                              ? "0" + date.getHours()
-                              : date.getHours();
-                  let minutes =
-                        date.getMinutes() < 10
-                              ? "0" + date.getMinutes()
-                              : date.getMinutes();
-                  return (
-                        date.getFullYear() +
-                        "-" +
-                        month +
-                        "-" +
-                        day +
-                        " " +
-                        hours +
-                        ":" +
-                        minutes
-                  );
-            },
+            
             handleSizeChange(size) {
                   this.pageSize = size;
                   this.toPage();
             },
             init() {
+                  this.header={
+                        token:window.sessionStorage.getItem('token'),
+                        adminID:JSON.parse(window.sessionStorage.getItem('admin')).id
+                  }
+
                   this.form.creator=JSON.parse(window.sessionStorage.getItem('admin')).id;
                   this.search.creator=this.form.creator;
                   this.toPage();
@@ -311,11 +297,6 @@ export default {
                   this.formTitle = "新增";
                   this.formVisible = true;
             },
-            handleClose(done) {
-                  this.$confirm("确认关闭？").then(() => {
-                        done();
-                  });
-            },
             mkdir(){
                   this.form.type=2;
                   this.submit();
@@ -326,6 +307,7 @@ export default {
                   
                   let formData = new FormData();
                   Object.keys(this.form).map((key) => {
+                        console.log(this.form[key]);
                         if (
                               this.form[key] != undefined &&
                               this.form[key] != ""
@@ -345,6 +327,8 @@ export default {
                   });
             },
             edit(row) {
+                  console.log(row);
+                  this.form = this.$options.data().form;
                   this.form = row;
                   this.formTitle = "编辑";
                   this.inductsVisible = true;

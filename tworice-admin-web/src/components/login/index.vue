@@ -49,7 +49,7 @@
             </el-col>
 
             <!-- 弹出层 -->
-            <el-dialog title="注册" :visible.sync="reg.dialogVisible" width="30%" :before-close="handleClose">
+            <el-dialog title="注册" :visible.sync="reg.dialogVisible" width="30%" :before-close="$utils.handleClose">
                   <el-form ref="reg" :model="reg.form" size="mini" :rules="reg.rules">
                         <el-form-item label="邮箱" :label-width="formLabelWidth" prop="loginName">
                               <el-input v-model="reg.form.loginName" @change="isChange = true" placeholder="登录邮箱"></el-input>
@@ -180,14 +180,6 @@ export default {
                               
                         })
                   }
-            },
-            /**关闭注册窗口 */
-            handleClose(done) {
-                  this.$confirm('确认退出注册？')
-                  .then(() => {
-                        done();
-                  })
-                  .catch(() => {});
             },
             /**注册 */
             toReg(){

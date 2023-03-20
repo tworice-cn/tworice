@@ -39,5 +39,10 @@ export default{
       /**获取当前登录的用户ID */
       getLoginUserID(){
             return JSON.parse(window.sessionStorage.getItem('admin')).id;
-      }
+      },
+      handleClose(done) {
+            this.$confirm("确认关闭？").then(() => {
+                  done();
+            });
+      },
 }

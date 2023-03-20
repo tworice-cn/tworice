@@ -48,7 +48,7 @@
                   </el-col>
 
                   <!-- 弹出层 -->
-                  <el-dialog :title="'当前角色：'+this.currentRole.roleName" :visible.sync="addUserDialog" width="50%" :before-close="handleClose">
+                  <el-dialog :title="'当前角色：'+this.currentRole.roleName" :visible.sync="addUserDialog" width="50%" :before-close="$utils.handleClose">
                         <div class="userTransfer">
                               <!-- 穿梭框 -->
                               <el-transfer filterable filter-placeholder="请输入人员名称" :button-texts="[ '移除人员','添加人员']" v-model="selectUserList" :data="userList" :titles="['未选人员', '已选人员']" @change="adminChange"></el-transfer>
@@ -59,7 +59,7 @@
                         </span>
                   </el-dialog>
 
-                  <el-dialog title="管理权限" :visible.sync="resourceDialog" width="40%" top="5vh" :before-close="handleClose">
+                  <el-dialog title="管理权限" :visible.sync="resourceDialog" width="40%" top="5vh" :before-close="$utils.handleClose">
                         <el-tree v-loading="treeLoad" ref="resourceTree" :data="resourceTree" show-checkbox node-key="id" :default-expand-all="true" :default-checked-keys="defaultChecked" :props="resourceDefaultProps"></el-tree>
                         
                         <span slot="footer" class="dialog-footer">
@@ -67,7 +67,7 @@
                         </span>
                   </el-dialog>
 
-                  <el-dialog title="设置角色" :visible.sync="roleDialog" width="40%" :before-close="handleClose">
+                  <el-dialog title="设置角色" :visible.sync="roleDialog" width="40%" :before-close="$utils.handleClose">
                         <b>请输入角色名 :</b>
                         <el-input v-model="roleForm.id" type="hidden"></el-input>
                         <el-input v-model="roleForm.roleName" placeholder="请输入角色名" maxlength="8" show-word-limit></el-input>
@@ -218,9 +218,6 @@ export default {
                               }
                         )
                   }
-            },
-            handleClose(done){
-                  done();
             },
             /**管理权限 */
             editResource(row){

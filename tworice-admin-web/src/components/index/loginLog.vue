@@ -5,7 +5,7 @@
             <!-- 数据表格 -->
             <el-table size="mini" :header-cell-style="$setting.table_header" :stripe="true" :fit="true" :data="tableData" border style="width: 100%">
                   <el-table-column type="index" label="序号"></el-table-column>
-                  <el-table-column prop="createTime" label="时间" :formatter="(row)=>formatDate(row.createTime)"></el-table-column>
+                  <el-table-column prop="createTime" label="时间" :formatter="(row)=>$utils.formatDate(row.createTime)"></el-table-column>
                   <el-table-column prop="loginName" label="登录账号"></el-table-column>
                   <el-table-column prop="ipAddr" label="登录IP"></el-table-column>
                   <el-table-column prop="status" label="登录结果" width="100">
@@ -24,13 +24,13 @@
             <div class="page-box">
                   <el-pagination :hide-on-single-page="true" @current-change="changePage" background layout="prev, pager, next" :total="total" :page-size="15"></el-pagination>
             </div>
-            <el-dialog title="查看" :visible.sync="showVisible" width="40%" :before-close="handleClose">
+            <el-dialog title="查看" :visible.sync="showVisible" width="40%" :before-close="$utils.handleClose">
                   <el-descriptions :column="1" border>
                         <el-descriptions-item>
                               <template slot="label">
                                     时间
                               </template>
-                              {{formatDate(form.createTime)}}
+                              {{$utils.formatDate(form.createTime)}}
                         </el-descriptions-item>
                         <el-descriptions-item>
                               <template slot="label">
@@ -80,15 +80,6 @@ export default {
                   this.form=row;
                   this.showVisible=true;
             },
-            /**格式化日期 */
-            formatDate(time){
-                  let date=new Date(time);
-                  let month=(date.getMonth()+1)<10?'0'+(date.getMonth()+1):(date.getMonth()+1);
-                  let day=date.getDate()<10?'0'+date.getDate():date.getDate();
-                  let hours=date.getHours()<10?'0'+date.getHours():date.getHours();
-                  let minutes=date.getMinutes()<10?'0'+date.getMinutes():date.getMinutes();
-                  return date.getFullYear()+'-'+month+'-'+day+' '+hours+':'+minutes;
-            },
             del(row){
                   this.$confirm('此操作将永久删除该信息, 是否继续?', '提示', {
                         confirmButtonText: '确定',
@@ -126,13 +117,6 @@ export default {
             },
             init(){
                   this.toPage();
-            },
-            handleClose(done) {
-                  this.$confirm("确认关闭？")
-                        .then(() => {
-                              done();
-                        })
-                        .catch(() => {});
             },
       },
       mounted(){

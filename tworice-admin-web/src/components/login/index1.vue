@@ -6,7 +6,7 @@
                         <el-col :md="8" class="min-height"></el-col>
                         <el-col :md="8" class="login-content">
                               <el-col :span="24" class="content-title">
-                                    登 录
+                                    {{$setting.systemName}}
                               </el-col>
                               <el-col :span="24" class="content-form">
                                     <el-col :span="24">
@@ -42,7 +42,7 @@
             </el-col>
 
             <!-- 弹出层 -->
-            <el-dialog title="注册" :visible.sync="reg.dialogVisible" width="30%" :before-close="handleClose">
+            <el-dialog title="注册" :visible.sync="reg.dialogVisible" width="30%" :before-close="$utils.handleClose">
                   <el-form :model="reg.form" size="mini" :rules="reg.rules">
                         <el-form-item label="邮箱" :label-width="formLabelWidth" prop="loginName">
                               <el-input v-model="reg.form.loginName" @change="isChange = true" placeholder="登录邮箱"></el-input>
@@ -161,10 +161,6 @@ export default {
                   }else{
                         this.$root.loading=true;
                         this.$axios.get(this.$url+'/admin/login/regCaptcha?email='+this.reg.form.loginName).then(res=>{
-                              this.$message({
-                                    type:'info',
-                                    message:res.data.status.message
-                              })
                               if(res.data.status.code==200){
                                     this.reg.form.key=res.data.data.key;
                                     // 初始化倒计时
@@ -177,14 +173,6 @@ export default {
                               
                         })
                   }
-            },
-            /**关闭注册窗口 */
-            handleClose(done) {
-                  this.$confirm('确认退出注册？')
-                  .then(() => {
-                        done();
-                  })
-                  .catch(() => {});
             },
             /**注册 */
             toReg(){
@@ -217,16 +205,8 @@ export default {
                                     window.sessionStorage.setItem("resources",JSON.stringify(response.data.data.resources))
                                     window.sessionStorage.setItem("roles",JSON.stringify(response.data.data.roles))
                                     this.$router.push('/admin');
-                                    this.$message({
-                                          type:'success',
-                                          message:response.data.status.message
-                                    })
                               }else if (parseInt(response.data.status.code) == 400) {
                                     // 登录失败
-                                    this.$message({
-                                          type:'info',
-                                          message:response.data.status.message
-                                    })
                                     this.initCaptcha();
                                     // this.username='';
                                     this.password='';
@@ -268,12 +248,7 @@ export default {
                   }
                   this.$axios.get(this.$url+'/admin/login/captcha'+param).then(
                         res=>{
-                              if(res.data.status.code==204){
-                                    this.$message({
-                                          type:'warning',
-                                          message:res.data.status.message
-                                    })
-                              }else{
+                              if(!(res.data.status.code==204)){
                                     this.key=res.data.data.key;
                                     this.$refs.captcha.src=res.data.data.captcha;
                               }
