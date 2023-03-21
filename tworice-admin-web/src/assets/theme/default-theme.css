@@ -35,6 +35,11 @@ th {
 .el-menu .el-submenu__title {
   color: var(--asideTextColor) !important;
 }
+/*用于解决子菜单背景白色问题*/
+.el-menu--horizontal .el-menu .el-menu-item,
+.el-menu--horizontal .el-menu .el-submenu__title {
+  background-color: transparent!important;
+}
 .index-main {
   height: 100vh;
   /**界面头部 */
@@ -139,7 +144,6 @@ th {
 }
 .el-tabs__item.is-active {
   color: var(--themeColor);
-  background-color: #fff;
 }
 /**标签左右切换按钮 */
 .el-tabs__nav-next,
