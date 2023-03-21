@@ -15,6 +15,7 @@ log
 *.sst
 *.lock
 *.zip
+*.iml
 
 # 前端
 node_modules/
