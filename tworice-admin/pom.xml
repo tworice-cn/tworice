@@ -34,28 +34,11 @@
             <artifactId>tworice-generate</artifactId>
             <version>1.1</version>
         </dependency>
-    </dependencies>
 
-<!--    <build>-->
-<!--        &lt;!&ndash; 设置构建的 jar 包名 &ndash;&gt;-->
-<!--        <finalName>${project.artifactId}</finalName>-->
-<!--        <plugins>-->
-<!--            &lt;!&ndash; 打包 &ndash;&gt;-->
-<!--            <plugin>-->
-<!--                <groupId>org.springframework.boot</groupId>-->
-<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
-<!--                <version>${spring-boot.version}</version> &lt;!&ndash; 如果 spring.boot.version 版本修改，则这里也要跟着修改 &ndash;&gt;-->
-<!--                <configuration>-->
-<!--                    <fork>true</fork>-->
-<!--                </configuration>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <goals>-->
-<!--                            <goal>repackage</goal> &lt;!&ndash; 将引入的 jar 打入其中 &ndash;&gt;-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
-<!--        </plugins>-->
-<!--    </build>-->
+        <dependency>
+            <groupId>cn.tworice</groupId>
+            <artifactId>tworice-admin-starter</artifactId>
+            <version>1.0</version>
+        </dependency>
+    </dependencies>
 </project>

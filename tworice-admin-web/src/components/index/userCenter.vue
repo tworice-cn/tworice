@@ -5,7 +5,7 @@
                         <el-avatar src="/favicon.ico"></el-avatar>
                         <el-col :span="24" class="user-name">{{adminInfo.nickName}}</el-col>
                         <el-col :span="24" class="user-info">
-                              <div class="info-item el-icon-male"> {{adminInfo.adminSex==1?'男':adminInfo.adminSex==0?'女':'未知'}}</div>
+                              <div class="info-item el-icon-male"> {{adminInfo.adminSex==1?'男':adminInfo.adminSex==2?'女':'未知'}}</div>
                               <div class="info-item el-icon-suitcase"> {{adminInfo.roleName}}</div>
                               <div class="info-item el-icon-location"> {{adminInfo.homePlace?adminInfo.homePlace:'未知'}}</div>
                         </el-col>
@@ -44,7 +44,7 @@
                                                 <i class="el-icon-male"></i>
                                                 性别
                                           </template>
-                                          {{adminInfo.adminSex==1?'男':adminInfo.adminSex==0?'女':'未知'}}
+                                          {{adminInfo.adminSex==1?'男':adminInfo.adminSex==2?'女':'未知'}}
                                     </el-descriptions-item>
                                     <el-descriptions-item>
                                           <template slot="label">

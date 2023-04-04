@@ -97,3 +97,44 @@ SQL文件在`sql`目录下，文件以日期命名，请使用最新日期的SQL
 
 
 
+
+
+## 6、第三方支持
+
+### 6.1、SpringBootAdmin
+
+引入：
+
+```xml
+<dependency>
+    <groupId>cn.tworice</groupId>
+    <artifactId>tworice-admin-starter</artifactId>
+    <version>1.0</version>
+</dependency>
+```
+
+增加配置文件：
+
+```yml
+spring:
+  application:
+    name: 应用
+  boot:
+    admin:
+      client:
+        url: http://localhost:88
+        instance:
+          prefer-ip: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      enabled: true
+```
+
+可根据实际需求调整。

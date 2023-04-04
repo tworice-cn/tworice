@@ -22,6 +22,7 @@
             <el-table @selection-change="handleSelectionChange" size="mini" v-loading="loading" :header-cell-style="$setting.table_header" :stripe="true" :fit="true" :data="tableData" border style="width: 100%">
                   <el-table-column type="selection" width="55"></el-table-column>
                   <el-table-column type="index" label="序号"></el-table-column>
+                  <el-table-column prop="id" label="编号"></el-table-column>
                   <el-table-column prop="nickName" label="姓名"></el-table-column>
                   <el-table-column prop="loginName" label="登录账号"></el-table-column>
                   <el-table-column prop="status" label="状态" width="80">
@@ -194,7 +195,9 @@ export default {
                   this.loading = true;
                   let format = new FormData();
                   Object.keys(this.form).map((key) => {
-                        format.append(key, this.form[key]);
+                        if(this.form[key]){
+                              format.append(key, this.form[key]);
+                        }
                   });
 
                   this.$axios({

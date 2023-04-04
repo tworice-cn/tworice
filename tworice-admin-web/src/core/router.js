@@ -11,6 +11,11 @@ const router =
                   meta: { title: "登录" },
             },
             {
+                  path: "/bigScreen",
+                  component: () => import("@/components/index/home.vue"),
+                  meta: { title: "实时监控" },
+            },
+            {
                   path: "/admin",
                   name: "首页",
                   component: () => import("@/components/index"),
@@ -151,6 +156,12 @@ const router =
                               name: "访问白名单",
                               component: (resolve) =>
                                     require(["@/components/index/whiteList.vue"], resolve),
+                        },
+                        {
+                              path: "admin",
+                              name: "应用监控",
+                              component: (resolve) =>
+                                    require(["@/components/tools/SpringBootAdmin.vue"], resolve),
                         },
                   ],
             },

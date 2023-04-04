@@ -24,6 +24,7 @@
   /**界面头部 */
   /**界面侧栏 */
   /**内容 */
+  /*用户菜单样式*/
 }
 .index-main .system-title {
   padding-left: 10px;
@@ -90,6 +91,26 @@
 }
 .index-main .index-body {
   padding: 0;
+}
+.index-main .portal-header {
+  display: flex;
+  justify-content: space-between;
+  background-color: #fff !important;
+  border-bottom: 1px solid #e6e6e6;
+}
+.index-main .portal-header .el-menu {
+  display: table;
+  align-items: center;
+}
+.index-main .portal-header .el-menu .portal-menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.index-main .portal-header .portal-avatar {
+  align-self: center;
+  width: 100px;
 }
 .zhan {
   width: 30px;

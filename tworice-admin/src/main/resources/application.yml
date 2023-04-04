@@ -1,3 +1,26 @@
 spring:
   profiles:
     active: dev
+  servlet:
+    multipart: #配置文件上传时的文件大小限制等
+      enabled: true
+      max-file-size: 200MB
+      max-request-size: 500MB
+      file-size-threshold: 200MB
+mybatis:
+  mapper-locations: classpath:/mapper/*.xml
+  configuration:
+    # 开启下划线到驼峰规则的自动转换，如果数据库中字段名是user_name自动映射成userName
+    map-underscore-to-camel-case: true
+    # 开启MyBatis二级缓存
+    cache-enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      enabled: true
