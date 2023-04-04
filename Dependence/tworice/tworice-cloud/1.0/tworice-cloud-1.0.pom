@@ -52,6 +52,9 @@
 
         <!-- 存储 -->
         <minio-version>8.2.2</minio-version>
+
+        <!-- 监控-->
+        <spring-boot-admin-version>2.3.1</spring-boot-admin-version>
     </properties>
 
     <dependencies>
@@ -229,6 +232,7 @@
                 <artifactId>tworice-banner</artifactId>
                 <version>${tworice-version}</version>
             </dependency>
+
             <!-- minio依赖-->
             <dependency>
                 <groupId>io.minio</groupId>
@@ -241,6 +245,17 @@
                 <version>${fastjson-version}</version>
             </dependency>
 
+            <!-- 监控-->
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-server</artifactId>
+                <version>${spring-boot-admin-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-client</artifactId>
+                <version>${spring-boot-admin-version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

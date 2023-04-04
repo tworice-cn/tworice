@@ -12,6 +12,8 @@
     <modules>
         <module>tworice-ocr-starter</module>
         <module>tworice-watermark-starter</module>
+        <module>tworice-admin-starter</module>
+        <module>tworice-usb-starter</module>
     </modules>
     <artifactId>tworice-starter</artifactId>
 </project>
