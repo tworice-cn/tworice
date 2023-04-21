@@ -18,6 +18,9 @@
       /*表格表头*/
       --tableHeaderBgColor:#F2F3F5;
       --tableHeaderTextColor:#1D2129;
+      /*表格背景*/
+      --tableBgColor:#ffffff;
+      --tableTextColor:#000000;
 }
 th{
       background-color: var(--tableHeaderBgColor)!important;
@@ -27,6 +30,13 @@ th{
 .app-body{
       border-radius: 5px;
       background-color: #fff;
+}
+.el-table tr,.el-table td {
+      background-color: transparent!important;
+}
+.el-table {
+      background-color: var(--tableBgColor) !important;
+      color: var(--tableTextColor) !important;
 }
 
 /*左侧菜单*/
@@ -299,14 +309,6 @@ transition: width 0.5s;
 }
 .info-search-box .search .el-input{
       width: 200px;
-}
-/*登录页背景*/
-.tworice-login-bg{
-      overflow: hidden;
-      background-image: url('~@/assets/img/loginBg.jpg');
-      background-size: 100%;
-      //font-family: "montserrat";
-      /* animation: bganimation 15s infinite; */
 }
 /**背景动画 */
 @keyframes bganimation{

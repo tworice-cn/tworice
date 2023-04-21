@@ -1,56 +1,49 @@
 <template>
       <div class="login tworice-login-bg">
           <el-col :span="24">
+                  <el-col :span="24" class="login-top"></el-col>
                   <el-col :span="24" class="login-middle">
-                        <el-col :md="12" class="min-height login-left">
-                              <i>
-                                    <img src="/favicon.ico" alt="" width="100px">
-                                    <br/>
-                              </i>
-                              {{$setting.systemName}}
-                        </el-col>
-                        <el-col :md="12" class="login-right">
-                              <el-col :span="24" class="login-top"></el-col>
-                              <el-col :span="24" class="login-content">
-                                    <el-col :span="24" class="content-title">
-                                          登 录
-                                    </el-col>
-                                    <el-col :span="24" class="content-form">
-                                          <el-col :span="24">
-                                                <el-input placeholder="请输入用户名" ref='userInput' type="text" suffix-icon="el-icon-user" v-model="username" @keyup.enter.native="login" @blur="isEmpty('u')"></el-input>
-                                          </el-col>
-                                          <el-col :span="24">
-                                                <div class="form-rule" ref="userCheck"></div>
-                                          </el-col>
-                                          <el-col :span="24">
-                                                <el-input placeholder="请输入密码" class="pw-input" type="password" suffix-icon="el-icon-lock" v-model="password" @keyup.enter.native="login" @blur="isEmpty('p')"></el-input>
-                                          </el-col>
-                                          <el-col :span="24">
-                                                <div class="form-rule" ref="pwCheck"></div>
-                                          </el-col>
-                                          <el-col :span="24">
-                                                <el-col :span="12">
-                                                      <el-input placeholder="请输入右侧结果" maxlength="6" ref='captchaInput' type="text" v-model="captcha" @keyup.enter.native="login" @blur="isEmpty('c')"></el-input>
-                                                </el-col>
-                                                <el-col :span="12" class="captcha-box">
-                                                      <img src="" alt="" height="40px" ref="captcha" @click="initCaptcha" title="点击换一张">
-                                                </el-col>
-                                          </el-col>
-                                          <el-col :span="24">
-                                                <div class="form-rule" ref="captchaCheck"></div>
-                                          </el-col>
-                                    </el-col>
-                                    <el-col :span="24" class="content-submit" :class="username==''||password==''||captcha==''?'content-submit-disabled':''" @click.native="login">登录</el-col>
-                                    <el-col :span="24" class="reg-box"><el-link @click="toReg">注 册</el-link></el-col>
+                        <el-col :md="14" class="min-height"></el-col>
+                        <el-col :md="8" class="login-content">
+                              <el-col :span="24" class="content-title">
+                                    {{$setting.systemName}}
                               </el-col>
+                              <el-col :span="24" class="content-form">
+                                    <el-col :span="24">
+                                          <el-input placeholder="请输入用户名" ref='userInput' type="text" suffix-icon="el-icon-user" v-model="username" @keyup.enter.native="login" @blur="isEmpty('u')"></el-input>
+                                    </el-col>
+                                    <el-col :span="24">
+                                          <div class="form-rule" ref="userCheck"></div>
+                                    </el-col>
+                                    <el-col :span="24">
+                                          <el-input placeholder="请输入密码" class="pw-input" type="password" suffix-icon="el-icon-lock" v-model="password" @keyup.enter.native="login" @blur="isEmpty('p')"></el-input>
+                                    </el-col>
+                                    <el-col :span="24">
+                                          <div class="form-rule" ref="pwCheck"></div>
+                                    </el-col>
+                                    <el-col :span="24">
+                                          <el-col :span="12">
+                                                <el-input placeholder="请输入右侧结果" maxlength="6" ref='captchaInput' type="text" v-model="captcha" @keyup.enter.native="login" @blur="isEmpty('c')"></el-input>
+                                          </el-col>
+                                          <el-col :span="12" class="captcha-box">
+                                                <img src="" alt="" height="40px" ref="captcha" @click="initCaptcha" title="点击换一张">
+                                          </el-col>
+                                    </el-col>
+                                    <el-col :span="24">
+                                          <div class="form-rule" ref="captchaCheck"></div>
+                                    </el-col>
+                              </el-col>
+                              <el-col :span="24" class="content-submit" :class="username==''||password==''||captcha==''?'content-submit-disabled':''" @click.native="login">登录</el-col>
+                              <el-col :span="24" class="reg-box"><el-link @click="toReg">注 册</el-link></el-col>
                         </el-col>
+                        <el-col :md="2" class="min-height"></el-col>
                   </el-col>
                   <el-col :span="24" class="login-bottom"></el-col>
             </el-col>
 
             <!-- 弹出层 -->
-            <el-dialog title="注册" :visible.sync="reg.dialogVisible" width="30%" :before-close="$utils.handleClose">
-                  <el-form ref="reg" :model="reg.form" size="mini" :rules="reg.rules">
+            <el-dialog title="注册" :visible.sync="reg.dialogVisible" width="30%" :before-close="handleClose">
+                  <el-form :model="reg.form" size="mini" :rules="reg.rules">
                         <el-form-item label="邮箱" :label-width="formLabelWidth" prop="loginName">
                               <el-input v-model="reg.form.loginName" @change="isChange = true" placeholder="登录邮箱"></el-input>
                         </el-form-item>
@@ -107,7 +100,8 @@ export default {
                               ],
                               passWord:[
                                     { required: true, message: '请输入登录密码', trigger: 'blur' },
-                                    { pattern:/^(?![\d]+$)(?![a-zA-Z]+$)(?![^\da-zA-Z]+$).{6,20}$/, message: '密码应6~10位的数字+字母、字母+特殊字符、特殊字符+数字', trigger: 'blur'}
+                                    { min: 6,message: '长度应大于或等于6 个字符', trigger: 'blur' },
+                                    { pattern:/^(?![\d]+$)(?![a-zA-Z]+$)(?![^\da-zA-Z]+$).{6,20}$/, message: '密码应包含大小写字母及数字'}
                               ],
                               nickName:[
                                     { required: true, message: '请输入昵称', trigger: 'blur' }
@@ -119,27 +113,29 @@ export default {
       methods:{
             /**提交注册 */
             submitReg(){
-                  this.$refs['reg'].validate(validate=>{
-                        if(validate){
-                              // 提交注册
-                              let formData=new FormData();
-                              Object.keys(this.reg.form).forEach(item=>{
-                                    formData.append(item,this.reg.form[item]);
-                              })
-                              this.$axios({
-                                    url:this.$url+'/admin/login/reg',
-                                    data:formData,
-                                    method:'post'
-                              }).then(res=>{
-                                    this.$message({
-                                          type:'info',
-                                          message:res.data.status.message
-                                    })
-                                    this.reg.dialogVisible=false;
-                              })
-                        }
+                  if(this.reg.form.loginName==''||this.reg.form.passWord==''||this.reg.form.nickName==''||this.reg.form.captcha==''||this.reg.form.key==''){
+                        this.$message({
+                              type:'error',
+                              message:'必填项不能为空'
+                        })
+                        return;
+                  }
+                  // 提交注册
+                  let formData=new FormData();
+                  Object.keys(this.reg.form).forEach(item=>{
+                        formData.append(item,this.reg.form[item]);
                   })
-                  
+                  this.$axios({
+                        url:this.$url+'/admin/login/reg',
+                        data:formData,
+                        method:'post'
+                  }).then(res=>{
+                        this.$message({
+                              type:'info',
+                              message:res.data.status.message
+                        })
+                        this.reg.dialogVisible=false;
+                  })
             },
             /**倒计时发送验证码 */
             updateTime(){
@@ -176,10 +172,19 @@ export default {
                                     this.reg.interval=setInterval(()=>{
                                           this.updateTime();
                                     },1000);
+                                    this.$root.loading=false;
                               }
                               
                         })
                   }
+            },
+            /**关闭注册窗口 */
+            handleClose(done) {
+                  this.$confirm('确认退出注册？')
+                  .then(() => {
+                        done();
+                  })
+                  .catch(() => {});
             },
             /**注册 */
             toReg(){
@@ -212,12 +217,22 @@ export default {
                                     window.sessionStorage.setItem("resources",JSON.stringify(response.data.data.resources))
                                     window.sessionStorage.setItem("roles",JSON.stringify(response.data.data.roles))
                                     this.$router.push('/admin');
+                                    this.$message({
+                                          type:'success',
+                                          message:response.data.status.message
+                                    })
                               }else if (parseInt(response.data.status.code) == 400) {
+                                    // 登录失败
+                                    this.$message({
+                                          type:'info',
+                                          message:response.data.status.message
+                                    })
                                     this.initCaptcha();
                                     // this.username='';
                                     this.password='';
                                     this.captcha='';
                               }
+                              this.$root.loading=false;
                         }
                   ).catch(()=>{
                         this.initCaptcha();
@@ -285,23 +300,7 @@ export default {
       width: 100vw;
       // background: #304156;
 }
-.login-left{
-      height: 100vh;
-      background-color: #000;
-      color: #3683e8;
-      // line-height: 100vh;
-      text-align: center;
-      font-size: 50px;
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-}
-.login-right{
-      height: 100vh;
-      background-color: #fff;
-}
 /**页面上方 */
 .login-top{
       height: 20vh;
@@ -309,30 +308,36 @@ export default {
 /**页面中间部分 */
 .login-middle{
       .login-content{
-
+            color: #000;
             height: 380px;
-            background-color: rgba(255, 255, 255);
-            border-radius: 3px;
-            padding: 0 10vw;
-            
+            background-color: rgba(255, 255, 255,0.3);
+            border-radius: 18px;
+            padding: 0 3vw;
 
+            .el-input__inner{
+                  background-color: rgba(255, 255, 255,0);
+                  color: #000;
+            }
             .content-title{
                   height: 10vh;
                   text-align: center;
                   font-size: 1.5rem;
                   line-height: 10vh;
                   letter-spacing: 6px;
+                  font-weight: 700;
             }
             .content-submit{
                   position: relative;
                   height: 40px;
                   color: white;
-                  background:var(--themeColor);
+                  background:rgba(255, 255, 255,0);
+                  border: 1px solid #fff;
                   line-height: 40px;
                   text-align: center;
                   // letter-spacing: 10px;
                   border-radius: 3px;
                   cursor: pointer;
+                  color: #000;
             }
             .content-submit-disabled::after{
                   position: absolute;
@@ -364,6 +369,10 @@ export default {
       line-height: 30px;
       text-align: center;
       font-size: 12px;
+      .el-link--inner{
+            color: #000;
+      }
+      
 }
 .reg-captcha-box{
       height: 50px;
@@ -377,12 +386,10 @@ export default {
             height: 40px;
             line-height: 40px;
             font-weight: 700;
-            background-color: var(--themeColor);
+            background-color: #409EFF;
             color: white;
             text-align: center;
             cursor: pointer;
       }
 }
-
-
 </style>

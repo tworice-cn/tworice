@@ -34,11 +34,5 @@
             <artifactId>tworice-generate</artifactId>
             <version>1.1</version>
         </dependency>
-
-        <dependency>
-            <groupId>cn.tworice</groupId>
-            <artifactId>tworice-admin-starter</artifactId>
-            <version>1.0</version>
-        </dependency>
     </dependencies>
 </project>

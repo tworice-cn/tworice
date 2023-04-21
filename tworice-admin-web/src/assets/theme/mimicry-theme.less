@@ -1,5 +1,8 @@
 /*模态主题*/
 *{
+      /*主题色*/
+      --themeColor:#cd7af7;
+      
       box-sizing: border-box;
       --bgColor:#ecf0f3;
       --fontColor:#313840;
@@ -33,6 +36,7 @@
       /**界面头部 */
       .index-header{
             padding: 0;
+            
             span{
                   // padding:25px 0 0 0;
                   letter-spacing: 3px;
@@ -85,25 +89,15 @@
                         }
                   }
             }
-      }
 
-      /**界面侧栏 */
-      .index-aside{
-            user-select: none;
-            ul{
-                  height: 100%;
-            }
-      }
-      /**内容 */
-      .index-body{
-            padding: 0;
+            
       }
       /*用户菜单样式*/
       .portal-header{
             display: flex;
             justify-content: space-between;
             background-color: #fff!important;
-            border-bottom: 1px solid #e6e6e6;
+            border-bottom: 1px solid var(--bgColor);
             .el-menu{
                   display: table;
                   align-items: center;
@@ -118,6 +112,18 @@
                   align-self: center;
                   width: 100px;
             }
+      }
+
+      /**界面侧栏 */
+      .index-aside{
+            user-select: none;
+            ul{
+                  height: 100%;
+            }
+      }
+      /**内容 */
+      .index-body{
+            padding: 0;
       }
 }
 .zhan{
@@ -182,11 +188,7 @@ transition: width 0.5s;
 }
 
 
-/*样式常量*/
-*{
-      /*主题色*/
-      --themeColor:#00A3FF;
-}
+
 
 /*侧栏图标颜色*/
 .el-submenu__title i{
@@ -313,14 +315,6 @@ transition: width 0.5s;
 .info-search-box .search .el-input{
       width: 200px;
 }
-/*登录页背景*/
-.tworice-login-bg{
-      overflow: hidden;
-      background-image: url('~@/assets/img/loginBg.jpg');
-      background-size: 100%;
-      font-family: "montserrat";
-      /* animation: bganimation 15s infinite; */
-}
 /**背景动画 */
 @keyframes bganimation{
       0%{
@@ -339,4 +333,8 @@ transition: width 0.5s;
 /*标签左右切换*/
 .el-tabs__nav-prev,.el-tabs__nav-next{
       color: var(--themeColor);
+}
+.el-button--primary{
+      background-color: var(--themeColor)!important;
+      border-color: var(--themeColor)!important;
 }

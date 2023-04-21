@@ -27,7 +27,7 @@
                   <el-table-column prop="loginName" label="登录账号"></el-table-column>
                   <el-table-column prop="status" label="状态" width="80">
                         <template slot-scope="scope">
-                              {{scope.row.status==0?'正常':'禁用'}}
+                              {{scope.row.status==-1?'禁用':'正常'}}
                         </template>
                   </el-table-column>
                   <el-table-column label="操作">
@@ -61,7 +61,7 @@
                               <el-input placeholder="请输入内容" v-model="form.loginName" @change="isChange = true" :disabled="showAdmin"></el-input>
                         </el-form-item>
                         <el-form-item label="账号状态" :label-width="formLabelWidth">
-                              <el-switch v-model="form.status" active-color="#13ce66" inactive-color="#ff4949" :active-value="0" :inactive-value="-1" :disabled="showAdmin"></el-switch>
+                              <el-switch v-model="form.status" active-color="#13ce66" inactive-color="#ff4949" :active-value="1" :inactive-value="-1" :disabled="showAdmin"></el-switch>
                         </el-form-item>
                   </el-form>
                   <div slot="footer" class="dialog-footer">
@@ -115,7 +115,7 @@ export default {
                         nickName: "",
                         loginName: "",
                         passWord: "",
-                        status: 0,
+                        status: 1,
                   },
                   rules: {
                         nickName: [

@@ -20,8 +20,8 @@ Vue.prototype.$screenfull=screenfull
 
 // 主题
 // import './assets/theme/mimicry-theme.less'
-// import './assets/theme/arco-pro-theme.less'
-import './assets/theme/default-theme.less'
+import './assets/theme/arco-pro-theme.less'
+// import './assets/theme/default-theme.less'
 
 // Echarts
 import * as echarts from 'echarts';
@@ -71,8 +71,6 @@ axios.interceptors.request.use(function (config) {
 let messageInstance = null;
 axios.interceptors.response.use(
       function (response) {
-            // 文件下载
-
             vue.loading=false;
             if (response.data.status) {
                   vue.loading=false;
