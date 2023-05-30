@@ -94,13 +94,13 @@ axios.interceptors.response.use(
                         //未登录
                         window.sessionStorage.removeItem('token');
                         
-                        messageInstance=Message({
+                        Message({
                               type:'info',
                               message:response.data.status.message
                         })
                         router.push('/login');
                   }else if(code > 401){
-                        messageInstance=Message({
+                        Message({
                               type: "error",
                               message: response.data.status.message,
                         });

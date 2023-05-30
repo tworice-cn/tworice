@@ -2,9 +2,13 @@ package cn.tworice.auth;
 
 import cn.tworice.auth.service.VerifyManger;
 import cn.tworice.common.util.AgingMap;
+import cn.tworice.system.service.impl.SystemWhiteListService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resources;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +27,8 @@ public class VerifyExecutor implements VerifyManger {
     @Value("${tworice.dev:false}")
     private boolean dev;
 
-
+    @Autowired
+    private SystemWhiteListService whiteListService;
 
     /**
      * 在线用户存储Map
@@ -66,6 +71,10 @@ public class VerifyExecutor implements VerifyManger {
         if(this.dev){
             return true;
         }
+        if(!whiteListService.ipVerify()){
+            return false;
+        }
+
         if (this.exist(key, token)) {
 //            List<String> urls = this.ADMIN_RESOURCES.get(key);
 //            System.out.println("用户请求地址：" + url);

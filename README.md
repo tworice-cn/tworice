@@ -117,13 +117,100 @@ SQL文件在`sql`目录下，文件以日期命名，请使用最新日期的SQL
 
 
 
+### 4.2、文件上传
+
+本项目目的是为了尽可能的轻量，不依赖第三方项目及应用，所以文件上传默认采用本地上传。
+
+文件上传分为开发环境和生产环境，采用`tworice.env`配置进行切换，取值范围`dev`、`prod`，分别采用不同的上传方式。
+
+文件的上传路径由配置文件`tworice.file.path`控制，如果是开发环境，默认为`\target\classes\static\`，建议不要修改；生产环境下建议修改该配置为`\static\`。
+
+
+
+### 4.3、系统登录
+
+```yml
+tworice:
+  login:
+    captchaAging: 300000 # 验证码的有效时间（毫秒）
+    root: root-root # 超级管理员账户
+```
+
+如上是系统登录的默认参数。
+
+1、验证码的有效时间包括登录的图形验证码和注册时的邮箱验证码。
+
+2、超级管理员账户默认拥有所有权限，不受数据库限制。格式如：`账号-密码`。
+
+
+
+### 4.4、流量监控
+
+流量监控是对访问系统的流量进行监控，流量以IP作为唯一标识，当同一IP的访问频率超过上限时触发拒绝访问。默认情况下本组件不开启，如下是使用方法。
+
+#### 4.4.1、配置文件
+
+```yml
+tworice:
+  monitor:
+    flow: true # 是否开启流量监控
+    storage: 300 # 默认流量数据存储上限
+    limit: 200 # 默认达到这个值后拒绝访问
+    refuse: 60000 # 默认拒绝访问的时间
+```
+
+如上是系统流量监控的参数，`flow`默认值是`false`不开启。
+
+#### 4.4.2、添加依赖
+
+```xml
+<dependency>
+    <groupId>cn.tworice</groupId>
+    <artifactId>tworice-admin-starter</artifactId>
+    <version>1.0</version>
+</dependency>
+```
+
+
+
+### 4.5、请求效验
+
+#### 4.5.1、拦截请求配置
+
+```yml
+tworice:
+  auth:
+    intercept:
+      paths:
+        - /admin/**
+        - /client/**
+```
+
+如上是默认值，不进行配置时，以上内容生效。
+
+
+
+#### 4.5.2、放行请求配置
+
+```yml
+tworice:
+  auth:
+    exclude:
+      paths:
+        - /admin/login/**
+        - /editor/**
+        - /admin/admin/template
+```
+
+如上是默认值，不进行配置时，以上内容生效。
+
 
 
 ## 5、第三方支持
 
 ### 5.1、SpringBootAdmin
 
-引入：
+Maven引入：
 
 ```xml
 <dependency>
@@ -176,4 +263,28 @@ tworice:
 type的取值：`arithmetic`（算数），`character`（字符）；其中字符验证码不分大小写。
 
 
+
+### 6.3、访问白名单
+
+系统支持设置访问系统的白名单IP段，访问机的IP必须在白名单段内，否则无法访问服务。
+
+**Q：**将白名单全部删除后系统显示“当前系统未允许任何IP访问”怎么办？
+
+**A：**将下图中的配置设置为`true`，表示当前为开发模式，不进行效验。此时重启服务器，进入系统后重新将IP加入到白名单列表中后，将配置修改回去，再次重启服务器。
+
+![image-20230504112557711](E:\projects\二饭快速开发框架\IMG\开发模式.png)
+
+
+
+### 6.4、数据库文档导出
+
+执行单元测试下的`cn.tworice.DataBaseDoc`，会生成一个`数据库文档.doc`文档在项目根目录。
+
+
+
+### 6.5、接口文档
+
+接口文档采用[Knife4j](https://doc.xiaominfo.com/)，基于Swagger。
+
+启动项目后访问`IP:PORT/doc.html`可查看。
 

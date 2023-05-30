@@ -2,7 +2,7 @@ server:
   port: 88
 spring:
   application:
-    name: 应用
+    name: 我的应用
   boot:
     admin:
       client:
@@ -51,19 +51,14 @@ logging:
     root: info
     cn.tworice: debug
 tworice:
-  login:
-    captchaAging: 300000 # 验证码的有效时间（毫秒）
-    root: root-root # 超级管理员账户
   generate:
     vue-project: tworice-admin-web # 前端项目与当前项目平级的相对路径，要包含前端项目根路径
     template: template  # 代码生成模板在resources目录下的路径
   dev: true
+  env: dev # 当前环境
   file:
     path: \target\classes\static\
   alipay:
     appid: 2021000122602703
   monitor:
     flow: true # 是否开启流量监控
-    storage: 300 # 流量数据存储上限
-    limit: 200 # 达到这个值后拒绝访问
-    refuse: 60000 # 拒绝访问的时间

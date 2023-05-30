@@ -16,6 +16,8 @@ log
 *.lock
 *.zip
 *.iml
+*.doc
+*.docx
 
 # 前端
 node_modules/

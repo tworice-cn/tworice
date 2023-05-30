@@ -1,6 +1,6 @@
 <template>
       <div class="doc">
-            <iframe :src="$url+'/swagger-ui/index.html#'"></iframe>
+            <iframe :src="$url+'/doc.html#'"></iframe>
       </div>
 </template>
 

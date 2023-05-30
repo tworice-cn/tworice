@@ -51,7 +51,7 @@
             <el-dialog title="通知" :visible.sync="editVisible" width="60%" :before-close="$utils.handleClose">
                   <el-form :model="noticeForm">
                         <el-form-item label="标题:">
-                              <el-input :validate-event="true" :show-word-limit="true" minlength="2" maxlength="64" v-model="noticeForm.title" size="small" placeholder="请输入通知标题"></el-input>
+                              <el-input :validate-event="true" :show-word-limit="true" minlength="2" maxlength="16" v-model="noticeForm.title" size="small" placeholder="请输入通知标题"></el-input>
                         </el-form-item>
                         <el-form-item label="置顶:">
                               <el-switch active-text="是" inactive-text="否" v-model="noticeForm.top" active-color="#13ce66" inactive-color="#ff4949" :active-value='1' :inactive-value='0'></el-switch>
