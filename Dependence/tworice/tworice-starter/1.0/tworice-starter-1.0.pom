@@ -14,6 +14,7 @@
         <module>tworice-watermark-starter</module>
         <module>tworice-admin-starter</module>
         <module>tworice-usb-starter</module>
+        <module>tworice-nlp-starter</module>
     </modules>
     <artifactId>tworice-starter</artifactId>
 </project>
