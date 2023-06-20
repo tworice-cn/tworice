@@ -17,30 +17,38 @@
                                     </el-col>
                                     <el-col :span="24" class="content-form">
                                           <el-col :span="24">
-                                                <el-input placeholder="请输入用户名" ref='userInput' type="text" suffix-icon="el-icon-user" v-model="username" @keyup.enter.native="login" @blur="isEmpty('u')"></el-input>
+                                                <el-input placeholder="请输入用户名" ref='userInput' type="text" suffix-icon="el-icon-user" v-model="login.username" @keyup.enter.native="loginSubmit" @blur="isEmpty('u')"></el-input>
                                           </el-col>
                                           <el-col :span="24">
                                                 <div class="form-rule" ref="userCheck"></div>
                                           </el-col>
                                           <el-col :span="24">
-                                                <el-input placeholder="请输入密码" class="pw-input" type="password" suffix-icon="el-icon-lock" v-model="password" @keyup.enter.native="login" @blur="isEmpty('p')"></el-input>
+                                                <el-input placeholder="请输入密码" class="pw-input" type="password" suffix-icon="el-icon-lock" v-model="login.password" @keyup.enter.native="loginSubmit" @blur="isEmpty('p')"></el-input>
                                           </el-col>
                                           <el-col :span="24">
                                                 <div class="form-rule" ref="pwCheck"></div>
                                           </el-col>
                                           <el-col :span="24">
                                                 <el-col :span="12">
-                                                      <el-input placeholder="请输入右侧结果" maxlength="6" ref='captchaInput' type="text" v-model="captcha" @keyup.enter.native="login" @blur="isEmpty('c')"></el-input>
+                                                      <el-input placeholder="请输入右侧结果" maxlength="6" ref='captchaInput' type="text" v-model="login.captcha" @keyup.enter.native="loginSubmit" @blur="isEmpty('c')"></el-input>
                                                 </el-col>
                                                 <el-col :span="12" class="captcha-box">
                                                       <img src="" alt="" height="40px" ref="captcha" @click="initCaptcha" title="点击换一张">
+                                                </el-col>
+                                          </el-col>
+                                          <el-col :span="24" class="form-item">
+                                                <el-col :span="12" class="item-left">
+                                                      <el-checkbox v-model="login.remember">记住我</el-checkbox>
+                                                </el-col>
+                                                <el-col :span="12" class="item-right">
+                                                      <el-link type="primary">忘记密码？</el-link>
                                                 </el-col>
                                           </el-col>
                                           <el-col :span="24">
                                                 <div class="form-rule" ref="captchaCheck"></div>
                                           </el-col>
                                     </el-col>
-                                    <el-col :span="24" class="content-submit" :class="username==''||password==''||captcha==''?'content-submit-disabled':''" @click.native="login">登录</el-col>
+                                    <el-col :span="24" class="content-submit" :class="login.username==''||login.password==''||login.captcha==''?'content-submit-disabled':''" @click.native="loginSubmit">登录</el-col>
                                     <el-col :span="24" class="reg-box"><el-link @click="toReg">注 册</el-link></el-col>
                               </el-col>
                         </el-col>
@@ -83,10 +91,13 @@ export default {
       data() {
             return {
                   formLabelWidth: '60px',
-                  username:'',
-                  password:'',
-                  captcha:'',
-                  key:'',
+                  login:{
+                        username:'',
+                        password:'',
+                        captcha:'',
+                        key:'',
+                        remember:false
+                  },
                   reg:{
                         time:30,
                         send_captcha:'发送验证码',
@@ -113,7 +124,8 @@ export default {
                                     { required: true, message: '请输入昵称', trigger: 'blur' }
                               ],
                         },
-                  }
+                  },
+                  
             }
       },
       methods:{
@@ -185,9 +197,9 @@ export default {
             toReg(){
                   this.reg.dialogVisible=true;
             },
-            login(){
+            loginSubmit(){
                   //判空
-                  if(this.username==''||this.password==''||this.captcha==''){
+                  if(this.login.username==''||this.login.password==''||this.login.captcha==''){
                         return
                   }
                   
@@ -195,10 +207,10 @@ export default {
                   this.$root.loading=true;
 
                   let format = new FormData();
-                  format.append("username",this.username);
-                  format.append("password",this.password);
-                  format.append("verCode",this.captcha);
-                  format.append("key",this.key);
+                  format.append("username",this.login.username);
+                  format.append("password",this.login.password);
+                  format.append("verCode",this.login.captcha);
+                  format.append("key",this.login.key);
                   this.$axios({
                         method:'post',
                         url:this.$url+'/admin/login/',
@@ -211,12 +223,14 @@ export default {
                                     window.sessionStorage.setItem("admin",JSON.stringify(response.data.data.admin))
                                     window.sessionStorage.setItem("resources",JSON.stringify(response.data.data.resources))
                                     window.sessionStorage.setItem("roles",JSON.stringify(response.data.data.roles))
+                                    if(this.login.remember){
+                                          localStorage.setItem("loginForm",JSON.stringify(this.login));
+                                    }
                                     this.$router.push('/admin');
                               }else if (parseInt(response.data.status.code) == 400) {
                                     this.initCaptcha();
-                                    // this.username='';
-                                    this.password='';
-                                    this.captcha='';
+                                    this.login.password='';
+                                    this.login.captcha='';
                               }
                         }
                   ).catch(()=>{
@@ -226,19 +240,19 @@ export default {
             // 表单验证是否为空
             isEmpty(con){
                   if(con=='u'){
-                        if(this.username==''){
+                        if(this.login.username==''){
                               this.$refs.userCheck.innerHTML='用户名不能为空'
                         }else{
                               this.$refs.userCheck.innerHTML=''
                         }
                   }else if(con=='p'){
-                        if(this.password==''){
+                        if(this.login.password==''){
                               this.$refs.pwCheck.innerHTML='密码不能为空'
                         }else{
                               this.$refs.pwCheck.innerHTML=''
                         }
                   }else if(con=='c'){
-                        if(this.captcha==''){
+                        if(this.login.captcha==''){
                               this.$refs.captchaCheck.innerHTML='验证码不能为空'
                         }else{
                               this.$refs.captchaCheck.innerHTML=''
@@ -259,7 +273,7 @@ export default {
                                           message:res.data.status.message
                                     })
                               }else{
-                                    this.key=res.data.data.key;
+                                    this.login.key=res.data.data.key;
                                     this.$refs.captcha.src=res.data.data.captcha;
                               }
                         }
@@ -269,11 +283,11 @@ export default {
             }
       },
       mounted(){
-            this.initCaptcha()
-            // 控制页面初始化，用户名输入框自动获取焦点
-            // this.$nextTick(function(){
-            //       this.$refs.userInput.focus()
-            // })
+            let loginForm=localStorage.getItem('loginForm')
+            if(loginForm){
+                  this.login=JSON.parse(loginForm);
+            }
+            this.initCaptcha();
       }
 };
 </script>
@@ -315,7 +329,16 @@ export default {
             border-radius: 3px;
             padding: 0 10vw;
             
+            .form-item{
+                  line-height: 40px;
 
+                  .item-left{
+                        text-align: left;
+                  }
+                  .item-right{
+                        text-align: right;
+                  }
+            }
             .content-title{
                   height: 10vh;
                   text-align: center;

@@ -35,6 +35,12 @@
             <version>1.1</version>
         </dependency>
 
+<!--        <dependency>-->
+<!--            <groupId>cn.tworice</groupId>-->
+<!--            <artifactId>tworice-admin-starter</artifactId>-->
+<!--            <version>1.0</version>-->
+<!--        </dependency>-->
+
 <!--        数据库文档依赖-->
         <dependency>
             <groupId>cn.smallbun.screw</groupId>
