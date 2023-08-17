@@ -258,7 +258,7 @@ management:
 
 
 
-### 6.2、图形验证码
+### 5.2、图形验证码
 
 项目支持**算数**和**字符**两种图形验证码，默认为算数验证码。
 图形验证码用在登录中，项目支持算数和字符两种图形验证码，默认为算数验证码。
@@ -275,7 +275,7 @@ type的取值：`arithmetic`（算数），`character`（字符）；其中字�
 
 
 
-### 6.3、访问白名单
+### 5.3、访问白名单
 
 系统支持设置访问系统的白名单IP段，访问机的IP必须在白名单段内，否则无法访问服务。
 
@@ -287,15 +287,48 @@ type的取值：`arithmetic`（算数），`character`（字符）；其中字�
 
 
 
-### 6.4、数据库文档导出
+### 5.4、数据库文档导出
 
 执行单元测试下的`cn.tworice.DataBaseDoc`，会生成一个`数据库文档.doc`文档在项目根目录。
 
 
 
-### 6.5、接口文档
+### 5.5、接口文档
 
 接口文档采用[Knife4j](https://doc.xiaominfo.com/)，基于Swagger。
 
 启动项目后访问`IP:PORT/doc.html`可查看。
+
+## 6、缓存
+
+默认已打开MyBatis二级缓存，可根据需求前往配置文件中进行关闭。
+
+
+
+## 7、部署
+
+### 7.1、Docker部署
+
+① package打包项目
+
+② 项目根目录执行
+
+```bash
+docker build -t tworice-admin:1.0 .
+```
+
+③ 运行docker运行命令
+
+```bash
+docker run -d --name tworice-admin -p 888:88 tworice-admin:1.0
+```
+
+④ 将镜像打包，到另一个机器上运行
+
+```bash
+# 生成一个名为 tworice.tar 的文件，其中 tworice-admin:1.0 是之前构建的镜像的名称和标签，后面可以跟多个镜像
+docker save -o tworice.tar tworice-admin:1.0
+# 导入镜像到另一台计算机的Docker中
+docker load -i images.tar
+```
 

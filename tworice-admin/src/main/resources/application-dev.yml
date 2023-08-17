@@ -56,6 +56,9 @@ tworice:
     template: template  # 代码生成模板在resources目录下的路径
   dev: true
   env: dev # 当前环境
+  easy:
+    key: root
+    authUrl: test
   file:
     path: \target\classes\static\
   alipay:

@@ -16,14 +16,13 @@
     "default-passive-events": "^2.0.0",
     "echarts": "^5.4.1",
     "element-ui": "^2.15.5",
-    "less": "^4.1.1",
+    "less": "^3.5.0",
     "less-loader": "^7.0.0",
     "vue": "^2.6.11",
     "vue-router": "^3.5.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "vue-template-compiler": "^2.6.11"
   },

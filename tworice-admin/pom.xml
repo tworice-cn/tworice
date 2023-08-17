@@ -16,6 +16,7 @@
     <!--   版本-->
     <properties>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <java.version>1.8</java.version>
     </properties>
 
     <dependencies>
@@ -53,4 +54,27 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+    <build>
+        <finalName>${artifactId}-${version}</finalName>
+        <plugins>
+            <!-- 使用maven插件spring-boot-maven-plugin -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.5.6</version>
+                <!-- 设置可执行Jar的入口类 -->
+                <configuration>
+                    <mainClass>cn.tworice.Application</mainClass>
+                </configuration>
+                <!-- 绑定到maven的package阶段，运行mvn package时会执行 -->
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
