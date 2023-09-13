@@ -15,8 +15,7 @@
         <module>tworice-system</module>
         <module>tworice-gateway</module>
         <module>tworice-verify</module>
-        <module>tworice-start</module>
-        <module>tworice-starter</module>
+        <module>tworice-components</module>
     </modules>
 
     <properties>
@@ -160,7 +159,7 @@
             <dependency>
                 <groupId>cn.tworice</groupId>
                 <artifactId>tworice-auth</artifactId>
-                <version>2.0</version>
+                <version>${tworice-version}</version>
             </dependency>
             <dependency>
                 <groupId>cn.tworice</groupId>

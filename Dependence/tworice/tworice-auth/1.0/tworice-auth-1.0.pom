@@ -10,6 +10,8 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>tworice-auth</artifactId>
     <name>${project.artifactId}</name>
+    <version>1.0</version>
+    <description>增加系统启动时核验是否有效</description>
     <dependencies>
         <!--JWT依赖-->
         <dependency>
@@ -28,6 +30,11 @@
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-core</artifactId>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>cn.tworice</groupId>-->
+<!--            <artifactId>tworice-easy-auth</artifactId>-->
+<!--            <version>1.0</version>-->
+<!--        </dependency>-->
     </dependencies>
 
 </project>
