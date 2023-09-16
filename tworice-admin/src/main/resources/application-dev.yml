@@ -31,7 +31,7 @@ spring:
   mail:
     host: smtp.163.com
     username: tworice_0811@163.com
-    password: QZXRQQWBALLKIHSO
+    password: HYPBSDEHDNBPXHGY
     default-encoding: UTF-8
     properties:
       mail:
@@ -65,3 +65,5 @@ tworice:
     appid: 2021000122602703
   monitor:
     flow: true # 是否开启流量监控
+  backup:
+    path: backup
