@@ -32,5 +32,6 @@
         <module>tworice-ip</module>
         <module>tworice-cryption</module>
         <module>tworice-banner</module>
+        <module>tworice-easy-auth</module>
     </modules>
 </project>

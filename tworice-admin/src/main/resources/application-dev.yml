@@ -31,7 +31,7 @@ spring:
   mail:
     host: smtp.163.com
     username: tworice_0811@163.com
-    password: HYPBSDEHDNBPXHGY
+    password: QZXRQQWBALLKIHSO # 替换成自己的密钥
     default-encoding: UTF-8
     properties:
       mail:
@@ -56,14 +56,9 @@ tworice:
     template: template  # 代码生成模板在resources目录下的路径
   dev: true
   env: dev # 当前环境
-  easy:
-    key: root
-    authUrl: test
   file:
     path: \target\classes\static\
   alipay:
     appid: 2021000122602703
   monitor:
     flow: true # 是否开启流量监控
-  backup:
-    path: backup
