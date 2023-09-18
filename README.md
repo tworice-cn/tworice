@@ -212,6 +212,35 @@ tworice:
 
 
 
+### 4.7、数据库备份
+
+分别支持通过请求数据接口，传递数据库配置来进行数据库备份，并将备份数据发送至指定邮箱。
+
+① Maven引入：
+
+```xml
+<dependency>
+    <groupId>cn.tworice</groupId>
+    <artifactId>tworice-backup-starter</artifactId>
+    <version>1.0</version>
+</dependency>
+```
+
+② 添加配置：
+
+```
+tworice:
+  backup:
+  	enabled: false  # 默认未开启，是否开启自动备份，开启后根据Cron表达式和邮箱进行数据库备份
+    path: backup  # 当前为默认值，指定SQL备份目录
+    cron: '0 0 2 * * *'  # 当前为默认值，Cron 表达式，表示每日凌晨两点执行备份
+    email: 123456@qq.com  # 默认为空，指定接收备份数据库的邮箱
+```
+
+系统提供多个对外接口，您也可以在系统启动后根据接口文档进行动态的指定数据库备份规则。
+
+
+
 ## 5、第三方支持
 
 ### 5.1、SpringBootAdmin
