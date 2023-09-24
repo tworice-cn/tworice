@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resources;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;

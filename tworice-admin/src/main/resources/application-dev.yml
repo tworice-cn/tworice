@@ -62,3 +62,5 @@ tworice:
     appid: 2021000122602703
   monitor:
     flow: true # 是否开启流量监控
+  backup:
+    enabled: true

@@ -7,6 +7,8 @@ spring:
       max-file-size: 200MB
       max-request-size: 500MB
       file-size-threshold: 200MB
+  freemarker:
+    check-template-location: false # 关闭SpringBoot自带的FreeMarker模板引擎模板检查
 mybatis:
   mapper-locations: classpath:/mapper/*.xml
   configuration:
