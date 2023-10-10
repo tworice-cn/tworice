@@ -3,15 +3,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <!-- 创建项目-->
     <parent>
-        <artifactId>tworice-cloud</artifactId>
+        <artifactId>tworice-framework</artifactId>
         <groupId>cn.tworice</groupId>
         <version>1.0</version>
-        <relativePath/>
     </parent>
     <artifactId>tworice-admin</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
 
     <!--   版本-->
     <properties>
@@ -20,20 +18,21 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>cn.tworice</groupId>
-            <artifactId>tworice-backup-starter</artifactId>
-            <version>1.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot</artifactId>
-        </dependency>
         <!-- 系统依赖-->
         <dependency>
             <groupId>cn.tworice</groupId>
             <artifactId>tworice-system</artifactId>
+        </dependency>
+        <!-- 单元测试 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+        <!-- 数据库备份 -->
+        <dependency>
+            <groupId>cn.tworice</groupId>
+            <artifactId>tworice-backup-starter</artifactId>
+            <version>1.0</version>
         </dependency>
         <!-- 代码生成 -->
         <dependency>
@@ -41,23 +40,11 @@
             <artifactId>tworice-generate</artifactId>
             <version>1.1</version>
         </dependency>
-
-<!--        <dependency>-->
-<!--            <groupId>cn.tworice</groupId>-->
-<!--            <artifactId>tworice-admin-starter</artifactId>-->
-<!--            <version>1.0</version>-->
-<!--        </dependency>-->
-
-<!--        数据库文档依赖-->
+        <!-- 数据库文档依赖 -->
         <dependency>
             <groupId>cn.smallbun.screw</groupId>
             <artifactId>screw-core</artifactId>
             <version>1.0.5</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
         </dependency>
     </dependencies>
     <build>
@@ -83,4 +70,12 @@
             </plugin>
         </plugins>
     </build>
+
+    <repositories>
+        <repository>
+            <id>nexus</id>
+            <name>Nexus Repository</name>
+            <url>http://www.tworice.online:18081/nexus/repository/maven-releases/</url>
+        </repository>
+    </repositories>
 </project>
