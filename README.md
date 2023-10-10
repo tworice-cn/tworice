@@ -241,6 +241,14 @@ tworice:
 
 
 
+### 4.8、系统初始化
+
+为了方便用户对系统进行初始化，系统设置了一个开发接口：
+
+`GET IP:PORT/admin/system/recovery`
+
+该接口会去读取项目根目录下的`/recovery/recovery.sql`SQL脚本文件，并将所有系统数据表进行初始化。
+
 ## 5、第三方支持
 
 ### 5.1、SpringBootAdmin
