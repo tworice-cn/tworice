@@ -63,4 +63,4 @@ tworice:
   monitor:
     flow: true # 是否开启流量监控
   backup:
-    enabled: true
+    enabled: false

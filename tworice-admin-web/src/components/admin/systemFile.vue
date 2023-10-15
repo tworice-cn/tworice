@@ -386,7 +386,7 @@ export default {
                   let files = this.$refs.inducts.files;
                   /*获取选择的文件*/ let len = files.length;
                   /*文件个数*/ if (len != 1) {
-                        this.$message({
+                        this.$msg({
                               message: "需要且只能上传一个文件",
                               type: "warning",
                         });
@@ -410,7 +410,7 @@ export default {
                         })
                         .catch(() => {
                               this.$refs.inducts.value = null;
-                              this.$message({
+                              this.$msg({
                                     message: "上传失败，请检查文件合法性！",
                                     type: "error",
                               });

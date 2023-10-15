@@ -212,7 +212,7 @@ export default {
                               data:format
                         }).then(
                               ()=>{
-                                    this.$message({
+                                    this.$msg({
                                           type:'success',
                                           message:'更新用户名成功，重新登录生效'
                                     })

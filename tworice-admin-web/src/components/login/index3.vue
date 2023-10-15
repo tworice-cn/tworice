@@ -114,7 +114,7 @@ export default {
             /**提交注册 */
             submitReg(){
                   if(this.reg.form.loginName==''||this.reg.form.passWord==''||this.reg.form.nickName==''||this.reg.form.captcha==''||this.reg.form.key==''){
-                        this.$message({
+                        this.$msg({
                               type:'error',
                               message:'必填项不能为空'
                         })
@@ -130,7 +130,7 @@ export default {
                         data:formData,
                         method:'post'
                   }).then(res=>{
-                        this.$message({
+                        this.$msg({
                               type:'info',
                               message:res.data.status.message
                         })
@@ -153,7 +153,7 @@ export default {
                         return;
                   }
                   if(this.reg.form.loginName==''){
-                        this.$message({
+                        this.$msg({
                               type:'error',
                               message:'邮箱不能为空'
                         })
@@ -161,7 +161,7 @@ export default {
                   }else{
                         this.$root.loading=true;
                         this.$axios.get(this.$url+'/admin/login/regCaptcha?email='+this.reg.form.loginName).then(res=>{
-                              this.$message({
+                              this.$msg({
                                     type:'info',
                                     message:res.data.status.message
                               })
@@ -217,13 +217,13 @@ export default {
                                     window.sessionStorage.setItem("resources",JSON.stringify(response.data.data.resources))
                                     window.sessionStorage.setItem("roles",JSON.stringify(response.data.data.roles))
                                     this.$router.push('/admin');
-                                    this.$message({
+                                    this.$msg({
                                           type:'success',
                                           message:response.data.status.message
                                     })
                               }else if (parseInt(response.data.status.code) == 400) {
                                     // 登录失败
-                                    this.$message({
+                                    this.$msg({
                                           type:'info',
                                           message:response.data.status.message
                                     })
@@ -269,7 +269,7 @@ export default {
                   this.$axios.get(this.$url+'/admin/login/captcha'+param).then(
                         res=>{
                               if(res.data.status.code==204){
-                                    this.$message({
+                                    this.$msg({
                                           type:'warning',
                                           message:res.data.status.message
                                     })

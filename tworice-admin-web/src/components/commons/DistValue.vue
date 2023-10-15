@@ -219,7 +219,7 @@ export default {
                         this.toPage();
                         this.formVisible = false;
                         this.$root.loading = false;
-                        this.$message({ type: "success", message: "操作成功" });
+                        this.$msg({ type: "success", message: "操作成功" });
                   });
             },
             edit(row) {
@@ -243,7 +243,7 @@ export default {
                         }).then(() => {
                               this.toPage();
                               this.$root.loading = false;
-                              this.$message({
+                              this.$msg({
                                     type: "success",
                                     message: "删除成功",
                               });
@@ -268,7 +268,7 @@ export default {
                         }).then(() => {
                               this.$root.loading = false;
                               this.toPage();
-                              this.$message({
+                              this.$msg({
                                     type: "success",
                                     message: "删除成功",
                               });
@@ -288,7 +288,7 @@ export default {
                   let files = this.$refs.inducts.files;
                   /*获取选择的文件*/ let len = files.length;
                   /*文件个数*/ if (len != 1) {
-                        this.$message({
+                        this.$msg({
                               message: "需要且只能上传一个文件",
                               type: "warning",
                         });
@@ -306,14 +306,14 @@ export default {
                               /*上传成功后是否需要将选择的文件滞空*/ this.$refs.inducts.value =
                                     null;
                               if (res.data.status.code == 200) {
-                                    this.$message({
+                                    this.$msg({
                                           message: res.data.status.message,
                                           type: "success",
                                     });
                                     this.inductsVisible = false;
                                     this.toPage();
                               } else {
-                                    this.$message({
+                                    this.$msg({
                                           message: res.data.status.message,
                                           type: "error",
                                     });
@@ -321,7 +321,7 @@ export default {
                         })
                         .catch(() => {
                               this.$refs.inducts.value = null;
-                              this.$message({
+                              this.$msg({
                                     message: "上传失败，请检查文件合法性！",
                                     type: "error",
                               });

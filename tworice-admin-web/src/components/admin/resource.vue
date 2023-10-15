@@ -199,7 +199,7 @@ export default {
             // 提交添加或编辑内容
             submit(){
                   if(this.form.name==''||this.form.sort==''){
-                        this.$message({
+                        this.$msg({
                               type:"warning",
                               message:'带*项不能为空'
                         })
@@ -209,7 +209,7 @@ export default {
                   if(this.isChange){
                         /**判断请求路径是否为空 */
                         if(this.form.url==''){
-                              this.$message({
+                              this.$msg({
                                     type:'error',
                                     message:'请求路径不能为空'
                               })
@@ -297,7 +297,7 @@ export default {
                               }
                         )
                   }).catch(() => {
-                        this.$message({
+                        this.$msg({
                               type: 'info',
                               message: '已取消删除'
                         });          

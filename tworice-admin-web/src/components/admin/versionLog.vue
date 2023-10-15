@@ -1,59 +1,66 @@
 <template>
-      <div class="app-body">
+      <div class="app-body">请输入作者
             <!-- 条件查询 -->
             <el-col :span="24" class="info-search-box">
                   <div class="search">
-                        <div class='search-item'>编号 : <el-input size='mini' v-model='search.id' placeholder='通过编号查询' clearable></el-input>
+                        <div class='search-item'> 版本号 : 
+                              <el-input size="mini" v-model='search.version' placeholder='请输入版本号' clearable></el-input>
+                        </div>
+                        <div class='search-item'> 作者 : 
+                              <el-input size="mini" v-model='search.author' placeholder='请输入作者' clearable></el-input>
                         </div>
                         <div class="search-item">
-                              <el-button size="mini" type="primary" @click="toPage">查询</el-button>
+                              <el-button type="primary" @click="toPage" size="mini">查询</el-button>
                         </div>
                   </div>
             </el-col>
             <el-col :span="24" class="button-box">
-                  <el-button size="mini" type="primary" icon="el-icon-plus" @click="add">新增</el-button>
-                  <el-button size="mini" type="danger" icon="el-icon-delete" @click="delList">批量删除</el-button>
-                  <el-button size="mini" type="warning" icon="el-icon-upload" @click="inducts">批量导入</el-button>
+                  <el-button type="primary" icon="el-icon-plus" size="mini" @click="add">新增</el-button>
             </el-col>
-            <el-table @selection-change="handleSelectionChange" size="mini" v-loading="loading" :header-cell-style="$setting.table_header" :stripe="true" :fit="true" :data="tableData" border style="width: 100%">
-                  <el-table-column type="selection" width="55"></el-table-column>
-                  <el-table-column prop='id' label='编号' width="55"></el-table-column>
-                  <el-table-column prop='createTime' label='创建时间' :formatter='(row)=>$utils.formatDate(row.createTime)'></el-table-column>
-                  <el-table-column prop='updateTime' label='更新时间' :formatter='(row)=>$utils.formatDate(row.updateTime)'></el-table-column>
-                  <el-table-column prop='beginIp' label='开始IP'></el-table-column>
-                  <el-table-column prop='endIp' label='结束IP'></el-table-column>
+            <el-table size="mini" v-loading="loading" :header-cell-style="$setting.table_header" :stripe="true" :fit="true" :data="tableData" border style="width: 100%">
+                  <el-table-column type="index" label="序号"></el-table-column>
+                  <el-table-column prop='createTime' label='日期' :formatter="(row)=>$utils.formatDate(row.createTime)"></el-table-column>
+                  <el-table-column prop='version' label='版本号'></el-table-column>
+                  <el-table-column prop='info' label='版本描述'>
+                        <template slot-scope="scope">
+                              <div class="version-info">{{scope.row.info}}</div>
+                        </template>
+                  </el-table-column>
+                  <el-table-column prop='author' label='作者'></el-table-column>
                   <el-table-column label="操作"> <template slot-scope="scope">
                               <el-button size="mini" type="warning" icon="el-icon-edit" circle @click.native="edit(scope.row)"></el-button>
-                              <el-button size="mini" type="danger" icon="el-icon-delete" circle @click.native="del(scope.row)"></el-button>
+                              <!-- <el-button size="mini" type="danger" icon="el-icon-delete" circle @click.native="del(scope.row)"></el-button> -->
                         </template> </el-table-column>
             </el-table>
             <el-col :span="24">
                   <div class="page-box">
-                        <el-pagination @size-change="handleSizeChange" :small="true" :hide-on-single-page="true" @current-change="changePage" background layout="total, sizes, prev, pager, next" :total="total"
-                              :page-size="pageSize"></el-pagination>
+                        <el-pagination :hide-on-single-page="true" @current-change="changePage" background layout="prev, pager, next" :total="total" :page-size="pageSize"></el-pagination>
                   </div>
             </el-col> <!-- 弹出层 -->
-            <el-dialog :title="formTitle" :visible.sync="formVisible" top="5vh" width="30%" :before-close="$utils.handleClose">
+            <el-dialog :title="formTitle" :visible.sync="formVisible" width="30%" :before-close="$utils.handleClose">
                   <el-form :model="form" :rules="rules" ref="form">
-                        <el-form-item label='开始IP' :label-width='formLabelWidth' prop='beginIp'>
-                              <el-input placeholder='请输入开始IP' v-model='form.beginIp' @change='isChange = true' size='small'></el-input>
+                        <el-form-item label='版本号' :label-width='formLabelWidth' prop='version'>
+                              <el-input placeholder='请输入版本号' v-model='form.version' @change='isChange = true'></el-input>
                         </el-form-item>
-                        <el-form-item label='结束IP' :label-width='formLabelWidth' prop='endIp'>
-                              <el-input placeholder='请输入结束IP' v-model='form.endIp' @change='isChange = true' size='small'></el-input>
+                        <el-form-item label='作者' :label-width='formLabelWidth' prop='author'>
+                              <el-input placeholder='请输入作者' v-model='form.author' @change='isChange = true'></el-input>
                         </el-form-item>
+                        <el-form-item label='版本描述' :label-width='formLabelWidth' prop='info'>
+                              <el-input type="textarea" :rows="2" placeholder='请输入版本描述' v-model='form.info' @change='isChange = true'></el-input>
+                        </el-form-item>
+                        
                   </el-form>
                   <div slot="footer" class="dialog-footer">
-                        <el-button size="mini" @click="formVisible=false">取 消</el-button>
-                        <el-button size="mini" type="primary" @click="submit">确 定</el-button>
+                        <el-button @click="formVisible=false">取 消</el-button>
+                        <el-button type="primary" @click="submit">确 定</el-button>
                   </div>
             </el-dialog>
-            <el-dialog title="选择数据表格" :visible.sync="inductsVisible" width="40%" :before-close="$utils.handleClose">
+            <el-dialog title="选择数据表格" :visible.sync="inductsVisible" width="30%" :before-close="$utils.handleClose">
                   <el-form size="mini">
                         <el-form-item label="选择表格" :label-width="formLabelWidth"> <input type="file" class="file-left-input" @change="inductsChange()" ref="inducts" multiple accept=".xls,.xlsx" /> </el-form-item>
                   </el-form>
                   <div slot="footer" class="dialog-footer">
-                        <el-button size="mini" @click="inductsVisible=false">取 消</el-button>
-                        <el-button size="mini" type="primary" @click="templateDownload">下载模板</el-button>
+                        <el-button @click="inductsVisible=false">取 消</el-button>
                   </div>
             </el-dialog>
       </div>
@@ -70,14 +77,7 @@ export default {
                   formTitle: "",
                   formVisible: false,
                   inductsVisible: false,
-                  form: {
-                        id: "",
-                        createTime: "",
-                        updateTime: "",
-                        beginIp: "",
-                        endIp: "",
-                        state: "",
-                  },
+                  form: { id: "", createTime: "", version: "", info: "", author: "" },
                   rules: {
                         id: [
                               {
@@ -89,56 +89,40 @@ export default {
                         createTime: [
                               {
                                     required: true,
-                                    message: "请输入创建时间",
+                                    message: "请输入日期",
                                     trigger: "blur",
                               },
                         ],
-                        updateTime: [
+                        version: [
                               {
                                     required: true,
-                                    message: "请输入更新时间",
+                                    message: "请输入版本号",
                                     trigger: "blur",
                               },
                         ],
-                        beginIp: [
+                        info: [
                               {
                                     required: true,
-                                    message: "请输入开始IP",
+                                    message: "请输入版本描述",
                                     trigger: "blur",
                               },
                         ],
-                        endIp: [
+                        author: [
                               {
                                     required: true,
-                                    message: "请输入结束IP",
-                                    trigger: "blur",
-                              },
-                        ],
-                        state: [
-                              {
-                                    required: true,
-                                    message: "请输入状态",
+                                    message: "请输入作者",
                                     trigger: "blur",
                               },
                         ],
                   },
                   formLabelWidth: "80px",
                   /** 弹出框标签宽度*/ isChange: false,
-                  search: { id: "", state: "" },
-                  multipleSelection: [],
-                  pageUrlPath: "/admin/whiteList",
-                  pattern: /\d+.\d+.\d+.\d+/,
+                  search: { id: "", version: "", author: "" },
             };
       },
       methods: {
-            /**初始化字典 */ initDist() {},
-            handleSizeChange(size) {
-                  this.pageSize = size;
-                  this.toPage();
-            },
             init() {
                   this.toPage();
-                  this.initDist();
             },
             toPage() {
                   this.loading = true;
@@ -154,8 +138,7 @@ export default {
                   this.$axios
                         .get(
                               this.$url +
-                                    this.pageUrlPath +
-                                    "/list?page=" +
+                                    "/client/versionLog/list?page=" +
                                     this.page +
                                     "&pageSize=" +
                                     this.pageSize +
@@ -176,17 +159,7 @@ export default {
                   this.formTitle = "新增";
                   this.formVisible = true;
             },
-            verifyIP(ipAddr){
-                  return this.pattern.test(ipAddr);
-            },
             submit() {
-                  if(!this.verifyIP(this.form.beginIp) || !this.verifyIP(this.form.endIp)){
-                        this.$message({
-                              type: "error",
-                              message: "请检查IP地址格式",
-                        });
-                        return;
-                  }
                   this.$root.loading = true;
                   let formData = new FormData();
                   Object.keys(this.form).map((key) => {
@@ -199,13 +172,11 @@ export default {
                   });
                   this.$axios({
                         method: "POST",
-                        url: this.$url + this.pageUrlPath + "/add",
+                        url: this.$url + "/client/versionLog/add",
                         data: formData,
-                  }).then((res) => {
-                        if (res.data.status.code == 200) {
-                              this.toPage();
-                              this.formVisible = false;
-                        }
+                  }).then(() => {
+                        this.toPage();
+                        this.formVisible = false;
                   });
             },
             edit(row) {
@@ -213,7 +184,7 @@ export default {
                   this.formTitle = "编辑";
                   this.formVisible = true;
             },
-            /*删除*/ del(row) {
+            del(row) {
                   this.$confirm("此操作将永久删除该信息, 是否继续?", "提示", {
                         confirmButtonText: "确定",
                         cancelButtonText: "取消",
@@ -225,43 +196,11 @@ export default {
                         this.$axios({
                               method: "DELETE",
                               data: format,
-                              url: this.$url + this.pageUrlPath + "/del",
-                        }).then((res) => {
-                              if (res.data.status.code == 200) {
-                                    this.toPage();
-                              }
+                              url: this.$url + "/client/versionLog/del",
+                        }).then(() => {
+                              this.toPage();
                         });
                   });
-            },
-            /**下载表 */ templateDownload() {
-                  window.open(this.$url + this.pageUrlPath + "/template");
-            },
-            /**批量删除 */ delList() {
-                  this.$confirm("此操作将永久删除信息, 是否继续?", "提示", {
-                        confirmButtonText: "确定",
-                        cancelButtonText: "取消",
-                        type: "warning",
-                  }).then(() => {
-                        this.$root.loading = true;
-                        let format = new FormData();
-                        this.multipleSelection.forEach((item) => {
-                              format.append("ids", item.id);
-                        });
-                        this.$axios({
-                              method: "DELETE",
-                              data: format,
-                              url: this.$url + this.pageUrlPath + "/del",
-                        }).then((res) => {
-                              if (res.data.status.code == 200) {
-                                    this.toPage();
-                              }
-                        });
-                  });
-            },
-            /**选择框 val为当前所有选择的内容数组 */ handleSelectionChange(
-                  val
-            ) {
-                  this.multipleSelection = val;
             },
             /**点击批量导入 */ inducts() {
                   this.inductsVisible = true;
@@ -270,7 +209,7 @@ export default {
                   let files = this.$refs.inducts.files;
                   /*获取选择的文件*/ let len = files.length;
                   /*文件个数*/ if (len != 1) {
-                        this.$message({
+                        this.$msg({
                               message: "需要且只能上传一个文件",
                               type: "warning",
                         });
@@ -280,7 +219,7 @@ export default {
                   formData.append("file", files[0]);
                   this.$axios({
                         method: "post",
-                        url: this.$url + this.pageUrlPath + "/inducts",
+                        url: this.$url + "/client/versionLog/inducts",
                         data: formData,
                         headers: { "Content-Type": "multipart/form-data" },
                   })
@@ -294,7 +233,7 @@ export default {
                         })
                         .catch(() => {
                               this.$refs.inducts.value = null;
-                              this.$message({
+                              this.$msg({
                                     message: "上传失败，请检查文件合法性！",
                                     type: "error",
                               });
@@ -305,4 +244,14 @@ export default {
             this.init();
       },
 };
-</script><style lang="less" scoped></style>
+</script>
+<style lang="less">
+.version-info{
+      // height: 50px;
+      line-height: 25px;
+      text-overflow: ellipsis;
+      display:-webkit-box;
+      -webkit-box-orient:vertical;
+      -webkit-line-clamp:2; 
+}
+</style>

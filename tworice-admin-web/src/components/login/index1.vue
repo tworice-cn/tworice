@@ -114,7 +114,7 @@ export default {
             /**提交注册 */
             submitReg(){
                   if(this.reg.form.loginName==''||this.reg.form.passWord==''||this.reg.form.nickName==''||this.reg.form.captcha==''||this.reg.form.key==''){
-                        this.$message({
+                        this.$msg({
                               type:'error',
                               message:'必填项不能为空'
                         })
@@ -130,7 +130,7 @@ export default {
                         data:formData,
                         method:'post'
                   }).then(res=>{
-                        this.$message({
+                        this.$msg({
                               type:'info',
                               message:res.data.status.message
                         })
@@ -153,7 +153,7 @@ export default {
                         return;
                   }
                   if(this.reg.form.loginName==''){
-                        this.$message({
+                        this.$msg({
                               type:'error',
                               message:'邮箱不能为空'
                         })

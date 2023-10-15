@@ -57,7 +57,7 @@ export default {
                   let files= this.$refs.inputer.files;// 获取选择的文件
                   let len=files.length;// 文件个数
                   if(len!=1){
-                        this.$message({
+                        this.$msg({
                               message: '需要且只能上传一个文件',
                               type: 'warning'
                         });
@@ -84,17 +84,17 @@ export default {
                               let url=this.$url+res.data.data.url;
                               console.log(url);
                               this.$refs.inputer.value = null; // 上传成功后是否需要将选择的文件滞空
-                              this.$message({
+                              this.$msg({
                                     message: res.data.status.message,
                                     type: 'success'
                               });
                         }else{
-                              this.$message({
+                              this.$msg({
                                     message: res.data.status.message,
                                     type: 'error'
                               });
                         }
-                  }).catch(()=>{this.$message({message: '上传失败，请检查文件合法性！',type: 'error'})})
+                  }).catch(()=>{this.$msg({message: '上传失败，请检查文件合法性！',type: 'error'})})
             }
       }
 };

@@ -228,7 +228,7 @@ export default {
                   }).then(({ value }) => {
                         let passwordExd=/^(?![\d]+$)(?![a-zA-Z]+$)(?![^\da-zA-Z]+$).{6,20}$/
                         if(!passwordExd.test(value)){
-                              this.$message({
+                              this.$msg({
                                     type:'warning',
                                     message:'密码应6~10位的数字+字母、字母+特殊字符、特殊字符+数字'
                               })
@@ -252,7 +252,7 @@ export default {
                                           }).then(() => {
                                                 this.$router.push('/login');
                                           }).catch(() => {
-                                                this.$message({
+                                                this.$msg({
                                                       type:'error',
                                                       message:'密码更新失败'
                                                 })       
@@ -276,7 +276,7 @@ export default {
                   }
                   window.sessionStorage.clear();
                   this.$router.push('/login')
-                  this.$message({
+                  this.$msg({
                         type: 'success',
                         message: '安全退出'
                   });
@@ -335,7 +335,7 @@ export default {
                   if (activeName === targetName) {
                         tabs.forEach((tab, index) => {
                               if (tab.name === targetName) {
-                                    let nextTab = tabs[index + 1] || tabs[index - 1];
+                                    let nextTab = tabs[admin + 1] || tabs[admin - 1];
                                     if (nextTab) {
                                           activeName = nextTab.name;
                                           this.clickTab(nextTab)
