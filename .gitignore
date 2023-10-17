@@ -23,6 +23,7 @@ log
 node_modules/
 dist/
 /tworice-admin-vue/dist/
+package-lock.json
 
 # 后端
 target

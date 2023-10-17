@@ -48,7 +48,6 @@ Vue.use(ElementUI);
 import { Message } from 'element-ui';
 Vue.prototype.$msg=Message;
 
-
 // TDesign
 import TDesign from 'tdesign-vue';
 Vue.use(TDesign);

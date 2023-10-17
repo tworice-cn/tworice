@@ -2,7 +2,7 @@ import CryptoJS from 'crypto-js';
 const KEY = CryptoJS.enc.Utf8.parse('1234567890hijklm');
 const IV = CryptoJS.enc.Utf8.parse('1234567890abcdef');
 
-Decrypt(word, keyStr, ivStr) {
+function Decrypt(word, keyStr, ivStr) {
       let key = KEY;
       let iv = IV;
 
