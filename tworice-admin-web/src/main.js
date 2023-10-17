@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import './assets/css/icon.css'
-import './core/app.css'
+import './assets/css/app.css'
 
 import 'default-passive-events'
 Vue.config.productionTip = false;
