@@ -1,6 +1,6 @@
 <template>
       <div>
-            <el-menu-item class="logo-box" index="/admin/home">
+            <el-menu-item class="logo-box">
                   <i>
                         <img src="favicon.ico" alt="" width="25px">
                   </i>

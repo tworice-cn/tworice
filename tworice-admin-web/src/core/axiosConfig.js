@@ -1,16 +1,16 @@
 import axios from 'axios'
-import {Message} from "element-ui";
+import {Notification} from "element-ui";
 
 let token = '';
 let adminID = '';
 
-export function setupAxios(vue,router) {
+export function setupAxios(router,vue) {
     axios.defaults.headers.common['token'] = token;
     axios.defaults.headers.common['adminID'] = adminID;
     axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
 
     // 添加一个请求拦截器
-    axios.interceptors.request.use(function (config) {
+    axios.interceptors.request.use(config=> {
         let user = window.sessionStorage.getItem('token');
         let admin = window.sessionStorage.getItem('admin');
 
@@ -23,25 +23,20 @@ export function setupAxios(vue,router) {
         config.headers.common['adminID'] = adminID;
 
         return config;
-    }, function (error) {
+    }, error=>{
         return Promise.reject(error);
     });
 
     // 添加一个响应拦截器
-    let messageInstance = null;
     axios.interceptors.response.use(
-        function (response) {
-
+        response => {
             vue.loading = false;
             if (response.data.status) {
-                vue.loading = false;
-                if (messageInstance) {
-                    messageInstance.close() //关闭
-                }
                 let code = parseInt(response.data.status.code);
                 if (code === 400) {
                     // 登录失败
-                    Message({
+                    Notification({
+                        title: '提示',
                         type: 'info',
                         message: response.data.status.message
                     })
@@ -50,13 +45,15 @@ export function setupAxios(vue,router) {
                     //未登录
                     window.sessionStorage.removeItem('token');
 
-                    Message({
-                        type: 'info',
+                    Notification({
+                        title: '提示',
+                        type: 'warning',
                         message: response.data.status.message
                     })
                     router.push('/login');
                 } else if (code > 401) {
-                    Message({
+                    Notification({
+                        title: '提示',
                         type: "error",
                         message: response.data.status.message,
                     });
@@ -66,11 +63,11 @@ export function setupAxios(vue,router) {
             }
             return response;
         },
-        function (error) {
+        error => {
             console.log(error);
-            // router.push('/login');
-            Message({
-                type: 'info',
+            Notification({
+                title: '提示',
+                type: 'warning',
                 message: '服务器连接异常'
             })
             vue.loading = false;

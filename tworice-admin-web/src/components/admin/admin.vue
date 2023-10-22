@@ -92,7 +92,7 @@
 
 <script>
 import Descriptions from '../commons/Descriptions.vue'
-
+import {list} from '@/api/admin/admin'
 export default {
       components:{
             Descriptions
@@ -156,25 +156,7 @@ export default {
                   this.toPage();
             },
             toPage() {
-                  let param = "";
-                  Object.keys(this.search).map((key) => {
-                        if (
-                              this.search[key] != undefined &&
-                              this.search[key] != ""
-                        ) {
-                              param += "&" + key + "=" + this.search[key];
-                        }
-                  });
-                  this.$axios
-                        .get(
-                              this.$url +
-                                    this.pageUrlPath +
-                                    "/list?page=" +
-                                    this.page +
-                                    "&pageSize=" +
-                                    this.pageSize +
-                                    param
-                        )
+                  list(this.$mergeJSON({page:this.page,pageSize:this.pageSize},this.search))
                         .then((response) => {
                               this.tableData = response.data.data.list;
                               this.total = response.data.data.total;
