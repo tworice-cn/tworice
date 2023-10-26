@@ -187,6 +187,11 @@ export function setupRouter(setting) {
                         name: "OCR识别",
                         component: (resolve) => require(["@/components/dev/ocr.vue"], resolve)
                     },
+                    {
+                        path: "ws",
+                        name: "WebSocket",
+                        component: (resolve) => require(["@/components/dev/ws.vue"], resolve)
+                    },
                 ],
             },
         ];

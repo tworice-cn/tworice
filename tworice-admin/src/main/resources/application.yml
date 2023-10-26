@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: 我的应用
   profiles:
     active: dev
   servlet:

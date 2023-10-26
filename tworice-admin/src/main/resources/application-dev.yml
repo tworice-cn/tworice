@@ -1,8 +1,6 @@
 server:
   port: 88
 spring:
-  application:
-    name: 我的应用
   boot:
     admin:
       client:

@@ -102,7 +102,7 @@ export default {
             return {
                   showAdmin: false, // 当查看是设置为true
                   loading: true,
-                  page: 0,
+                  page: 1,
                   pageSize: 10,
                   total: 0,
                   tableData: [],
@@ -156,6 +156,7 @@ export default {
                   this.toPage();
             },
             toPage() {
+                  console.log(this.page);
                   let param = "";
                   Object.keys(this.search).map((key) => {
                         if (
@@ -183,7 +184,8 @@ export default {
             },
             /**监听页码发生变化 */
             changePage(e) {
-                  this.page = e - 1;
+                  console.log(e);
+                  this.page = e;
                   this.toPage();
             },
             add() {
