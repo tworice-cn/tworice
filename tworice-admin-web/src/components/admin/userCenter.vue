@@ -176,7 +176,10 @@ export default {
             },
             submit(){
                   this.$root.loading = true;
-                  this.updateNickName();
+                  // 判断用户名是否被修改
+                  if(this.adminInfo.nickName!=JSON.parse(window.sessionStorage.getItem('admin')).nickName){
+                        this.updateNickName();
+                  }
                   if(!this.isChange){
                         this.$root.loading=false;
                         this.formVisible = false;
@@ -199,9 +202,13 @@ export default {
                   }).then(() => {
                         this.initAdminInfo();
                         this.formVisible = false;
+                        this.$msg({
+                          type:'success',
+                          message:'更新成功'
+                        })
                   });
             },
-            updateNickName(){
+             updateNickName(){
                   if(this.adminInfo.nickName && this.adminInfo.nickName!=''){
                         let format=new FormData();
                         format.append("id",this.userData.id);
@@ -212,10 +219,10 @@ export default {
                               data:format
                         }).then(
                               ()=>{
-                                    this.$msg({
-                                          type:'success',
-                                          message:'更新用户名成功，重新登录生效'
-                                    })
+                                  this.$notify.success({
+                                    title: '提醒',
+                                    message: '更新用户名成功，重新登录生效'
+                                  });
                               }
                         )
                   }

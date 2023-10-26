@@ -3,11 +3,10 @@ import VueRouter from "vue-router";
 
 Vue.use(VueRouter);
 
-export function setupRouter(setting) {
+export function setupRouter() {
     const router =
         //$start
         [
-            {path: "/", redirect: "/admin"},
             {path: "/login", component: () => import("@/components/login/index.vue"), meta: {title: "登录"}},
             {path: "/bigScreen", component: () => import("@/components/admin/home.vue"), meta: {title: "实时监控"}},
             {
@@ -35,7 +34,7 @@ export function setupRouter(setting) {
             {
                 path: "/home",
                 name: "欢迎",
-                component: () => import("@/components/front"),
+                component: () => import("@/components/front/index/index.vue"),
                 children: [],
             },
             {
@@ -196,16 +195,8 @@ export function setupRouter(setting) {
             },
         ];
     //$end
-    let vueRouter = new VueRouter({routes: router});
-    vueRouter.beforeEach((to, from, next) => {
-        /* 路由发生变化修改页面title */
-        if (to.meta.title) {
-            document.title = to.meta.title;
-        } else {
-            document.title = setting.systemTitle;
-        }
-        next()
-    })
-
-    return vueRouter;
+    return new VueRouter({
+        routes: router,
+        base: "/"
+    });
 }

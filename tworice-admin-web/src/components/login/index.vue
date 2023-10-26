@@ -94,8 +94,7 @@
 </template>
 
 <script>
-import login from './login.js';
-export default login;
+export { default } from './login.js';
 </script>
 
 <style lang="less">

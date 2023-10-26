@@ -1,3 +1,4 @@
+import setting from "@/core/setting";
 export default {
     props: [],
     data() {
@@ -118,10 +119,7 @@ export default {
             if (this.login.username == '' || this.login.password == '' || this.login.captcha == '') {
                 return
             }
-
-            // 显示加载画面
             this.$root.loading = true;
-
             let format = new FormData();
             format.append("username", this.login.username);
             format.append("password", this.login.password);
@@ -135,7 +133,7 @@ export default {
                 response => {
                     if (response.data.status.code == 200) {
                         // 登录成功
-                        window.sessionStorage.setItem("token", response.data.data.token)
+                        window.sessionStorage.setItem("token", response.data.data.token);
                         window.sessionStorage.setItem("admin", JSON.stringify(response.data.data.admin))
                         window.sessionStorage.setItem("resources", JSON.stringify(response.data.data.resources))
                         window.sessionStorage.setItem("roles", JSON.stringify(response.data.data.roles))
@@ -154,7 +152,6 @@ export default {
                 this.initCaptcha();
             })
         },
-
         // 登录成功跳转
         successLogin(roles) {
             if (roles == null || roles.length == 0) {
@@ -162,11 +159,14 @@ export default {
                     type: 'error',
                     message: '权限不足'
                 })
-            } else if (roles[0] == 4) {
-                this.$router.push('/home');
-            } else {
-                this.$router.push('/admin');
+                return;
             }
+            let path='/admin';
+            if (roles[0].id == 4) {
+                path='/home';
+            }
+            this.$router.push(path);
+            window.sessionStorage.setItem("index", path);
         },
         // 表单验证是否为空
         isEmpty(con) {
