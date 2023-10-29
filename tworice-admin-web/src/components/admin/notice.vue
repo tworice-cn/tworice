@@ -19,7 +19,7 @@
                         <el-table-column prop="createTime" label="创建日期" :formatter="(row)=>$utils.formatDate(row.createTime)"></el-table-column>
                         <el-table-column prop="updateTime" label="更新日期" :formatter="(row)=>$utils.formatDate(row.updateTime)"></el-table-column>
                         <el-table-column prop="title" label="标题"></el-table-column>
-                        <el-table-column prop="adminName" label="发布者"></el-table-column>
+                        <el-table-column prop="nickName" label="发布者"></el-table-column>
                         <el-table-column prop="top" label="置顶" width="100">
                               <template slot-scope="scope">
                                     <el-switch @change="topChange(scope.row)" v-model="scope.row.top" active-color="#13ce66" inactive-color="#ff4949" :active-value='1' :inactive-value='0'></el-switch>

@@ -42,7 +42,9 @@ Vue.component("Loading",Loading);//注册全局组件
 import {setupRouter} from '@/core/router.js'
 let router = setupRouter();
 
-
+// Axios
+import {setupAxios} from '@/core/axiosConfig.js'
+Vue.prototype.$axios = setupAxios(router);
 
 // 设置全局前置守卫配置
 router.beforeEach((to, from, next) => {
@@ -66,17 +68,15 @@ let vue=new Vue({
       render: h => h(App),
       data(){
             return{
-                  loading:false // 全局属性，通过$root
+                  loading:setting.loading // 全局属性，通过$root
             }
       }
 }).$mount('#app');
 
-// Axios
-import {setupAxios} from '@/core/axiosConfig.js'
-Vue.prototype.$axios = setupAxios(router,vue);
+
 
 // 全局函数
-Vue.prototype.$mergeJSON=function mergeJSON(obj1,obj2){
+Vue.prototype.$mergeJSON=function(obj1,obj2){
       for (let key in obj2) {
             if (obj2[key] !== null && obj2[key] !== undefined && obj2[key] !== '') {
                   if (typeof obj2[key] === 'object' && !Array.isArray(obj2[key])) {

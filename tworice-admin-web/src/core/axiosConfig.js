@@ -1,10 +1,11 @@
 import axios from 'axios'
 import {Notification} from "element-ui";
+import setting from '@/core/setting.js'
 
 let token = '';
 let adminID = '';
 
-export function setupAxios(router,vue) {
+export function setupAxios(router) {
     axios.defaults.headers.common['token'] = token;
     axios.defaults.headers.common['adminID'] = adminID;
     axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
@@ -30,7 +31,7 @@ export function setupAxios(router,vue) {
     // 添加一个响应拦截器
     axios.interceptors.response.use(
         response => {
-            vue.loading = false;
+            setting.loading = false;
             if (response.data.status) {
                 let code = parseInt(response.data.status.code);
                 if (code === 400) {
@@ -70,7 +71,7 @@ export function setupAxios(router,vue) {
                 type: 'warning',
                 message: '服务器连接异常'
             })
-            vue.loading = false;
+            setting.loading = false;
         }
     );
 
