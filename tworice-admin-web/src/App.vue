@@ -1,6 +1,6 @@
 <template>
       <div id="app">
-            <Loading v-if="this.$root.loading"></Loading>
+            <Loading v-if="$root.loading"></Loading>
             <router-view></router-view>
       </div>
 </template>
