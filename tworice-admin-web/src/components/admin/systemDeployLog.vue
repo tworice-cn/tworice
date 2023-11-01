@@ -4,7 +4,7 @@
             <el-col :span="24" class="info-search-box">
                   <div class="search">
                         <div class="search-item">操作人 : <el-input size="mini" v-model="search.creator" placeholder="通过操作人查询" clearable></el-input></div>
-                        <div class="search-item">调动人 : <el-input size="mini" v-model="search.adminId" placeholder="通过调动人查询" clearable></el-input></div>
+                        <div class="search-item">调动人 : <el-input size="mini" v-model="search.userId" placeholder="通过调动人查询" clearable></el-input></div>
                         <div class="search-item"><el-button size="mini" type="primary" @click="submitSearch">查询</el-button></div>
                   </div>
             </el-col>
@@ -22,7 +22,7 @@
                   <el-table-column prop="createTime" label="调动时间" :formatter="(row) => $utils.formatDate(row.createTime)"></el-table-column
                   ><el-table-column prop="creator" label="操作人编号"></el-table-column><el-table-column prop="state" label="调动状态"></el-table-column
                   >
-                  <el-table-column prop="adminId" label="调动人编号"></el-table-column>
+                  <el-table-column prop="userId" label="调动人编号"></el-table-column>
                   <el-table-column prop="nickName" label="调动人"></el-table-column>
                   
             </el-table>
@@ -47,8 +47,8 @@
                         <el-form-item label="调动状态" :label-width="formLabelWidth" prop="state"
                               ><el-select size="mini" v-model="form.state" placeholder="请选择" clearable
                                     ><el-option v-for="item in stateDist" :key="item.id" :label="item.content" :value="item.content"></el-option></el-select></el-form-item
-                        ><el-form-item label="调动人" :label-width="formLabelWidth" prop="adminId"
-                              ><el-input placeholder="请输入调动人" v-model="form.adminId" @change="isChange = true" size="small"></el-input
+                        ><el-form-item label="调动人" :label-width="formLabelWidth" prop="userId"
+                              ><el-input placeholder="请输入调动人" v-model="form.userId" @change="isChange = true" size="small"></el-input
                         ></el-form-item>
                   </el-form>
                   <div slot="footer" class="dialog-footer">
@@ -80,18 +80,18 @@ export default {
                   formTitle: "",
                   formVisible: false,
                   inductsVisible: false,
-                  form: { id: "", createTime: "", updateTime: "", creator: "", state: "", adminId: "" },
+                  form: { id: "", createTime: "", updateTime: "", creator: "", state: "", userId: "" },
                   rules: {
                         id: [{ required: true, message: "请输入编号", trigger: "blur" }],
                         createTime: [{ required: true, message: "请输入创建时间", trigger: "blur" }],
                         updateTime: [{ required: true, message: "请输入更新时间", trigger: "blur" }],
                         creator: [{ required: true, message: "请输入操作人", trigger: "blur" }],
                         state: [{ required: true, message: "请输入调动状态", trigger: "blur" }],
-                        adminId: [{ required: true, message: "请输入调动人", trigger: "blur" }],
+                        userId: [{ required: true, message: "请输入调动人", trigger: "blur" }],
                   },
                   formLabelWidth: "80px",
                   /** 弹出框标签宽度*/ isChange: false,
-                  search: { id: "", creator: "", state: "", adminId: "",deployId:""},
+                  search: { id: "", creator: "", state: "", userId: "",deployId:""},
                   multipleSelection: [],
                   stateDist: [],
                   pageUrlPath: "/client/systemDeployLog",

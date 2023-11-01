@@ -181,7 +181,7 @@ export default {
                         let format=new FormData();
                         movedKeys.forEach(
                               item=>{
-                                    format.append("adminId",item);
+                                    format.append("userId",item);
                               }
                         )
                         format.append("departmentId",this.currentDepartment.id);

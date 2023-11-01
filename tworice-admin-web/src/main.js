@@ -31,7 +31,7 @@ Vue.prototype.$echarts=echarts;
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
-import { Message } from 'element-ui';
+import { Message,Notification } from 'element-ui';
 Vue.prototype.$msg=Message;
 
 // Loading加载界面
@@ -43,8 +43,42 @@ import {setupRouter} from '@/core/router.js'
 let router = setupRouter();
 
 // Axios
-import {setupAxios} from '@/core/axiosConfig.js'
-Vue.prototype.$axios = setupAxios(router);
+import axios from 'axios'
+Vue.prototype.$axios = axios;
+axios.defaults.headers.common['token'] = '';
+axios.defaults.headers.common['adminID'] = '';
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
+// 添加一个请求拦截器
+axios.interceptors.request.use(function (config) {
+      let token = window.sessionStorage.getItem('token')||'';
+      let admin = window.sessionStorage.getItem('admin')||{};
+      config.headers.common['token'] = token;
+      config.headers.common['adminID'] = admin.id;
+      return config;
+}, function (error) {
+      return Promise.reject(error);
+});
+// 添加一个响应拦截器
+axios.interceptors.response.use(
+    function (response) {
+          vue.loading=false;
+          if (response.data.status) {
+                vue.loading=false;
+                let code=parseInt(response.data.status.code);
+                if(code>=400){
+                      Notification({ title: '提示', type: code===400?'info':(code===401?'warning':'error'), message: response.data.status.message });
+                      if(code === 401) {router.push('/login');}
+                } else if(code === 201){
+                      Message({ type:'success', message:response.data.status.message });
+                      response.data.status.code=200;
+                }
+          }
+          return response;
+    },()=> {
+          Notification({ title: '提示', type: 'warning', message: '服务器连接异常' })
+          vue.loading=false;
+    }
+)
 
 // 设置全局前置守卫配置
 router.beforeEach((to, from, next) => {
@@ -72,8 +106,6 @@ let vue=new Vue({
             }
       }
 }).$mount('#app');
-
-
 
 // 全局函数
 Vue.prototype.$mergeJSON=function(obj1,obj2){
