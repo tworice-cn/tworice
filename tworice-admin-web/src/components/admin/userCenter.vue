@@ -162,7 +162,7 @@ export default {
 
                   notice:{
                         list:[],
-                        page:0,
+                        page:1,
                         pageSize:10,
                         total:0,
                   },

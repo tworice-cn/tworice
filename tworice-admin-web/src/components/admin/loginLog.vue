@@ -72,7 +72,7 @@ export default {
                   form:{createTime:'',loginName:'',ipAddr:'',status:'',active:''},
                   total:0,
                   pageSize:15,// 每页的数量
-                  page:0,// 页码，从零开始
+                  page:1,// 页码，从零开始
             }
       },
       methods:{
@@ -103,7 +103,7 @@ export default {
             },
             /**页码变化 */
             changePage(e){
-                  this.page=e-1;
+                  this.page=e;
                   this.toPage();
             },
             /**请求该页码的数据 */

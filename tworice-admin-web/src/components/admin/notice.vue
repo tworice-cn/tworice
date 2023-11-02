@@ -88,7 +88,7 @@ export default {
       data() {
             return {
                   descriptions:[],
-                  page:0,
+                  page:1,
                   pageSize:10,
                   total:0,
                   search_name:'',// 
@@ -113,7 +113,7 @@ export default {
             },
             /**监听页码发生变化 */
             changePage(e){
-                  this.page=e-1;
+                  this.page=e;
                   this.toPage();
             },
             init(){

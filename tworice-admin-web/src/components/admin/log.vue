@@ -43,7 +43,7 @@ export default {
                   tableData:[],
                   total:0,
                   pageSize:20,// 每页的数量
-                  page:0,// 页码，从零开始
+                  page:1,// 页码，从零开始
                   isChange:false,
                   multipleSelection:[],
                   search:{
@@ -153,7 +153,7 @@ export default {
             },
             /**监听页码发生变化 */
             changePage(e){
-                  this.page=e-1;
+                  this.page=e;
                   this.toPage();
             },
             /**请求当前页码的数据 */
