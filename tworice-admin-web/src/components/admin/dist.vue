@@ -90,7 +90,7 @@ export default {
                   distVisible:false,
 
                   loading: true,
-                  page: 0,
+                  page: 1,
                   pageSize: 10,
                   total: 0,
                   tableData: [],
@@ -182,7 +182,7 @@ export default {
                         });
             },
             /**监听页码发生变化 */ changePage(e) {
-                  this.page = e - 1;
+                  this.page = e;
                   this.toPage();
             },
             add() {

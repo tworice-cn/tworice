@@ -13,8 +13,8 @@ export default {
       data() {
             return {
                   header: {
-                        token: window.sessionStorage.getItem("token"),
-                        adminID: JSON.parse(window.sessionStorage.getItem("admin")).id,
+                        token: window.localStorage.getItem("token"),
+                        adminID: JSON.parse(window.localStorage.getItem("admin")).id,
                   }
             };
       },

@@ -96,7 +96,7 @@ export default {
                               url:this.$url+"admin/log/delAdmin",
                         }).then(
                               response=>{
-                                    this.tableData=response.data.data.logList;
+                                    this.tableData=response.data.data.list;
                               }
                         )
                   })
@@ -110,7 +110,7 @@ export default {
             toPage(){
                   this.$axios.get(this.$url+'/admin/log/loginList?pageSize='+this.pageSize+'&page='+this.page).then(
                         response=>{
-                              this.tableData=response.data.data.logList;
+                              this.tableData=response.data.data.list;
                               this.total=response.data.data.total;
                         }
                   )

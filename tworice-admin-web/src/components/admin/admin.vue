@@ -333,18 +333,25 @@ export default {
                   this.multipleSelection = val;
             },
             rePassWord(row){
-                  let format = new FormData();
-                  format.append("id",row.id);
-                  this.$axios({
-                        method: "PUT",
-                        data: format,
-                        url: this.$url + this.pageUrlPath + "/rePassWord",
-                  }).then(res => {
-                        this.loading = false;
-                        if(res.data.status.code==200){
-                              this.toPage();
-                        }
-                  });
+              this.$confirm("重置账号密码, 是否继续?", "提示", {
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                type: "warning",
+              }).then(() => {
+                let format = new FormData();
+                format.append("id",row.id);
+                this.$axios({
+                  method: "PUT",
+                  data: format,
+                  url: this.$url + this.pageUrlPath + "/rePassWord",
+                }).then(res => {
+                  this.loading = false;
+                  if(res.data.status.code==200){
+                    this.toPage();
+                  }
+                });
+              })
+
             }
       },
       mounted() {

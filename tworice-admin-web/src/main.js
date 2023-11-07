@@ -44,14 +44,18 @@ let router = setupRouter();
 
 // Axios
 import axios from 'axios'
-Vue.prototype.$axios = axios;
-axios.defaults.headers.common['token'] = '';
-axios.defaults.headers.common['adminID'] = '';
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
+let service = axios.create({
+    baseURL: Vue.prototype.$url,
+    timeout: 30000,// 超时
+    withCredentials: false,// 禁用 Cookie 等信息
+})
+service.defaults.headers.common['token'] = '';
+service.defaults.headers.common['adminID'] = '';
+service.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
 // 添加一个请求拦截器
-axios.interceptors.request.use(function (config) {
-      let token = window.sessionStorage.getItem('token')||'';
-      let admin = window.sessionStorage.getItem('admin')||{};
+service.interceptors.request.use(function (config) {
+      let token = window.localStorage.getItem('token')||'';
+      let admin = JSON.parse(window.localStorage.getItem('admin')||'{}');
       config.headers.common['token'] = token;
       config.headers.common['adminID'] = admin.id;
       return config;
@@ -59,7 +63,7 @@ axios.interceptors.request.use(function (config) {
       return Promise.reject(error);
 });
 // 添加一个响应拦截器
-axios.interceptors.response.use(
+service.interceptors.response.use(
     function (response) {
           vue.loading=false;
           if (response.data.status) {
@@ -79,6 +83,7 @@ axios.interceptors.response.use(
           vue.loading=false;
     }
 )
+Vue.prototype.$axios = service;
 
 // 设置全局前置守卫配置
 router.beforeEach((to, from, next) => {
@@ -90,7 +95,7 @@ router.beforeEach((to, from, next) => {
       }
       if(to.path === '/'){
             Vue.prototype.$axios.get(setting.baseURL+'admin/index/').then(()=>{
-                  next(window.sessionStorage.getItem('index')||'/login');
+                  next(window.localStorage.getItem('index')||'/login');
             })
       }
       next()

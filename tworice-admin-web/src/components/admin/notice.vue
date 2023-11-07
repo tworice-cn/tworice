@@ -186,12 +186,12 @@ export default {
             submitNotice(){
                   this.$root.loading=true;
                   
-                  let admin=window.sessionStorage.getItem("admin");
+                  let admin=window.localStorage.getItem("admin");
                   admin=JSON.parse(admin);
 
                   // 初始化表单内容
                   let format=new FormData();
-                  format.append("adminId",admin.id);
+                  format.append("userId",admin.id);
                   format.append("title",this.noticeForm.title);
                   format.append("top",this.noticeForm.top);
                   format.append("content",this.$refs.editor.getHtml());

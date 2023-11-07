@@ -1,7 +1,6 @@
-import request from '../request.js'
-
+import Vue from 'vue';
 export function list(params){
-    return request({
+    return Vue.prototype.$axios({
         url: '/admin/admin/list',
         method: 'get',
         params: params

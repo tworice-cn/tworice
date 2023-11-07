@@ -200,10 +200,10 @@ export default {
                         response=>{
                               if(response.data.status.code==200){
                                     // 登录成功
-                                    window.sessionStorage.setItem("token",response.data.data.token)
-                                    window.sessionStorage.setItem("admin",JSON.stringify(response.data.data.admin))
-                                    window.sessionStorage.setItem("resources",JSON.stringify(response.data.data.resources))
-                                    window.sessionStorage.setItem("roles",JSON.stringify(response.data.data.roles))
+                                    window.localStorage.setItem("token",response.data.data.token)
+                                    window.localStorage.setItem("admin",JSON.stringify(response.data.data.admin))
+                                    window.localStorage.setItem("resources",JSON.stringify(response.data.data.resources))
+                                    window.localStorage.setItem("roles",JSON.stringify(response.data.data.roles))
                                     this.$router.push('/admin');
                               }else if (parseInt(response.data.status.code) == 400) {
                                     // 登录失败
