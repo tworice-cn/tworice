@@ -1,11 +1,12 @@
 import setting from "@/core/setting";
+import log from "@/components/admin/log.vue";
 export default {
     props: [],
     data() {
         return {
             formLabelWidth: '60px',
             login: {
-                username: '',
+                loginName: '',
                 password: '',
                 captcha: '',
                 key: '',
@@ -90,7 +91,6 @@ export default {
                     type: 'error',
                     message: '邮箱不能为空'
                 })
-                return;
             } else {
                 this.$root.loading = true;
                 this.$axios.get(this.$url + '/admin/login/regCaptcha?email=' + this.reg.form.loginName).then(res => {
@@ -116,12 +116,12 @@ export default {
         },
         loginSubmit() {
             //判空
-            if (this.login.username == '' || this.login.password == '' || this.login.captcha == '') {
+            if (this.login.loginName == '' || this.login.password == '' || this.login.captcha == '') {
                 return
             }
             this.$root.loading = true;
             let format = new FormData();
-            format.append("username", this.login.username);
+            format.append("loginName", this.login.loginName);
             format.append("password", this.login.password);
             format.append("verCode", this.login.captcha);
             format.append("key", this.login.key);
@@ -131,18 +131,18 @@ export default {
                 data: format
             }).then(
                 response => {
-                    if (response.data.status.code == 200) {
+                    if (response.data.status.code === 200) {
                         // 登录成功
-                        window.sessionStorage.setItem("token", response.data.data.token);
-                        window.sessionStorage.setItem("admin", JSON.stringify(response.data.data.admin))
-                        window.sessionStorage.setItem("resources", JSON.stringify(response.data.data.resources))
-                        window.sessionStorage.setItem("roles", JSON.stringify(response.data.data.roles))
+                        window.localStorage.setItem("token", response.data.data.token);
+                        window.localStorage.setItem("admin", JSON.stringify(response.data.data.admin))
+                        window.localStorage.setItem("resources", JSON.stringify(response.data.data.resources))
+                        window.localStorage.setItem("roles", JSON.stringify(response.data.data.roles))
                         if (this.login.remember) {
                             localStorage.setItem("loginForm", JSON.stringify(this.login));
                         }
 
                         this.successLogin(response.data.data.roles);
-                    } else if (parseInt(response.data.status.code) == 400) {
+                    } else{
                         this.initCaptcha();
                         this.login.password = '';
                         this.login.captcha = '';
@@ -166,12 +166,12 @@ export default {
                 path='/home';
             }
             this.$router.push(path);
-            window.sessionStorage.setItem("index", path);
+            window.localStorage.setItem("index", path);
         },
         // 表单验证是否为空
         isEmpty(con) {
             if (con == 'u') {
-                if (this.login.username == '') {
+                if (this.login.loginName == '') {
                     this.$refs.userCheck.innerHTML = '用户名不能为空'
                 } else {
                     this.$refs.userCheck.innerHTML = ''

@@ -31,19 +31,19 @@ export default {
         showUser(e){
             if(e==this.$route.path.substring(0,17)){
                 this.handleSelect(e);
-                e += '/'+JSON.parse(window.sessionStorage.getItem('admin')).id;
+                e += '/'+JSON.parse(window.localStorage.getItem('admin')).id;
                 this.$router.push(e);
                 window.location.reload();
             }else{
                 this.handleSelect(e);
-                e += '/'+JSON.parse(window.sessionStorage.getItem('admin')).id;
+                e += '/'+JSON.parse(window.localStorage.getItem('admin')).id;
 
                 this.$router.push(e);
             }
         },
         /**初始化侧栏资源 */
         initResources(){
-            this.resources=JSON.parse(window.sessionStorage.getItem('resources')||[]);
+            this.resources=JSON.parse(window.localStorage.getItem('resources')||[]);
             this.handleSelect(this.$route.path);
         },
         // 初始化系统
@@ -67,14 +67,14 @@ export default {
                 // 初始化资源
                 this.initResources();
                 // 当前用户没有角色设置角色为游客
-                if(window.sessionStorage.getItem('roles')==null||window.sessionStorage.getItem('roles')==undefined){
+                if(window.localStorage.getItem('roles')==null||window.localStorage.getItem('roles')==undefined){
                     this.roles=[{id:0,roleName:'游客'}];
                     // 设置登录状态为未登录
                     this.loginStatus=false;
                     this.asideStatus=true;
                 }else{
                     this.loginStatus=true;
-                    this.roles=JSON.parse(window.sessionStorage.getItem('roles'));
+                    this.roles=JSON.parse(window.localStorage.getItem('roles'));
                 }
                 this.$root.loading=false;
             }
@@ -86,19 +86,19 @@ export default {
                 }
             }
 
-            if(window.sessionStorage.getItem('admin')!=null&&window.sessionStorage.getItem('admin')!=undefined){
-                this.admin=JSON.parse(window.sessionStorage.getItem('admin'));
+            if(window.localStorage.getItem('admin')!=null&&window.localStorage.getItem('admin')!=undefined){
+                this.admin=JSON.parse(window.localStorage.getItem('admin'));
             }
         },
         // 初始化界面展示
         initInterface(){
             // 初始化角色
-            let roles=window.sessionStorage.getItem('roles');
+            let roles=window.localStorage.getItem('roles');
             if(roles==null||roles==undefined){
                 this.roles=[];
                 this.isAdmin=false
             }else{
-                this.roles=JSON.parse(window.sessionStorage.getItem('roles'));
+                this.roles=JSON.parse(window.localStorage.getItem('roles'));
             }
             // 如果登录为用户则收起侧栏
             if(this.roles.length==0||this.roles[0].id==4){

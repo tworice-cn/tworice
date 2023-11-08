@@ -2,12 +2,13 @@ package cn.tworice.auth;
 
 import cn.tworice.auth.service.VerifyManger;
 import cn.tworice.common.util.AgingMap;
-import cn.tworice.system.service.impl.SystemWhiteListService;
+import cn.tworice.system.service.whiteList.SystemWhiteListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +27,7 @@ public class VerifyExecutor implements VerifyManger {
     @Value("${tworice.dev:false}")
     private boolean dev;
 
-    @Autowired
+    @Resource
     private SystemWhiteListService whiteListService;
 
     /**

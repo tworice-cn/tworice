@@ -162,7 +162,7 @@ export default {
 
                   notice:{
                         list:[],
-                        page:0,
+                        page:1,
                         pageSize:10,
                         total:0,
                   },
@@ -177,7 +177,7 @@ export default {
             submit(){
                   this.$root.loading = true;
                   // 判断用户名是否被修改
-                  if(this.adminInfo.nickName!=JSON.parse(window.sessionStorage.getItem('admin')).nickName){
+                  if(this.adminInfo.nickName!=JSON.parse(window.localStorage.getItem('admin')).nickName){
                         this.updateNickName();
                   }
                   if(!this.isChange){
@@ -186,7 +186,7 @@ export default {
                         return;
                   }
                   let formData = new FormData();
-                  this.adminInfo.adminId=this.userData.id;
+                  this.adminInfo.userId=this.userData.id;
                   Object.keys(this.adminInfo).map((key) => {
                         if (
                               this.adminInfo[key] != undefined &&
@@ -229,7 +229,7 @@ export default {
             },
             init(){
                   let id = this.$route.params.id;
-                  let admin=JSON.parse(window.sessionStorage.getItem("admin"))
+                  let admin=JSON.parse(window.localStorage.getItem("admin"))
                   if(admin.id==id){
                         this.isMe=true;
                   }
@@ -257,11 +257,12 @@ export default {
                               let info=response.data.data.info;
                               if(info){
                                     this.adminInfo = info;
+                                    this.adminInfo.roleName=info.roles[0].roleName;
                               }
                         });
             },
             initLogList(){
-                  let roles=JSON.parse(window.sessionStorage.getItem('roles'));
+                  let roles=JSON.parse(window.localStorage.getItem('roles'));
                   let state=false;
                   roles.forEach(element => {
                         if(element.id<3){
@@ -271,9 +272,9 @@ export default {
                   });
                   if(state){
                         // 当前为管理员
-                        this.$axios.get(this.$url+'/admin/log/adminList?pageSize=10&page=0&adminId='+this.userData.id).then(
+                        this.$axios.get(this.$url+'/admin/log/adminList?pageSize=10&page=0&userId='+this.userData.id).then(
                               response=>{
-                                    response.data.data.logList.forEach(item=>{
+                                    response.data.data.list.forEach(item=>{
                                           let logItem={
                                                 nickName:item.admin,
                                                 time:item.createTime,
@@ -283,7 +284,7 @@ export default {
                                     })
                                     this.$axios.get(this.$url+'/admin/log/loginList?pageSize=10&page=0&loginName='+this.userData.loginName).then(
                                           loginLogresponse=>{
-                                                loginLogresponse.data.data.logList.forEach(item=>{
+                                                loginLogresponse.data.data.list.forEach(item=>{
                                                       let logItem={
                                                             nickName:'账号'+this.userData.loginName,
                                                             time:item.createTime,
@@ -305,7 +306,7 @@ export default {
                         // 当前为用户
                         this.$axios.get(this.$url+'/admin/log/loginList?pageSize=10&page=0&loginName='+this.userData.loginName).then(
                               response=>{
-                                    let logList=response.data.data.logList;
+                                    let logList=response.data.data.list;
                                     logList.forEach(item=>{
                                           let logItem={
                                                 nickName:'账号'+this.userData.loginName,

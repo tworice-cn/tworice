@@ -100,7 +100,7 @@ export default {
                   startUpload:false,/**是否显示进度条，一般开始上传后开始显示 */
                   progress:0,/**上传进度 */
                   loading: true,
-                  page: 0,
+                  page: 1,
                   pageSize: 10,
                   total: 0,
                   tableData: [],
@@ -234,7 +234,7 @@ export default {
                         this.form.parent=this.$route.query.parent;
                   }
                   this.form.type=1;
-                  this.form.creator=JSON.parse(window.sessionStorage.getItem('admin')).id;
+                  this.form.creator=JSON.parse(window.localStorage.getItem('admin')).id;
                   return this.form;
             },
             /**初始化字典 */ initDist() {},
@@ -245,11 +245,11 @@ export default {
             },
             init() {
                   this.header={
-                        token:window.sessionStorage.getItem('token'),
-                        adminID:JSON.parse(window.sessionStorage.getItem('admin')).id
+                        token:window.localStorage.getItem('token'),
+                        adminID:JSON.parse(window.localStorage.getItem('admin')).id
                   }
 
-                  this.form.creator=JSON.parse(window.sessionStorage.getItem('admin')).id;
+                  this.form.creator=JSON.parse(window.localStorage.getItem('admin')).id;
                   this.search.creator=this.form.creator;
                   this.toPage();
                   this.initDist();
@@ -289,7 +289,7 @@ export default {
                         });
             },
             /**监听页码发生变化 */ changePage(e) {
-                  this.page = e - 1;
+                  this.page = e;
                   this.toPage();
             },
             add() {

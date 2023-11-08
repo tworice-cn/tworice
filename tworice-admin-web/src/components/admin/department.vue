@@ -181,7 +181,7 @@ export default {
                         let format=new FormData();
                         movedKeys.forEach(
                               item=>{
-                                    format.append("adminId",item);
+                                    format.append("userId",item);
                               }
                         )
                         format.append("departmentId",this.currentDepartment.id);
@@ -236,7 +236,7 @@ export default {
                               )
                               this.defaultChecked=checked; // 设置默认选中
                               // 设置所有资源
-                              let resources=window.sessionStorage.getItem("resources");
+                              let resources=window.localStorage.getItem("resources");
                               resources=JSON.parse(resources);
                               this.resourceTree=resources;
                               this.treeLoad=false;

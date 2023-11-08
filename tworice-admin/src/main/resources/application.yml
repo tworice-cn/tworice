@@ -28,3 +28,8 @@ management:
       show-details: always
     shutdown:
       enabled: true
+mybatis-plus-join:
+  banner: false
+mybatis-plus:
+  global-config:
+    banner: false

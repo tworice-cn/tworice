@@ -15,7 +15,7 @@ export default {
                 return;
             }
             let formData = new FormData();
-            formData.append("id", JSON.parse(window.sessionStorage.getItem('admin')).id);
+            formData.append("id", JSON.parse(window.localStorage.getItem('admin')).id);
             formData.append("passWord", value);
             vue.$axios({
                 url: vue.$url + 'admin/admin/update',
@@ -24,7 +24,7 @@ export default {
             }).then(
                 res => {
                     if (res.data.status.code == 200) {
-                        window.sessionStorage.clear();
+                        window.localStorage.clear();
                         vue.$confirm('密码已更新，请立即重新登录!', '提示', {
                             confirmButtonText: '确定',
                             showCancelButton: false,
@@ -46,7 +46,7 @@ export default {
     /* 安全退出系统 */
     exitSystem: function (vue) {
         let formData = new FormData();
-        let admin = JSON.parse(window.sessionStorage.getItem('admin')) || {};
+        let admin = JSON.parse(window.localStorage.getItem('admin')) || {};
         if (admin != null) {
             formData.append('key', admin.id);
             vue.$axios({
@@ -55,7 +55,7 @@ export default {
                 data: formData
             });
         }
-        window.sessionStorage.clear();
+        window.localStorage.clear();
         vue.$router.push('/login')
         vue.$msg({
             type: 'success',

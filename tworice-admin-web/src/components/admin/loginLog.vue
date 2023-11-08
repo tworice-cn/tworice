@@ -72,7 +72,7 @@ export default {
                   form:{createTime:'',loginName:'',ipAddr:'',status:'',active:''},
                   total:0,
                   pageSize:15,// 每页的数量
-                  page:0,// 页码，从零开始
+                  page:1,// 页码，从零开始
             }
       },
       methods:{
@@ -96,21 +96,21 @@ export default {
                               url:this.$url+"admin/log/delAdmin",
                         }).then(
                               response=>{
-                                    this.tableData=response.data.data.logList;
+                                    this.tableData=response.data.data.list;
                               }
                         )
                   })
             },
             /**页码变化 */
             changePage(e){
-                  this.page=e-1;
+                  this.page=e;
                   this.toPage();
             },
             /**请求该页码的数据 */
             toPage(){
                   this.$axios.get(this.$url+'/admin/log/loginList?pageSize='+this.pageSize+'&page='+this.page).then(
                         response=>{
-                              this.tableData=response.data.data.logList;
+                              this.tableData=response.data.data.list;
                               this.total=response.data.data.total;
                         }
                   )

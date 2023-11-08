@@ -88,7 +88,7 @@ export default {
       data() {
             return {
                   descriptions:[],
-                  page:0,
+                  page:1,
                   pageSize:10,
                   total:0,
                   search_name:'',// 
@@ -113,7 +113,7 @@ export default {
             },
             /**监听页码发生变化 */
             changePage(e){
-                  this.page=e-1;
+                  this.page=e;
                   this.toPage();
             },
             init(){
@@ -186,12 +186,12 @@ export default {
             submitNotice(){
                   this.$root.loading=true;
                   
-                  let admin=window.sessionStorage.getItem("admin");
+                  let admin=window.localStorage.getItem("admin");
                   admin=JSON.parse(admin);
 
                   // 初始化表单内容
                   let format=new FormData();
-                  format.append("adminId",admin.id);
+                  format.append("userId",admin.id);
                   format.append("title",this.noticeForm.title);
                   format.append("top",this.noticeForm.top);
                   format.append("content",this.$refs.editor.getHtml());

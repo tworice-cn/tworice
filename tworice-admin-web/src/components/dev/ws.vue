@@ -35,7 +35,7 @@ export default {
         this.socket = socket;
 
         let data = {
-          uid:JSON.parse(window.sessionStorage.getItem('admin')).id,
+          uid:JSON.parse(window.localStorage.getItem('admin')).id,
           type:'LOGIN'
         }
         if(this.group){
@@ -64,7 +64,7 @@ export default {
     sendMessage() {
       if (this.socket && this.socket.readyState === WebSocket.OPEN) {
         let message = {
-          uid:JSON.parse(window.sessionStorage.getItem('admin')).id,
+          uid:JSON.parse(window.localStorage.getItem('admin')).id,
           content:this.message,
           to:this.to,
           type:this.type

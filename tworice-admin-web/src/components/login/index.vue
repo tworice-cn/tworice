@@ -17,7 +17,7 @@
             </el-col>
             <el-col :span="24" class="content-form">
               <el-col :span="24">
-                <el-input ref='userInput' v-model="login.username" placeholder="请输入用户名" suffix-icon="el-icon-user"
+                <el-input ref='userInput' v-model="login.loginName" placeholder="请输入用户名" suffix-icon="el-icon-user"
                           type="text" @blur="isEmpty('u')" @keyup.enter.native="loginSubmit"></el-input>
               </el-col>
               <el-col :span="24">
@@ -51,7 +51,7 @@
                 <div ref="captchaCheck" class="form-rule"></div>
               </el-col>
             </el-col>
-            <el-col :class="login.username==''||login.password==''||login.captcha==''?'content-submit-disabled':''" :span="24"
+            <el-col :class="login.loginName==''||login.password==''||login.captcha==''?'content-submit-disabled':''" :span="24"
                     class="content-submit"
                     @click.native="loginSubmit">登录
             </el-col>
