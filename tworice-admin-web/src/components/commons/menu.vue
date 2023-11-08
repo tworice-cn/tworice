@@ -6,7 +6,7 @@
                               <i :class="item.icon"></i>
                               <span v-if="!asideStatus">{{item.name}}</span>
                         </template>
-                        <Menu :menuList="item.list"></Menu>
+                        <Menu :menuList="item.children"></Menu>
                   </el-submenu>
                   <el-menu-item v-if="item.type==2" :key="item.id" :index="item.url">
                         <i :class="item.icon"></i>

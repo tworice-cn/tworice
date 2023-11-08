@@ -9,6 +9,13 @@ export function setupRouter() {
         [
             {path: "/login", component: () => import("@/components/login/index.vue"), meta: {title: "登录"}},
             {path: "/bigScreen", component: () => import("@/components/admin/home.vue"), meta: {title: "实时监控"}},
+            {path: "/admin/userCenter/:id", component: () => import("@/components/admin/userCenter.vue"), meta: {title: "用户中心"}},
+            {
+                path: "/home",
+                name: "欢迎",
+                component: () => import("@/components/front/index/index.vue"),
+                children: [],
+            },
             {
                 path: "/admin",
                 name: "首页",
@@ -20,22 +27,11 @@ export function setupRouter() {
                         component: (resolve) => require(["@/components/admin/home.vue"], resolve)
                     },
                     {
-                        path: "userCenter/:id",
-                        name: "用户中心",
-                        component: (resolve) => require(["@/components/admin/userCenter.vue"], resolve)
-                    },
-                    {
                         path: "file",
                         name: "我的文件",
                         component: (resolve) => require(["@/components/admin/systemFile.vue"], resolve)
                     },
                 ],
-            },
-            {
-                path: "/home",
-                name: "欢迎",
-                component: () => import("@/components/front/index/index.vue"),
-                children: [],
             },
             {
                 path: "/system",

@@ -6,7 +6,7 @@
                         <el-button type="primary" icon="el-icon-plus" size="mini" @click="addModule">新增</el-button>
                   </el-col>
                   <el-col :span="24">
-                        <el-table size="mini" :data="tableData" style="width: 100%;margin-bottom: 20px;" row-key="id" border :tree-props="{children: 'list', hasChildren: 'hasChildren'}" :header-cell-style="$setting.table_header">
+                        <el-table size="mini" :data="tableData" style="width: 100%;margin-bottom: 20px;" row-key="id" border :tree-props="{children: 'children', hasChildren: 'hasChildren'}" :header-cell-style="$setting.table_header">
                               <el-table-column prop="name" label="资源名称"></el-table-column>
                               <el-table-column prop="url" label="页面路径"></el-table-column>
                               <!-- <el-table-column prop="path" label="请求路径"></el-table-column> -->
@@ -268,17 +268,17 @@ export default {
                         let format = new FormData();
                         format.append('ids',row.id);
                         if(row.type==1){
-                              if(row.list){
-                                    row.list.forEach(page => {
+                              if(row.children){
+                                    row.children.forEach(page => {
                                           format.append('ids',page.id);
-                                          page.list.forEach(func => {
+                                          page.children.forEach(func => {
                                           format.append('ids',func.id); 
                                           })
                                     });
                               }
                         }else if(row.type==2){
-                              if(row.list){
-                                    row.list.forEach(func => {
+                              if(row.children){
+                                    row.children.forEach(func => {
                                           format.append('ids',func.id); 
                                     });
                               }
