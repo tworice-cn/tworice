@@ -76,6 +76,11 @@ export function setupRouter() {
                         name: "查看公告",
                         component: (resolve) => require(["@/components/admin/showNotice.vue"], resolve)
                     },
+                    {
+                        path: "feedback",
+                        name: "用户反馈",
+                        component: (resolve) => require(["@/components/admin/systemFeedback.vue"], resolve)
+                    },
                 ],
             },
             {
