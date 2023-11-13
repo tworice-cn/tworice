@@ -7,7 +7,7 @@
         </div>
         <div class='search-item'>反馈类型 :
           <el-select v-model="search.fbType" placeholder="请选择" size="mini">
-            <el-option v-for="item in typeList" :key="item" :label="item" :value="item"></el-option>
+            <el-option v-for="item in typeList" :key="item.type" :label="item.type" :value="item.type"></el-option>
           </el-select>
         </div>
         <div class='search-item'>联系方式 :
@@ -62,7 +62,7 @@
       <el-form :model="form" :rules="rules" ref="form">
         <el-form-item label='反馈类型' :label-width='formLabelWidth' prop='fbType'>
           <el-select v-model="form.fbType" placeholder="请选择" size="mini">
-            <el-option v-for="item in typeList" :key="item" :label="item" :value="item"></el-option>
+            <el-option v-for="item in typeList" :key="item.type" :label="item.type" :value="item.type"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label='反馈描述' :label-width='formLabelWidth' prop='fbDescribe'>
@@ -96,7 +96,9 @@
     </el-dialog>
   </div>
 </template>
-<script>export default {
+<script>
+import {type} from '@/api/feedback/feedback'
+export default {
   props: [], data() {
     return {
       loading: true,
@@ -141,7 +143,7 @@
       this.toPage();
     },
     initType(){
-      this.$axios.get(this.$url+this.pageUrlPath+'/type').then(res=>{
+      type().then(res=>{
         this.typeList=res.data.data.list;
       })
     },
