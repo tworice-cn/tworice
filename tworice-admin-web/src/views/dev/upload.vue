@@ -20,7 +20,7 @@ export default {
       },
       methods: {
             uploadChange(e) {
-                  console.log(e.data.url);
+                  console.log(e.data.file);
             },
       },
 };

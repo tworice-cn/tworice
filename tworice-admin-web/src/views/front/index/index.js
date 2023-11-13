@@ -1,7 +1,7 @@
 import BreadCrumb from "@/components/commons/BreadCrumb.vue";
 import Menu from "@/components/commons/menu.vue";
 import PortalMenu from "@/components/commons/portalMenu.vue";
-import system from "@/components/commons/system/system";
+import system from "@/components/commons/system/system.js";
 
 export default {
     props: [],

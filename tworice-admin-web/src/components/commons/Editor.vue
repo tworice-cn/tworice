@@ -50,7 +50,6 @@ export default Vue.extend({
             },
             /**清空内容 */
             clearText(){
-                  
                   this.editor.clear();
             },
             /**
@@ -64,13 +63,9 @@ export default Vue.extend({
                   this.$emit('input', e)
             }
       },
-      mounted() {
-            
-      },
       beforeDestroy() {
-            const editor = this.editor
-            if (editor == null) return
-            editor.destroy() // 组件销毁时，及时销毁编辑器
+            if (this.editor == null) return;
+            this.editor.destroy() // 组件销毁时，及时销毁编辑器
       }
 })
 </script>
