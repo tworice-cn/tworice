@@ -76,8 +76,8 @@
 </template>
 
 <script>
-import Editor from '../commons/Editor.vue'
-import Descriptions from '../commons/Descriptions.vue'
+import Editor from '@/components/commons/Editor.vue'
+import Descriptions from '@/components/commons/Descriptions.vue'
 
 export default {
       components:{

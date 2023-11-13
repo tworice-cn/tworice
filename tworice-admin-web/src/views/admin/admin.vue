@@ -91,7 +91,7 @@
 </template>
 
 <script>
-import Descriptions from '../commons/Descriptions.vue'
+import Descriptions from '@/components/commons/Descriptions.vue'
 import {list} from '@/api/admin/admin'
 export default {
       components:{

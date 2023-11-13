@@ -24,5 +24,5 @@
 </template>
 
 <script>
-export {default} from "@/components/front/index/index";
+export {default} from "@/views/front/index/index";
 </script>

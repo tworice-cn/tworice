@@ -13,8 +13,8 @@ spring:
   # 数据库
   datasource:
     username: root
-    password: 123456
-    url: jdbc:mysql://127.0.0.1:3306/tworice_admin?serverTimezone=UTC
+    password: fanning0811
+    url: jdbc:mysql://8.140.131.83:3306/tworice_admin?serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
     # hikari数据库连接池
     hikari:

@@ -78,7 +78,7 @@
             </el-dialog>
       </div>
 </template><script>
-import DistValue from '../commons/DistValue.vue'
+import DistValue from '../../components/commons/DistValue.vue'
 
 export default {
       components:{

@@ -1,6 +1,6 @@
 <template>
       <div>
-            方法执行结果打印在控制台。当前代码示例位置：components/dev/editor.vue
+            方法执行结果打印在控制台。当前代码示例位置：views/dev/editor.vue
             <div style="width:500px;">
                   <Editor ref="editor" v-model="value"></Editor>
             </div>
@@ -12,7 +12,7 @@
 
 <script>
 
-import Editor from '../commons/Editor.vue'
+import Editor from '@/components/commons/Editor.vue'
 export default {
       components:{
             Editor

@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import Descriptions from '../commons/Descriptions.vue'
+import Descriptions from '../../components/commons/Descriptions.vue'
 export default {
       components:{
             Descriptions

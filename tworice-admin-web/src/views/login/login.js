@@ -1,5 +1,5 @@
 import setting from "@/core/setting";
-import log from "@/components/admin/log.vue";
+import log from "@/views/admin/log.vue";
 export default {
     props: [],
     data() {
