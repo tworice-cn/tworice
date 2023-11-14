@@ -7,11 +7,23 @@ export default {
   },
   data() {
     return {
-      typeList:[]
+      typeList:[],
+      form: {
+        id: '',
+        createTime: '',
+        updateTime: '',
+        creator: '',
+        fbType: '',
+        fbDescribe: '',
+        fbContact: '',
+        fbImg: '',
+      },
     };
   },
   methods: {
-
+    changeType(type){
+      this.form.fbType=type;
+    }
   },
   mounted() {
     type().then(res=>{
@@ -22,13 +34,13 @@ export default {
 </script>
 
 <template>
-  <div class="feedback-container">
+  <el-col class="feedback-container">
     <el-col :span="24" class="feedback-header">
-      <h3>请选择反馈类型</h3>
+      <h3>{{form.fbType?'请填写反馈信息':'请选择反馈类型'}}</h3>
     </el-col>
 
-    <el-col :span="24" class="feedback-type">
-      <el-col :span="24" class="type-item" v-for="item in typeList" :key="item.type">
+    <el-col :span="24" class="feedback-type" v-if="form.fbType==''">
+      <el-col :span="24" class="type-item" v-for="item in typeList" :key="item.type" @click.native="changeType(item.type)">
         <el-col :span="20" class="item-left">
           <el-col :span="24" class="type-title">{{item.type}}</el-col>
           <el-col :span="24" class="type-msg">{{item.msg}}</el-col>
@@ -38,29 +50,28 @@ export default {
     </el-col>
 
 
-<!--    <div class="feedback-form">-->
-<!--      <form @submit.prevent="submitFeedback">-->
-<!--        <div class="form-group">-->
-<!--          <label for="name">姓名：</label>-->
-<!--          <input type="text" id="name" v-model="name" required>-->
-<!--        </div>-->
-<!--        <div class="form-group">-->
-<!--          <label for="email">邮箱：</label>-->
-<!--          <input type="email" id="email" v-model="email" required>-->
-<!--        </div>-->
-<!--        <div class="form-group">-->
-<!--          <label for="message">反馈内容：</label>-->
-<!--          <textarea id="message" v-model="message" required></textarea>-->
-<!--        </div>-->
-<!--        <button type="submit" class="submit-button">提交反馈</button>-->
-<!--      </form>-->
-<!--    </div>-->
-  </div>
+    <el-col :span="24" class="feedback-form" v-if="form.fbType">
+      <form @submit.prevent="submitFeedback">
+        <div class="form-group">
+          <label for="name">姓名：</label>
+          <input type="text" id="name" v-model="name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">邮箱：</label>
+          <input type="email" id="email" v-model="email" required>
+        </div>
+        <div class="form-group">
+          <label for="message">反馈内容：</label>
+          <textarea id="message" v-model="message" required></textarea>
+        </div>
+        <button type="submit" class="submit-button">提交反馈</button>
+      </form>
+    </el-col>
+  </el-col>
 </template>
 
 <style scoped lang="less">
 .feedback-container {
-  max-width: 600px;
   margin: 0 auto;
   padding: 20px;
 }

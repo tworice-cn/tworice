@@ -20,7 +20,7 @@ export function setupRouter() {
             {
                 path: "/admin",
                 name: "首页",
-                component: () => import("../views/admin"),
+                component: () => import("@/views/admin"),
                 children: [
                     {
                         path: "home",

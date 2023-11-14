@@ -1,5 +1,6 @@
 <template>
       <div class="user-center">
+            <el-page-header @back="goBack" content="返回" class="back-box"></el-page-header>
             <el-col :span="24" class="top-box">
                   <div class="avatar-box">
                         <el-avatar src="/favicon.ico"></el-avatar>
@@ -16,8 +17,11 @@
                         <el-tab-pane label="用户信息" name="userInfo"></el-tab-pane>
                         <el-tab-pane label="操作日志" name="userLog" v-if="isMe"></el-tab-pane>
                         <el-tab-pane label="系统公告" name="systemNotice" v-if="isMe"></el-tab-pane>
+                        <el-tab-pane label="反馈建议" name="feedback" v-if="isMe"></el-tab-pane>
                   </el-tabs>
-                  
+                  <el-col :span="24" class="info-box" v-if="activeName=='feedback'">
+                        <feedback></feedback>
+                  </el-col>
                   <el-col :span="24" class="info-box" v-if="activeName=='userInfo'">
                         <el-col :span="24" class="info-title">
                               <el-col :span="12" class="title-left">用户信息</el-col>
@@ -148,9 +152,11 @@
 </template>
 
 <script>
+import feedback from "@/components/feedback";
 export default {
       name: "",
       props: [],
+      components: { feedback },
       data() {
             return {
                   activeName:'userInfo',
@@ -170,6 +176,9 @@ export default {
             };
       }, 
       methods: {
+            goBack(){
+                  this.$router.go(-1);
+            },
             showNotice(item){
                   // 跳转到showNotice路由并携带id参数
                   this.$router.push({path:'/notice/showNotice',query:{id:item.id}});
@@ -327,6 +336,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.back-box{
+      height: 50px;
+      line-height: 50px;
+}
 .user-center{
       padding: 0 10px;
       cursor: default;
