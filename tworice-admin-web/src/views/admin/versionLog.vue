@@ -38,14 +38,14 @@
                   </div>
             </el-col> <!-- 弹出层 -->
             <el-dialog :title="formTitle" :visible.sync="formVisible" width="30%" :before-close="$utils.handleClose">
-                  <el-form :model="form" :rules="rules" ref="form">
-                        <el-form-item label='版本号' :label-width='formLabelWidth' prop='version'>
+                  <el-form :model="form" ref="form">
+                        <el-form-item label='版本号' :label-width='formLabelWidth'>
                               <el-input placeholder='请输入版本号' v-model='form.version' @change='isChange = true'></el-input>
                         </el-form-item>
-                        <el-form-item label='作者' :label-width='formLabelWidth' prop='author'>
+                        <el-form-item label='作者' :label-width='formLabelWidth' >
                               <el-input placeholder='请输入作者' v-model='form.author' @change='isChange = true'></el-input>
                         </el-form-item>
-                        <el-form-item label='版本描述' :label-width='formLabelWidth' prop='info'>
+                        <el-form-item label='版本描述' :label-width='formLabelWidth' >
                               <el-input type="textarea" :rows="2" placeholder='请输入版本描述' v-model='form.info' @change='isChange = true'></el-input>
                         </el-form-item>
                         
@@ -78,43 +78,6 @@ export default {
                   formVisible: false,
                   inductsVisible: false,
                   form: { id: "", createTime: "", version: "", info: "", author: "" },
-                  rules: {
-                        id: [
-                              {
-                                    required: true,
-                                    message: "请输入编号",
-                                    trigger: "blur",
-                              },
-                        ],
-                        createTime: [
-                              {
-                                    required: true,
-                                    message: "请输入日期",
-                                    trigger: "blur",
-                              },
-                        ],
-                        version: [
-                              {
-                                    required: true,
-                                    message: "请输入版本号",
-                                    trigger: "blur",
-                              },
-                        ],
-                        info: [
-                              {
-                                    required: true,
-                                    message: "请输入版本描述",
-                                    trigger: "blur",
-                              },
-                        ],
-                        author: [
-                              {
-                                    required: true,
-                                    message: "请输入作者",
-                                    trigger: "blur",
-                              },
-                        ],
-                  },
                   formLabelWidth: "80px",
                   /** 弹出框标签宽度*/ isChange: false,
                   search: { id: "", version: "", author: "" },

@@ -3,7 +3,6 @@ package cn.tworice.auth;
 import cn.tworice.auth.service.VerifyManger;
 import cn.tworice.common.util.AgingMap;
 import cn.tworice.system.service.whiteList.SystemWhiteListService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;

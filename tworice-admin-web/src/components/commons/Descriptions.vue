@@ -6,7 +6,7 @@
                               <i :class="item.icon?item.icon:''"></i>
                               {{item.name}}
                         </template>
-                        {{item.value}}
+                        <div v-html="item.value"></div>
                   </el-descriptions-item>
             </el-descriptions>
       </div>

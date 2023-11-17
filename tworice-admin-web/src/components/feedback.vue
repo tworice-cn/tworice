@@ -1,9 +1,10 @@
 <script>
-import {type} from '@/api/feedback/feedback'
+import {type,submitForm} from '@/api/feedback/feedback'
+import Editor from '@/components/commons/Editor.vue'
 export default {
   name: "Feedback",
-  props: {
-
+  components:{
+    Editor
   },
   data() {
     return {
@@ -15,14 +16,20 @@ export default {
         creator: '',
         fbType: '',
         fbDescribe: '',
-        fbContact: '',
-        fbImg: '',
+        fbContact: ''
       },
     };
   },
   methods: {
     changeType(type){
       this.form.fbType=type;
+    },
+    submit(){
+      submitForm(this.form).then(res=>{
+        if (res.data.status.code < 400) {
+          this.form.fbType='';
+        }
+      })
     }
   },
   mounted() {
@@ -51,20 +58,16 @@ export default {
 
 
     <el-col :span="24" class="feedback-form" v-if="form.fbType">
-      <form @submit.prevent="submitFeedback">
+      <form >
         <div class="form-group">
-          <label for="name">姓名：</label>
-          <input type="text" id="name" v-model="name" required>
-        </div>
-        <div class="form-group">
-          <label for="email">邮箱：</label>
-          <input type="email" id="email" v-model="email" required>
+          <label for="email">联系邮箱：</label>
+          <el-input type="email" id="email" v-model="form.fbContact" required/>
         </div>
         <div class="form-group">
           <label for="message">反馈内容：</label>
-          <textarea id="message" v-model="message" required></textarea>
+          <Editor ref="editor" v-model="form.fbDescribe"></Editor>
         </div>
-        <button type="submit" class="submit-button">提交反馈</button>
+        <button type="submit" class="submit-button" @click="submit">提交反馈</button>
       </form>
     </el-col>
   </el-col>
@@ -79,7 +82,7 @@ export default {
 .feedback-header {
   text-align: center;
   margin-bottom: 40px;
-  margin-top: 75px;
+  margin-top: 40px;
 }
 /* 反馈类型 */
 .feedback-type{
@@ -117,15 +120,20 @@ export default {
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
+
+  .form-group {
+    margin-bottom: 10px;
+
+    label {
+      display: block;
+      line-height: 30px;
+    }
+  }
 }
 
-.form-group {
-  margin-bottom: 10px;
-}
 
-label {
-  display: block;
-}
+
+
 
 input[type="text"], input[type="email"], textarea {
   width: 100%;

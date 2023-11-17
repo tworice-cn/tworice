@@ -3,7 +3,7 @@
     <el-col :span="24" class="info-search-box">
       <div class="search">
         <div class='search-item'>编号 :
-          <el-input size='mini' v-model='search.id' placeholder='通过编号查询' clearable></el-input>
+          <el-input v-model='search.id' clearable placeholder='通过编号查询' size='mini'></el-input>
         </div>
         <div class='search-item'>反馈类型 :
           <el-select v-model="search.fbType" placeholder="请选择" size="mini">
@@ -11,7 +11,7 @@
           </el-select>
         </div>
         <div class='search-item'>联系方式 :
-          <el-input size='mini' v-model='search.fbContact' placeholder='通过联系方式查询' clearable></el-input>
+          <el-input v-model='search.fbContact' clearable placeholder='通过联系方式查询' size='mini'></el-input>
         </div>
         <div class="search-item">
           <el-button size="mini" type="primary" @click="submitSearch">查询</el-button>
@@ -19,62 +19,54 @@
       </div>
     </el-col>
     <el-col :span="24" class="button-box">
-      <el-button size="mini" type="primary" icon="el-icon-plus" @click="add">新增</el-button>
-      <el-button size="mini" type="danger" icon="el-icon-delete" @click="delList">批量删除</el-button>
-      <el-button size="mini" type="warning" icon="el-icon-upload" @click="inducts">批量导入</el-button>
+      <el-button icon="el-icon-plus" size="mini" type="primary" @click="add">新增</el-button>
+      <el-button icon="el-icon-delete" size="mini" type="danger" @click="delList">批量删除</el-button>
+      <el-button icon="el-icon-upload" size="mini" type="warning" @click="inducts">批量导入</el-button>
     </el-col>
-    <el-table @selection-change="handleSelectionChange" size="mini" v-loading="loading"
-              :header-cell-style="$setting.table_header" :stripe="true" :fit="true" :data="tableData" border
-              style="width: 100%">
+    <el-table v-loading="loading" :data="tableData" :fit="true"
+              :header-cell-style="$setting.table_header" :stripe="true" border size="mini" style="width: 100%"
+              @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55"></el-table-column>
-<!--      <el-table-column type="index" label="序号" width="55"></el-table-column>-->
-      <el-table-column prop='id' label='编号'></el-table-column>
-      <el-table-column prop='createTime' label='创建时间'
-                       :formatter='(row)=>$utils.formatDate(row.createTime)'></el-table-column>
-      <el-table-column prop='updateTime' label='更新时间'
-                       :formatter='(row)=>$utils.formatDate(row.updateTime)'></el-table-column>
-      <el-table-column prop='creator' label='创建人'></el-table-column>
-      <el-table-column prop='fbType' label='反馈类型'>
+      <el-table-column label='编号' prop='id' width="60" ></el-table-column>
+      <el-table-column :formatter='(row)=>$utils.formatDate(row.createTime)' label='创建时间'
+                       prop='createTime'></el-table-column>
+      <el-table-column :formatter='(row)=>$utils.formatDate(row.updateTime)' label='更新时间'
+                       prop='updateTime'></el-table-column>
+      <el-table-column label='反馈人标识' prop='creator'></el-table-column>
+      <el-table-column label='反馈类型' prop='fbType'>
         <template slot-scope="scope">
-          <el-tag>{{scope.row.fbType}}</el-tag>
+          <el-tag>{{ scope.row.fbType }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop='fbDescribe' label='反馈描述'>
-
-      </el-table-column>
-      <el-table-column prop='fbContact' label='联系方式'></el-table-column>
-      <el-table-column prop='fbImg' label='反馈图片'></el-table-column>
+      <el-table-column label='联系方式' prop='fbContact'></el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button size="mini" type="warning" icon="el-icon-edit" circle @click.native="edit(scope.row)"></el-button>
-          <el-button size="mini" type="danger" icon="el-icon-delete" circle @click.native="del(scope.row)"></el-button>
+          <el-button size="mini" type="info" icon="el-icon-view" circle @click.native="show(scope.row)"></el-button>
+          <el-button circle icon="el-icon-edit" size="mini" type="warning" @click.native="edit(scope.row)"></el-button>
+          <el-button circle icon="el-icon-delete" size="mini" type="danger" @click.native="del(scope.row)"></el-button>
         </template>
       </el-table-column>
     </el-table>
     <el-col :span="24">
       <div class="page-box">
-        <el-pagination @size-change="handleSizeChange" :small="true" :hide-on-single-page="true"
-                       @current-change="changePage" background layout="total, sizes, prev, pager, next" :total="total"
-                       :page-size="pageSize" :current-page="page"></el-pagination>
+        <el-pagination :current-page="page" :hide-on-single-page="true" :page-size="pageSize"
+                       :small="true" :total="total" background layout="total, sizes, prev, pager, next"
+                       @size-change="handleSizeChange" @current-change="changePage"></el-pagination>
       </div>
-    </el-col>            <!-- 弹出层 -->
-    <el-dialog :title="formTitle" :visible.sync="formVisible" top="5vh" width="30%" :before-close="$utils.handleClose">
-      <el-form :model="form" :rules="rules" ref="form">
-        <el-form-item label='反馈类型' :label-width='formLabelWidth' prop='fbType'>
+    </el-col>
+    <el-dialog :before-close="$utils.handleClose" :title="formTitle" :visible.sync="formVisible" top="5vh" width="40%">
+      <el-form ref="form" :model="form" :rules="rules">
+        <el-form-item :label-width='formLabelWidth' label='反馈类型' prop='fbType'>
           <el-select v-model="form.fbType" placeholder="请选择" size="mini">
             <el-option v-for="item in typeList" :key="item.type" :label="item.type" :value="item.type"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label='反馈描述' :label-width='formLabelWidth' prop='fbDescribe'>
-          <el-input placeholder='请输入反馈描述' v-model='form.fbDescribe' @change='isChange = true'
-                    size='small'></el-input>
+        <el-form-item :label-width='formLabelWidth' label='联系方式' prop='fbContact'>
+          <el-input v-model='form.fbContact' placeholder='请输入联系方式' size='small'
+                    @change='isChange = true'></el-input>
         </el-form-item>
-        <el-form-item label='联系方式' :label-width='formLabelWidth' prop='fbContact'>
-          <el-input placeholder='请输入联系方式' v-model='form.fbContact' @change='isChange = true'
-                    size='small'></el-input>
-        </el-form-item>
-        <el-form-item label='反馈图片' :label-width='formLabelWidth' prop='fbImg'>
-          <el-input placeholder='请输入反馈图片' v-model='form.fbImg' @change='isChange = true' size='small'></el-input>
+        <el-form-item :label-width='formLabelWidth' label='反馈描述' prop='fbDescribe'>
+          <Editor ref="editor" v-model="form.fbDescribe" @change='isChange = true'></Editor>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -82,11 +74,11 @@
         <el-button size="mini" type="primary" @click="submit">确 定</el-button>
       </div>
     </el-dialog>
-    <el-dialog title="选择数据表格" :visible.sync="inductsVisible" width="40%" :before-close="$utils.handleClose">
+    <el-dialog :before-close="$utils.handleClose" :visible.sync="inductsVisible" title="选择数据表格" width="40%">
       <el-form size="mini">
-        <el-form-item label="选择表格" :label-width="formLabelWidth"><input type="file" class="file-left-input"
-                                                                            @change="inductsChange()" ref="inducts"
-                                                                            multiple accept=".xls,.xlsx"/>
+        <el-form-item :label-width="formLabelWidth" label="选择表格"><input ref="inducts" accept=".xls,.xlsx"
+                                                                            class="file-left-input" multiple
+                                                                            type="file" @change="inductsChange()"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -94,11 +86,24 @@
         <el-button size="mini" type="primary" @click="templateDownload">下载模板</el-button>
       </div>
     </el-dialog>
+    <el-dialog title="查看" :visible.sync="showVisible" width="40%" :before-close="$utils.handleClose">
+      <Descriptions :value="showInfo"></Descriptions>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click.native="showVisible=false">关 闭</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
-import {type} from '@/api/feedback/feedback'
+import {type,submitForm} from '@/api/feedback/feedback'
+import Editor from '@/components/commons/Editor.vue'
+import Descriptions from '@/components/commons/Descriptions.vue'
+
 export default {
+  components: {
+    Editor,
+    Descriptions
+  },
   props: [], data() {
     return {
       loading: true,
@@ -109,6 +114,7 @@ export default {
       formTitle: '',
       formVisible: false,
       inductsVisible: false,
+      showVisible:false,
       form: {
         id: '',
         createTime: '',
@@ -119,6 +125,7 @@ export default {
         fbContact: '',
         fbImg: '',
       },
+      showInfo:[],
       rules: {
         id: [{required: true, message: '请输入编号', trigger: 'blur'}],
         createTime: [{required: true, message: '请输入创建时间', trigger: 'blur'}],
@@ -134,17 +141,27 @@ export default {
       search: {id: '', creator: '', fbType: '', fbContact: '',},
       multipleSelection: [],
       pageUrlPath: '/client/systemFeedback',
-      typeList:[]
+      typeList: []
     }
   }, methods: {
-
+    show(row){
+      this.showInfo=[];
+      this.showInfo.push({name:'编号',value:row.id});
+      this.showInfo.push({name:'创建人标识',value:row.creator});
+      this.showInfo.push({name:'创建时间',value:this.$utils.formatDate(row.createTime)});
+      this.showInfo.push({name:'更新时间',value:this.$utils.formatDate(row.updateTime)});
+      this.showInfo.push({name:'反馈类型',value:row.fbType});
+      this.showInfo.push({name:'联系方式',value:row.fbContact});
+      this.showInfo.push({name:'反馈内容',value:row.fbDescribe});
+      this.showVisible=true;
+    },
     handleSizeChange(size) {
       this.pageSize = size;
       this.toPage();
     },
-    initType(){
-      type().then(res=>{
-        this.typeList=res.data.data.list;
+    initType() {
+      type().then(res => {
+        this.typeList = res.data.data.list;
       })
     },
     init() {
@@ -171,25 +188,21 @@ export default {
       this.form = this.$options.data().form;
       this.formTitle = '新增';
       this.formVisible = true;
-    }, submit() {
-      this.$root.loading = true;
-      let formData = new FormData();
-      Object.keys(this.form).map(key => {
-        if (this.form[key] != undefined && this.form[key] != '') {
-          formData.append(key, this.form[key]);
-        }
-      });
-      this.$axios({method: 'POST', url: this.$url + this.pageUrlPath + "/add", data: formData}).then(res => {
+    },
+    submit() {
+      submitForm(this.form).then(res => {
         if (res.data.status.code < 400) {
           this.toPage();
           this.formVisible = false;
         }
       });
-    }, edit(row) {
+    },
+    edit(row) {
       this.form = row;
       this.formTitle = '编辑';
       this.formVisible = true;
-    },            /*删除*/            del(row) {
+    },
+    del(row) {
       this.$confirm('此操作将永久删除该信息, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',

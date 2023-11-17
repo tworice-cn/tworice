@@ -1,5 +1,6 @@
 import setting from "@/core/setting";
 import log from "@/views/admin/log.vue";
+import {submitForm} from "@/api/feedback/feedback";
 export default {
     props: [],
     data() {
@@ -47,6 +48,7 @@ export default {
         }
     },
     methods: {
+        submitForm,
         /**提交注册 */
         submitReg() {
             this.$refs['reg'].validate(validate => {

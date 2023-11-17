@@ -389,7 +389,7 @@ export default {
             padding-bottom: 20px;
             
             .info-box{
-                  height: 500px;
+                  //height: 500px;
                   background-color: #fff;
                   border-radius: 4px;
                   overflow: auto;
