@@ -96,7 +96,6 @@ export default {
                   userList:[],// 角色待选人员
                   selectUserList:[],// 角色已选人员
                   resourceDefaultProps:{ // 自定义权限管理 属性名称
-                        children: 'list',
                         label: 'name'
                   },
                   resourceTree:[],
@@ -237,6 +236,7 @@ export default {
                               // 设置所有资源
                               let resources=window.localStorage.getItem("resources");
                               resources=JSON.parse(resources);
+                          console.log(resources)
                               this.resourceTree=resources;
                               this.treeLoad=false;
                         }
@@ -246,7 +246,6 @@ export default {
              * 提交角色权限
              */
             submitResource(){
-                  // this.$root.loading=true;
 
                   let checkedKeys=[];// 选中的叶子节点（页面）
 

@@ -2,14 +2,14 @@
   <div class="login tworice-login-bg">
     <el-col :span="24">
       <el-col :span="24" class="login-middle">
-        <el-col :md="12" class="min-height login-left">
+        <el-col :md="12" :xs="0" class="min-height login-left">
           <i>
             <img alt="" src="/favicon.ico" width="100px">
             <br/>
           </i>
           {{ $setting.systemName }}
         </el-col>
-        <el-col :md="12" class="login-right">
+        <el-col :md="12" :xs="24" class="login-right">
           <el-col :span="24" class="login-top"></el-col>
           <el-col :span="24" class="login-content">
             <el-col :span="24" class="content-title">
@@ -77,10 +77,10 @@
           <el-input v-model="reg.form.nickName" placeholder="您的昵称" @change="isChange = true"></el-input>
         </el-form-item>
         <el-col :span="24" class="reg-captcha-box">
-          <el-col :span="15">
+          <el-col :span="13" class="reg-captcha-input-box">
             <el-input v-model="reg.form.captcha" maxlength="6" placeholder="请输入验证码" type="text"></el-input>
           </el-col>
-          <el-col :span="9" class="send-captcha-box" @click.native="regCaptcha">
+          <el-col :span="11" class="send-captcha-box" @click.native="regCaptcha">
             {{ reg.send_captcha }}
           </el-col>
         </el-col>
@@ -208,7 +208,11 @@ export { default } from './login.js';
   height: 50px;
   margin-bottom: 30px;
 
-  input {
+  .reg-captcha-input-box{
+    overflow: hidden;
+  }
+
+  el-input {
     height: 40px;
   }
 
@@ -222,6 +226,4 @@ export { default } from './login.js';
     cursor: pointer;
   }
 }
-
-
 </style>

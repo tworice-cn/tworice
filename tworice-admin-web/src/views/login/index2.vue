@@ -53,11 +53,11 @@
           <el-input v-model="reg.form.nickName" @change="isChange = true" placeholder="您的昵称"></el-input>
         </el-form-item>
         <el-col :span="24" class="reg-captcha-box">
-          <el-col :span="15">
-            <el-input placeholder="请输入验证码" maxlength="6" type="text" v-model="reg.form.captcha"></el-input>
+          <el-col :span="13" class="reg-captcha-input-box">
+            <el-input v-model="reg.form.captcha" maxlength="6" placeholder="请输入验证码" type="text"></el-input>
           </el-col>
-          <el-col :span="9" class="send-captcha-box" @click.native="regCaptcha">
-            {{reg.send_captcha}}
+          <el-col :span="11" class="send-captcha-box" @click.native="regCaptcha">
+            {{ reg.send_captcha }}
           </el-col>
         </el-col>
       </el-form>
@@ -155,6 +155,10 @@ export { default } from './login.js';
 .reg-captcha-box{
   height: 50px;
   margin-bottom: 30px;
+
+  .reg-captcha-input-box{
+    overflow: hidden;
+  }
 
   input{
     height: 40px;
