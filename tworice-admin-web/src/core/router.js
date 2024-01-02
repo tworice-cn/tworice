@@ -7,7 +7,7 @@ export function setupRouter() {
     const router =
         //$start
         [
-            {path: "/login", component: () => import("@/views/login/index.vue"), meta: {title: "登录"}},
+            {path: "/login", component: () => import("@/views/login/index5.vue"), meta: {title: "登录"}},
             {path: "/bigScreen", component: () => import("@/views/admin/home.vue"), meta: {title: "实时监控"}},
             {path: "/admin/userCenter/:id", component: () => import("@/views/admin/userCenter.vue"), meta: {title: "用户中心"}},
             {path: "/front/feedback", component: () => import("@/views/front/feedback"), meta: {title: "用户反馈"}},

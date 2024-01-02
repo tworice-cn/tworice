@@ -14,7 +14,7 @@ spring:
   datasource:
     username: root
     password: 123456
-    url: jdbc:mysql://8.8.8.8:3306/tworice_admin?serverTimezone=UTC
+    url: jdbc:mysql://127.0.0.1:3306/tworice_admin?serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
     # hikari数据库连接池
     hikari:
@@ -49,10 +49,12 @@ logging:
     root: info
     cn.tworice: debug
 tworice:
+  login:
+    captchaType: character
   generate:
     vue-project: tworice-admin-web # 前端项目与当前项目平级的相对路径，要包含前端项目根路径
     template: template  # 代码生成模板在resources目录下的路径
-  dev: true
+  dev: false # 开发模式是否开启
   env: dev # 当前环境
   file:
     path: \upload

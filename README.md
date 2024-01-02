@@ -304,8 +304,8 @@ management:
 
 ```yml
 tworice:
-	captcha:
-    	type: arithmetic # 算数验证码
+	login:
+		captchaType: arithmetic # 算数验证码
 ```
 
 type的取值：`arithmetic`（算数），`character`（字符）；其中字符验证码不分大小写。
