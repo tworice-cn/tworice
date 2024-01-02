@@ -228,8 +228,9 @@ export default {
     mounted() {
         let loginForm = localStorage.getItem('loginForm')
         if (loginForm) {
-            this.login = JSON.parse(loginForm);
-            this.login.captcha='';
+            let loginStore=JSON.parse(loginForm);
+            this.login.loginName = loginStore.loginName;
+            this.login.password = loginStore.password;
         }
         this.initCaptcha();
     }

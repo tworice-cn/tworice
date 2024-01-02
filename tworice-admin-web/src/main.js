@@ -20,8 +20,8 @@ Vue.prototype.$screenfull=screenfull
 
 // 主题
 // import '@/assets/theme/mimicry-theme.less'
-import '@/assets/theme/arco-pro-theme.less'
-// import '@/assets/theme/default-theme.less'
+// import '@/assets/theme/arco-pro-theme.less'
+import '@/assets/theme/default-theme.less'
 
 // Echarts
 import * as echarts from 'echarts';

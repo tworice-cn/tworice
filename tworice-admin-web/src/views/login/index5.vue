@@ -1,27 +1,36 @@
+<!--机智库样式，左侧登录框，右侧背景图-->
 <template>
   <div class="login tworice-login-bg">
     <el-col :span="24">
       <el-col :span="24" class="login-middle">
-        <el-col :md="12" :xs="0" class="min-height login-left">
-          <i>
-            <img alt="" src="/favicon.ico" width="100px">
-            <br/>
-          </i>
-          {{ $setting.systemName }}
-        </el-col>
-        <el-col :md="12" :xs="24" class="login-right">
+        <el-col :md="8" :xs="0" class="min-height login-left">
           <el-col :span="24" class="login-top"></el-col>
           <el-col :span="24" class="login-content">
             <el-col :span="24" class="content-title">
-              登 录
+              <i>
+                <img alt="" src="/favicon.ico" width="60px">
+                <br/>
+              </i>
+            </el-col>
+            <el-col :span="24" class="content-title">
+              欢迎使用{{$setting.systemName}}
             </el-col>
             <el-col :span="24" class="content-form">
+              <el-col :span="24" class="content-form-prompt">用户名</el-col>
               <el-col :span="24">
                 <el-input ref='userInput' v-model="login.loginName" placeholder="请输入用户名" suffix-icon="el-icon-user"
                           type="text" @blur="isEmpty('u')" @keyup.enter.native="loginSubmit"></el-input>
               </el-col>
               <el-col :span="24">
                 <div ref="userCheck" class="form-rule"></div>
+              </el-col>
+              <el-col :span="24" class="content-form-prompt">
+                <el-col :span="12" class="item-left min-height">
+                  密码
+                </el-col>
+                <el-col :span="12" class="item-right">
+                  <el-link type="primary" @click="forgetPwd">忘记密码</el-link>
+                </el-col>
               </el-col>
               <el-col :span="24">
                 <el-input v-model="login.password" class="pw-input" placeholder="请输入密码" suffix-icon="el-icon-lock"
@@ -39,14 +48,6 @@
                   <img ref="captcha" alt="" height="40px" src="" title="点击换一张" @click="initCaptcha">
                 </el-col>
               </el-col>
-              <el-col :span="24" class="form-item">
-                <el-col :span="12" class="item-left">
-                  <el-checkbox v-model="login.remember">记住我</el-checkbox>
-                </el-col>
-                <el-col :span="12" class="item-right">
-                  <el-link type="primary" @click="forgetPwd">忘记密码？</el-link>
-                </el-col>
-              </el-col>
               <el-col :span="24">
                 <div ref="captchaCheck" class="form-rule"></div>
               </el-col>
@@ -56,9 +57,12 @@
                     @click.native="loginSubmit">登录
             </el-col>
             <el-col :span="24" class="reg-box">
-              <el-link @click="toReg">注 册</el-link>
+              <el-link @click="toReg" class="to-reg-button">没有账号？点击注册</el-link>
             </el-col>
           </el-col>
+        </el-col>
+        <el-col :md="16" :xs="24" class="login-right">
+
         </el-col>
       </el-col>
       <el-col :span="24" class="login-bottom"></el-col>
@@ -107,8 +111,12 @@ export { default } from './login.js';
 
 .login-left {
   height: 100vh;
-  background-color: #000;
-  color: #3683e8;
+  background-color: #fff;
+}
+
+.login-right {
+  height: 100vh;
+  color: var(--themeColor);
   // line-height: 100vh;
   text-align: center;
   font-size: 50px;
@@ -117,11 +125,10 @@ export { default } from './login.js';
   align-items: center;
   justify-content: center;
   flex-direction: column;
-}
 
-.login-right {
-  height: 100vh;
-  background-color: #fff;
+  background-image: url('~@/assets/img/loginBg.jpg');
+  background-size: cover;
+  background-position: center;
 }
 
 /**页面上方 */
@@ -136,7 +143,7 @@ export { default } from './login.js';
     height: 380px;
     background-color: rgba(255, 255, 255);
     border-radius: 3px;
-    padding: 0 10vw;
+    padding: 0 3vw;
 
     .form-item {
       line-height: 40px;
@@ -201,7 +208,7 @@ export { default } from './login.js';
   height: 30px;
   line-height: 30px;
   text-align: center;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .reg-captcha-box {
@@ -225,5 +232,13 @@ export { default } from './login.js';
     text-align: center;
     cursor: pointer;
   }
+}
+/*输入框提示语*/
+.content-form-prompt{
+  font-size: 14px;
+  line-height: 30px;
+}
+.item-right {
+  text-align: right;
 }
 </style>

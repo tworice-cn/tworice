@@ -1,3 +1,4 @@
+<!--右侧登录栏占比1/5半透明，大背景图-->
 <template>
   <div class="login tworice-login-bg">
     <el-col :span="24">

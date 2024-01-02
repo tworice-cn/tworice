@@ -1,3 +1,4 @@
+<!--大背景图，圆角登录框-->
 <template>
   <div class="login tworice-login-bg">
     <el-col :span="24">
