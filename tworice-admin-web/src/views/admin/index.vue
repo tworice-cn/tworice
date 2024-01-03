@@ -6,7 +6,7 @@
                         <el-menu :collapse-transition="false" @select="handleSelect" :unique-opened="true" :collapse="asideStatus" :default-active="$route.path" class="el-menu-vertical-demo" :router="true" ref="menu">
                               <el-menu-item class="logo-box">
                                     <i>
-                                          <img src="/favicon.ico" alt="" width="25px">
+                                          <img src="/favicon.ico" alt="">
                                     </i>
                                     <span slot="title" class="system-title">{{$setting.systemName}}</span>
                               </el-menu-item>

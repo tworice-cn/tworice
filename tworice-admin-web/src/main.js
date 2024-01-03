@@ -22,6 +22,7 @@ Vue.prototype.$screenfull=screenfull
 // import '@/assets/theme/mimicry-theme.less'
 // import '@/assets/theme/arco-pro-theme.less'
 import '@/assets/theme/default-theme.less'
+// import '@/assets/theme/jzk-theme.less'
 
 // Echarts
 import * as echarts from 'echarts';

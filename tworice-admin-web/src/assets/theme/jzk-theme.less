@@ -1,48 +1,52 @@
 *{
       box-sizing: border-box;
       /*主题色*/
-      --themeColor:#00A3FF;
+      --themeColor:#52b7ff;
       /*背景默认颜色*/
       --bgColor:#fff;
+
       /*左侧菜单背景默认颜色*/
       --asideBg:#fff;
       /*左侧菜单文字默认颜色*/
-      --asideTextColor:#4E5969; 
+      --asideTextColor:#697a8d;
       /*左侧菜单文字选择颜色*/
-      --asideActiveTextColor:#165DFF;
+      --asideActiveTextColor:#fff;
       /*左侧菜单元素悬浮时背景颜色*/
-      --asideHoverBg:#F2F3F5;
+      --asideHoverBg:#f8f8f9;
       /*子菜单背景颜色*/
       --menuItemBgColor:#fff;
       /*子菜单鼠标悬浮背景颜色*/
-      --menuItemBgColorHover:#F2F3F5;
+      --menuItemBgColorHover:#f8f8f9;
+
+
       /*表格表头*/
       --tableHeaderBgColor:#F2F3F5;
       --tableHeaderTextColor:#1D2129;
       /*表格背景*/
       --tableBgColor:#ffffff;
       --tableTextColor:#000000;
+
 }
-th{
+th,.has-gutter,thead{
       background-color: var(--tableHeaderBgColor)!important;
       color: var(--tableHeaderTextColor)!important;
       font-weight: 500!important;
 }
+
 .app-body{
       border-radius: 5px;
-      background-color: #fff;
-}
-.el-table tr,.el-table td {
-      background-color: transparent!important;
 }
 .el-table {
-      background-color: var(--tableBgColor) !important;
       color: var(--tableTextColor) !important;
+
+      th{
+            background-color: var(--tableBgColor) !important;
+      }
 }
 
 /*左侧菜单*/
 .el-menu{
-      background-color: var(--asideBg)!important;
+      //background-color: var(--asideBg)!important;
       
       .el-menu-item{
             color: var(--asideTextColor)!important;
@@ -50,14 +54,24 @@ th{
 
       .el-menu-item:hover,.el-submenu__title:hover{
             background-color: var(--asideHoverBg)!important;
+            color: var(--asideTextColor)!important;
       }
 
       .is-active{
             color: var(--asideActiveTextColor)!important;
+
       }
 
       .el-submenu__title{
             color: var(--asideTextColor)!important;
+            background-color: var(--asideBg)!important;
+      }
+      .el-menu-item.is-active{
+            background-color: var(--themeColor)!important;
+            font-weight: 700;
+            margin: 0 20px;
+            box-sizing: border-box;
+            border-radius: 10px;
       }
 
 
@@ -67,11 +81,15 @@ th{
       height: 100vh;
       
       .system-title{
-            padding-left: 10px;
+            padding-left: 0px;
+            height: 0;
+            width: 0;
+            display: none;
       }
       /**界面头部 */
       .index-header{
-            padding: 0;
+            padding: 20px 20px 0;
+
             span{
                   // padding:25px 0 0 0;
                   letter-spacing: 3px;
@@ -84,7 +102,16 @@ th{
                   padding: 0 60px 0 20px;
                   display: flex;
                   justify-content: space-between;
+                  position: relative;
 
+                  .el-icon-s-fold,.el-icon-s-unfold{
+                        position: absolute;
+                        left: -15px;
+                        background-color: var(--themeColor);
+                        padding: 8px;
+                        border-radius: 50%;
+                        color: var(--asideActiveTextColor)!important;
+                  }
                   .header-left,.header-right{
                         display: flex;
                         height: 100%;
@@ -104,6 +131,14 @@ th{
                                     font-size: 16px;
                               }
                         }
+
+                        .item{
+                              display: none;
+                        }
+                  }
+
+                  .breadCrumb{
+                        display: none;
                   }
             }
             /*角色信息框*/
@@ -111,6 +146,7 @@ th{
                   display: none;
             }
             .tabs-box{
+                  display: none;
                   width: 100%;
 
                   /**窗口标签 */
@@ -134,23 +170,37 @@ th{
             }
             /*用户名框*/
             .username-box{
-                  font-size: 0!important;
+                  //font-size: 0!important;
                   cursor: pointer;
-                  width: 40px!important;
+                  width: 120px!important;
                   height: 40px!important;
                   line-height: 40px!important;
-                  border-radius: 50%!important;
                   overflow: hidden;
-                  background-image:url('/favicon.ico');
-                  background-size: 50%;
-                  background-position: center;
-                  background-repeat: no-repeat;
-                  .username-drop-down i{
-                        // font-size: 0!important;
-                        color: white!important;
-                        opacity: 0;
-                        user-select: none;
+                  background-color: var(--themeColor)!important;
+                  color: var(--asideActiveTextColor)!important;
+                  text-align: center;
+                  position: relative;
+                  //background-image:url('/favicon.ico');
+                  //background-size: 50%;
+                  //background-position: center;
+                  //background-repeat: no-repeat;
+                  .username-drop-down{
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        width: 120px!important;
+                        height: 40px!important;
+                        i{
+                              //font-size: 18px!important;
+                              color: white!important;
+                              opacity: 0;
+                              user-select: none;
+                              width: 120px!important;
+                              height: 40px!important;
+                              line-height: 0!important;
+                        }
                   }
+
             }
       }
       /*用户菜单样式*/
@@ -221,6 +271,9 @@ transition: width 0.5s;
       color: rgb(222, 222, 222);
 }
 
+
+
+
 /*侧栏图标颜色*/
 .el-submenu__title i{
       /* color: #FFF; */
@@ -239,9 +292,10 @@ transition: width 0.5s;
 .logo-box{
       font-weight: 700;
       color: white;
+      text-align: center;
 
       img{
-            width: 25px;
+            height: 35px;
       }
 }
 /*子菜单背景颜色*/

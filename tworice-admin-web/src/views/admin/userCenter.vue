@@ -1,6 +1,6 @@
 <template>
       <div class="user-center">
-            <el-page-header @back="goBack" content="返回" class="back-box"></el-page-header>
+            <el-page-header @back="goBack" content="用户信息" class="back-box"></el-page-header>
             <el-col :span="24" class="top-box">
                   <div class="avatar-box">
                         <el-avatar src="/favicon.ico"></el-avatar>
