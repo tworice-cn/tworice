@@ -78,7 +78,7 @@ service.interceptors.response.use(
                       response.data.status.code=200;
                 } else if(code === 202){ // 数据进行了加密
                       if(response.data.data.crypt){
-                            response.data.data=JSON.parse(Crypt.encrypt(response.data.data));
+                            response.data.data=JSON.parse(Crypt.decrypt(response.data.data));
                       }
                       response.data.status.code=200;
                 }
