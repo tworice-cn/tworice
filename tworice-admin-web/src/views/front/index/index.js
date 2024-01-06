@@ -128,7 +128,7 @@ export default {
         },
         /**切换菜单 */
         handleSelect(e){
-            if(!this.isAdmin ||  e==null || e==undefined || e=='' || e=='/admin'){
+            if(!this.isAdmin || e==null || e=='' || e=='/admin'){
                 return;
             }
 
