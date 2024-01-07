@@ -16,46 +16,48 @@
             <el-col :span="24" class="content-title">
               登 录
             </el-col>
-            <el-col :span="24" class="content-form">
-              <el-col :span="24">
-                <el-input ref='userInput' v-model="login.loginName" placeholder="请输入用户名" suffix-icon="el-icon-user"
-                          type="text" @blur="isEmpty('u')" @keyup.enter.native="loginSubmit"></el-input>
-              </el-col>
-              <el-col :span="24">
-                <div ref="userCheck" class="form-rule"></div>
-              </el-col>
-              <el-col :span="24">
-                <el-input v-model="login.password" class="pw-input" placeholder="请输入密码" suffix-icon="el-icon-lock"
-                          type="password" @blur="isEmpty('p')" @keyup.enter.native="loginSubmit"></el-input>
-              </el-col>
-              <el-col :span="24">
-                <div ref="pwCheck" class="form-rule"></div>
-              </el-col>
-              <el-col :span="24">
-                <el-col :span="12">
-                  <el-input ref='captchaInput' v-model="login.captcha" maxlength="6" placeholder="请输入右侧验证码"
-                            type="text" @blur="isEmpty('c')" @keyup.enter.native="loginSubmit"></el-input>
+            <el-form @submit="loginSubmit">
+              <el-col :span="24" class="content-form">
+                <el-col :span="24">
+                  <el-input ref='userInput' v-model="login.loginName" placeholder="请输入用户名" suffix-icon="el-icon-user"
+                            type="text" @blur="isEmpty('u')" @keyup.enter.native="loginSubmit"></el-input>
                 </el-col>
-                <el-col :span="12" class="captcha-box">
-                  <img ref="captcha" alt="" height="40px" src="" title="点击换一张" @click="initCaptcha">
+                <el-col :span="24">
+                  <div ref="userCheck" class="form-rule"></div>
+                </el-col>
+                <el-col :span="24">
+                  <el-input v-model="login.password" class="pw-input" placeholder="请输入密码" suffix-icon="el-icon-lock"
+                            type="password" @blur="isEmpty('p')" @keyup.enter.native="loginSubmit"></el-input>
+                </el-col>
+                <el-col :span="24">
+                  <div ref="pwCheck" class="form-rule"></div>
+                </el-col>
+                <el-col :span="24">
+                  <el-col :span="12">
+                    <el-input ref='captchaInput' v-model="login.captcha" maxlength="6" placeholder="请输入右侧验证码"
+                              type="text" @blur="isEmpty('c')" @keyup.enter.native="loginSubmit"></el-input>
+                  </el-col>
+                  <el-col :span="12" class="captcha-box">
+                    <img ref="captcha" alt="" height="40px" src="" title="点击换一张" @click="initCaptcha">
+                  </el-col>
+                </el-col>
+                <el-col :span="24" class="form-item">
+                  <el-col :span="12" class="item-left">
+                    <el-checkbox v-model="login.remember">记住我</el-checkbox>
+                  </el-col>
+                  <el-col :span="12" class="item-right">
+                    <el-link type="primary" @click="forgetPwd">忘记密码？</el-link>
+                  </el-col>
+                </el-col>
+                <el-col :span="24">
+                  <div ref="captchaCheck" class="form-rule"></div>
                 </el-col>
               </el-col>
-              <el-col :span="24" class="form-item">
-                <el-col :span="12" class="item-left">
-                  <el-checkbox v-model="login.remember">记住我</el-checkbox>
-                </el-col>
-                <el-col :span="12" class="item-right">
-                  <el-link type="primary" @click="forgetPwd">忘记密码？</el-link>
-                </el-col>
+              <el-col :class="login.loginName==''||login.password==''||login.captcha==''?'content-submit-disabled':''" :span="24"
+                      class="content-submit"
+                      @click.native="loginSubmit">登录
               </el-col>
-              <el-col :span="24">
-                <div ref="captchaCheck" class="form-rule"></div>
-              </el-col>
-            </el-col>
-            <el-col :class="login.loginName==''||login.password==''||login.captcha==''?'content-submit-disabled':''" :span="24"
-                    class="content-submit"
-                    @click.native="loginSubmit">登录
-            </el-col>
+            </el-form>
             <el-col :span="24" class="reg-box">
               <el-link @click="toReg">注 册</el-link>
             </el-col>

@@ -11,6 +11,7 @@
                               <el-col :span="24" class="content-title">
                                     {{$setting.systemName}}
                               </el-col>
+                          <el-form @submit="loginSubmit">
                               <el-col :span="24" class="content-form">
                                     <el-col :span="24">
                                           <el-input  placeholder="请输入用户名" ref='userInput' type="text" suffix-icon="el-icon-user" v-model="login.loginName" @keyup.enter.native="loginSubmit" @blur="isEmpty('u')"></el-input>
@@ -37,7 +38,8 @@
                                     </el-col>
                               </el-col>
                               <el-col :span="24" class="content-submit" :class="login.loginName==''||login.password==''||login.captcha==''?'content-submit-disabled':''" @click.native="loginSubmit">登录</el-col>
-                              <el-col :span="24" class="reg-box"><el-link @click="toReg">注 册</el-link></el-col>
+                          </el-form>
+                            <el-col :span="24" class="reg-box"><el-link @click="toReg">注 册</el-link></el-col>
                         </el-col>
                         <el-col :md="2" class="min-height"></el-col>
                   </el-col>
