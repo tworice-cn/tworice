@@ -1,0 +1,204 @@
+import feedback from "@/components/feedback";
+import BackBox from "@/components/commons/BackBox.vue";
+
+export default {
+    name: "",
+    props: [],
+    components: {feedback, BackBox},
+    data() {
+        return {
+            activeName: 'userInfo',
+            userData: {},
+            logList: [],
+            formVisible: false,
+            adminInfo: {},
+            isChange: false,
+            userMenu:[
+                {
+                    "name":'个人信息',
+                    "key":'userInfo',
+                    "me":false
+                },
+                {
+                    "name":'操作日志',
+                    "key":'userLog',
+                    "me":true
+                },
+                {
+                    "name":'系统公告',
+                    "key":'systemNotice',
+                    "me":true
+                },
+                {
+                    "name":'反馈建议',
+                    "key":'feedback',
+                    "me":true
+                },
+            ],
+            notice: {
+                list: [],
+                page: 1,
+                pageSize: 10,
+                total: 0,
+            },
+            isMe: false
+        };
+    },
+    methods: {
+        checkMenu(key){
+            this.activeName=key;
+        },
+        showNotice(item) {
+            // 跳转到showNotice路由并携带id参数
+            this.$router.push({path: '/notice/showNotice', query: {id: item.id}});
+        },
+        submit() {
+            this.$root.loading = true;
+            // 判断用户名是否被修改
+            if (this.adminInfo.nickName != JSON.parse(window.localStorage.getItem('admin')).nickName) {
+                this.updateNickName();
+            }
+            if (!this.isChange) {
+                this.$root.loading = false;
+                this.formVisible = false;
+                return;
+            }
+            let formData = new FormData();
+            this.adminInfo.userId = this.userData.id;
+            Object.keys(this.adminInfo).map((key) => {
+                if (
+                    this.adminInfo[key] != undefined &&
+                    this.adminInfo[key] != ""
+                ) {
+                    formData.append(key, this.adminInfo[key]);
+                }
+            });
+            this.$axios({
+                method: "POST",
+                url: this.$url + "/admin/adminInfo/add",
+                data: formData,
+            }).then(() => {
+                this.initAdminInfo();
+                this.formVisible = false;
+                this.$msg({
+                    type: 'success',
+                    message: '更新成功'
+                })
+            });
+        },
+        updateNickName() {
+            if (this.adminInfo.nickName && this.adminInfo.nickName != '') {
+                let format = new FormData();
+                format.append("id", this.userData.id);
+                format.append("nickName", this.adminInfo.nickName);
+                this.$axios({
+                    method: 'post',
+                    url: this.$url + "/admin/admin/add",
+                    data: format
+                }).then(
+                    () => {
+                        this.$notify.success({
+                            title: '提醒',
+                            message: '更新用户名成功，重新登录生效'
+                        });
+                    }
+                )
+            }
+        },
+        init() {
+            let id = this.$route.params.id;
+            let admin = JSON.parse(window.localStorage.getItem("admin"))
+            if (admin.id == id) {
+                this.isMe = true;
+            }
+            this.userData = {
+                id: id
+            }
+            this.initLogList();
+            this.initAdminInfo();
+            this.initNotice();
+        },
+        initNotice() {
+
+            this.$axios.get(this.$url + "admin/notice/list?page=" + this.notice.page + "&pageSize=" + this.notice.pageSize).then(
+                response => {
+                    this.notice.list = response.data.data.list;
+                    this.notice.total = response.data.data.total;
+                }
+            )
+        },
+        initAdminInfo() {
+            this.$axios.get(
+                this.$url + "/admin/adminInfo/info/" + this.userData.id
+            )
+                .then((response) => {
+                    let info = response.data.data.info;
+                    if (info) {
+                        this.adminInfo = info;
+                        this.adminInfo.roleName = info.roles[0].roleName;
+                    }
+                });
+        },
+        initLogList() {
+            let roles = JSON.parse(window.localStorage.getItem('roles'));
+            let state = false;
+            roles.forEach(element => {
+                if (element.id < 3) {
+                    state = true;
+                    return;
+                }
+            });
+            if (state) {
+                // 当前为管理员
+                this.$axios.get(this.$url + '/admin/log/adminList?pageSize=10&page=0&userId=' + this.userData.id).then(
+                    response => {
+                        response.data.data.list.forEach(item => {
+                            let logItem = {
+                                nickName: item.admin,
+                                time: item.createTime,
+                                info: item.active
+                            }
+                            this.logList.push(logItem);
+                        })
+                        this.$axios.get(this.$url + '/admin/log/loginList?pageSize=10&page=0&loginName=' + this.userData.loginName).then(
+                            loginLogresponse => {
+                                loginLogresponse.data.data.list.forEach(item => {
+                                    let logItem = {
+                                        nickName: '账号' + this.userData.loginName,
+                                        time: item.createTime,
+                                        info: "登录" + (item.status == 1 ? '成功' : '失败')
+                                    }
+                                    this.logList.push(logItem);
+                                })
+                                this.logList.sort(function (a, b) {
+                                    return parseInt(b.time) - parseInt(a.time)
+                                })
+                                this.logList = this.logList.slice(0, 10);
+                            }
+                        )
+                    }
+                )
+
+
+            } else {
+                // 当前为用户
+                this.$axios.get(this.$url + '/admin/log/loginList?pageSize=10&page=0&loginName=' + this.userData.loginName).then(
+                    response => {
+                        let logList = response.data.data.list;
+                        logList.forEach(item => {
+                            let logItem = {
+                                nickName: '账号' + this.userData.loginName,
+                                time: item.createTime,
+                                info: "登录" + (item.status == 1 ? '成功' : '失败')
+                            }
+                            this.logList.push(logItem);
+                        })
+                    }
+                )
+            }
+        }
+    },
+    mounted() {
+        this.init();
+    }
+};
