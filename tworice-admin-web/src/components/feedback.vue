@@ -43,7 +43,7 @@ export default {
 <template>
   <el-col class="feedback-container">
     <el-col :span="24" class="feedback-header">
-      <h3>{{form.fbType?'请填写反馈信息':'请选择反馈类型'}}</h3>
+      <h3>{{form.fbType?'请填写【'+form.fbType+'】反馈信息':'请选择反馈类型'}}</h3>
     </el-col>
 
     <el-col :span="24" class="feedback-type" v-if="form.fbType==''">
@@ -58,7 +58,7 @@ export default {
 
 
     <el-col :span="24" class="feedback-form" v-if="form.fbType">
-      <form >
+      <form @submit="submit">
         <div class="form-group">
           <label for="email">联系邮箱：</label>
           <el-input type="email" id="email" v-model="form.fbContact" required/>
@@ -67,7 +67,10 @@ export default {
           <label for="message">反馈内容：</label>
           <Editor ref="editor" v-model="form.fbDescribe"></Editor>
         </div>
-        <button type="submit" class="submit-button" @click="submit">提交反馈</button>
+        <button type="submit" class="submit-button">提交反馈</button>
+        <el-col :span="24" class="reset">
+          <el-link @click="form.fbType=''">重新选择</el-link>
+        </el-col>
       </form>
     </el-col>
   </el-col>
@@ -131,10 +134,6 @@ export default {
   }
 }
 
-
-
-
-
 input[type="text"], input[type="email"], textarea {
   width: 100%;
   padding: 5px;
@@ -150,5 +149,10 @@ input[type="text"], input[type="email"], textarea {
   font-size: 16px;
   border: none;
   cursor: pointer;
+}
+
+.reset{
+  margin-top: 10px;
+  text-align: center;
 }
 </style>

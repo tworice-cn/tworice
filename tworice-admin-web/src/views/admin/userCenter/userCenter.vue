@@ -41,11 +41,9 @@ export { default } from './userCenter';
 							编辑</i></el-col>
 					</el-col>
 					<el-col :span="24" class="myinfo-box">
-						<Descriptions :value="[]"></Descriptions>
+						<Descriptions :value="userInfo"></Descriptions>
 					</el-col>
 				</el-col>
-
-
 				<el-col :span="24" class="info-box" v-if="activeName=='userLog'">
 					<el-col :span="24" class="info-title">
 						操作记录
