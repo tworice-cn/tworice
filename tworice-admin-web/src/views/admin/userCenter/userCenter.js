@@ -1,10 +1,10 @@
 import feedback from "@/components/feedback";
 import BackBox from "@/components/commons/BackBox.vue";
-
+import Descriptions from "../../../components/commons/Descriptions.vue";
 export default {
     name: "",
     props: [],
-    components: {feedback, BackBox},
+    components: {feedback, BackBox,Descriptions},
     data() {
         return {
             activeName: 'userInfo',
@@ -35,6 +35,7 @@ export default {
                     "me":true
                 },
             ],
+            userInfo:[], // 展示到用户中的
             notice: {
                 list: [],
                 page: 1,
@@ -136,8 +137,20 @@ export default {
                     if (info) {
                         this.adminInfo = info;
                         this.adminInfo.roleName = info.roles[0].roleName;
+
                     }
+                    this.initUserInfo();
                 });
+        },
+        initUserInfo(){
+            this.userInfo.push({icon:'el-icon-user', name:'用户名', value: this.adminInfo.nickName})
+            this.userInfo.push({icon:'el-icon-coordinate', name:'角色', value: this.adminInfo.roleName})
+            this.userInfo.push({icon:'el-icon-male', name:'性别', value: this.adminInfo.adminSex === 1 ? '男' : this.adminInfo.adminSex === 2 ? '女' : '未知'})
+            this.userInfo.push({icon:'el-icon-mobile-phone', name:'手机号', value: this.adminInfo.adminPhone})
+            this.userInfo.push({icon:'el-icon-message', name:'邮箱', value: this.adminInfo.adminEmail})
+            this.userInfo.push({icon:'el-icon-location-outline', name:'居住地', value: this.adminInfo.homePlace})
+            this.userInfo.push({icon:'el-icon-office-building', name:'联系地址', value: this.adminInfo.contactAddress})
+            this.userInfo.push({icon:'el-icon-tickets', name:'备注', value: this.adminInfo.adminNote})
         },
         initLogList() {
             let roles = JSON.parse(window.localStorage.getItem('roles'));

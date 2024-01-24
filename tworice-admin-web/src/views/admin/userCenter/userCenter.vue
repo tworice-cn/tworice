@@ -7,20 +7,25 @@ export { default } from './userCenter';
 		<BackBox :name="'用户中心'"></BackBox>
 		<el-col :span="24" class="user-center-box">
 			<el-col :span="6" class="left-box">
-				<el-col :span="24" class="avatar-box">
-					<el-avatar src="/favicon.ico"></el-avatar>
-					<el-col :span="24" class="user-name">{{ adminInfo.nickName }}</el-col>
-					<el-col :span="24" class="user-info">
-						<div class="info-item el-icon-male">
-							{{ adminInfo.adminSex == 1 ? '男' : adminInfo.adminSex == 2 ? '女' : '未知' }}
-						</div>
-						<div class="info-item el-icon-suitcase"> {{ adminInfo.roleName }}</div>
-						<div class="info-item el-icon-location">
-							{{ adminInfo.homePlace ? adminInfo.homePlace : '未知' }}
-						</div>
+				<el-col :span="24" class="left-top-box">
+					<el-col :span="4" class="min-height"></el-col>
+					<el-col :span="16" class="avatar-box">
+						<el-avatar src="/favicon.ico"></el-avatar>
+						<el-col :span="24" class="user-name">{{ adminInfo.nickName }}</el-col>
+						<el-col :span="24" class="user-info">
+							<div class="info-item el-icon-male">
+								{{ adminInfo.adminSex == 1 ? '男' : adminInfo.adminSex == 2 ? '女' : '未知' }}
+							</div>
+							<div class="info-item el-icon-suitcase"> {{ adminInfo.roleName }}</div>
+							<div class="info-item el-icon-location">
+								{{ adminInfo.homePlace ? adminInfo.homePlace : '未知' }}
+							</div>
+						</el-col>
 					</el-col>
+					<el-col :span="4" class="min-height"></el-col>
 				</el-col>
-				<el-col :span="24">
+
+				<el-col :span="24" class="left-bottom-box">
 					<div class="menu-item-box" v-for="item in userMenu" @click="checkMenu(item.key)" v-if="(!item.me) || (isMe && item.me)">{{ item.name }}</div>
 				</el-col>
 			</el-col>
@@ -36,66 +41,7 @@ export { default } from './userCenter';
 							编辑</i></el-col>
 					</el-col>
 					<el-col :span="24" class="myinfo-box">
-						<el-descriptions class="margin-top" :column="1" border>
-							<el-descriptions-item>
-								<template slot="label">
-									<i class="el-icon-user"></i>
-									用户名
-								</template>
-								{{ adminInfo.nickName }}
-							</el-descriptions-item>
-							<el-descriptions-item>
-								<template slot="label">
-									<i class="el-icon-coordinate"></i>
-									角色
-								</template>
-								{{ adminInfo.roleName }}
-							</el-descriptions-item>
-							<el-descriptions-item>
-								<template slot="label">
-									<i class="el-icon-male"></i>
-									性别
-								</template>
-								{{
-									adminInfo.adminSex == 1 ? '男' : adminInfo.adminSex == 2 ? '女' : '未知'
-								}}
-							</el-descriptions-item>
-							<el-descriptions-item>
-								<template slot="label">
-									<i class="el-icon-mobile-phone"></i>
-									手机号
-								</template>
-								{{ adminInfo.adminPhone }}
-							</el-descriptions-item>
-							<el-descriptions-item>
-								<template slot="label">
-									<i class="el-icon-message"></i>
-									邮箱
-								</template>
-								{{ adminInfo.adminEmail }}
-							</el-descriptions-item>
-							<el-descriptions-item>
-								<template slot="label">
-									<i class="el-icon-location-outline"></i>
-									居住地
-								</template>
-								{{ adminInfo.homePlace }}
-							</el-descriptions-item>
-							<el-descriptions-item>
-								<template slot="label">
-									<i class="el-icon-office-building"></i>
-									联系地址
-								</template>
-								{{ adminInfo.contactAddress }}
-							</el-descriptions-item>
-							<el-descriptions-item>
-								<template slot="label">
-									<i class="el-icon-tickets"></i>
-									备注
-								</template>
-								{{ adminInfo.adminNote }}
-							</el-descriptions-item>
-						</el-descriptions>
+						<Descriptions :value="[]"></Descriptions>
 					</el-col>
 				</el-col>
 
@@ -174,6 +120,10 @@ export { default } from './userCenter';
 </template>
 
 <style lang="less" scoped>
+th{
+	// 表格表头
+	background-color: #ffffff !important;color: initial!important;
+}
 .user-center {
 	padding: 0 10px;
 	cursor: default;
@@ -185,13 +135,11 @@ export { default } from './userCenter';
 		// background-image: url('~@/assets/img/');
 		.avatar-box {
 			height: 150px;
-			width: 280px;
 			display: flex;
 			justify-content: center;
 			align-items: center;
 			flex-direction: column;
 			font-size: 14px;
-			margin: 0 auto;
 
 			.el-avatar {
 				width: 64px;
@@ -223,6 +171,17 @@ export { default } from './userCenter';
 		.menu-item-box{
 			height: 60px;
 			text-align: center;
+			cursor: pointer;
+		}
+		.menu-item-box:hover{
+			text-decoration: underline;
+		}
+
+		.left-top-box{
+			padding: 50px 0;
+		}
+		.left-bottom-box{
+
 		}
 	}
 
