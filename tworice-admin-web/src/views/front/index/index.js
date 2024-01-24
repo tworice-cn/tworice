@@ -2,6 +2,7 @@ import BreadCrumb from "@/components/commons/BreadCrumb.vue";
 import Menu from "@/components/commons/menu.vue";
 import PortalMenu from "@/components/commons/portalMenu.vue";
 import system from "@/components/commons/system/system.js";
+import log from "@/views/admin/log.vue";
 
 export default {
     props: [],
@@ -127,7 +128,7 @@ export default {
         },
         /**切换菜单 */
         handleSelect(e){
-            if(!this.isAdmin ||  e==null || e==undefined || e=='' || e=='/admin'){
+            if(!this.isAdmin || e==null || e=='' || e=='/admin'){
                 return;
             }
 
@@ -157,8 +158,8 @@ export default {
             }else{
                 // 在资源列表中寻找该资源
                 this.resources.forEach(item=>{
-                    if(item.list){
-                        item.list.forEach(child=>{
+                    if(item.children){
+                        item.children.forEach(child=>{
                             if(child.url==e){
                                 this.editableTabs.push({
                                     title: child.name,

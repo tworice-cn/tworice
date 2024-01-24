@@ -1,10 +1,15 @@
 import setting from "@/core/setting";
 import log from "@/views/admin/log.vue";
 import {submitForm} from "@/api/feedback/feedback";
+import ReAuth from "@/views/login/common/reAuth.vue";
 export default {
     props: [],
+    components:{
+        ReAuth
+    },
     data() {
         return {
+            showState:'login',
             formLabelWidth: '60px',
             login: {
                 loginName: '',
@@ -134,17 +139,15 @@ export default {
             }).then(
                 response => {
                     if (response.data.status.code === 200) {
-                        // 登录成功
-                        window.localStorage.setItem("token", response.data.data.token);
-                        window.localStorage.setItem("admin", JSON.stringify(response.data.data.admin))
-                        window.localStorage.setItem("resources", JSON.stringify(response.data.data.resources))
-                        window.localStorage.setItem("roles", JSON.stringify(response.data.data.roles))
                         if (this.login.remember) {
                             localStorage.setItem("loginForm", JSON.stringify(this.login));
                         }
-
-                        this.successLogin(response.data.data.roles);
-                    } else{
+                        this.checkLoginResult(response);
+                    } else if(response.data.status.code === 300){
+                        // 二次验证
+                        this.login.key=response.data.data.key;
+                        this.showState='reAuth';
+                    }else{
                         this.initCaptcha();
                         this.login.password = '';
                         this.login.captcha = '';
@@ -153,6 +156,14 @@ export default {
             ).catch(() => {
                 this.initCaptcha();
             })
+        },
+        checkLoginResult(response){
+            // 登录成功
+            window.localStorage.setItem("token", response.data.data.token);
+            window.localStorage.setItem("admin", JSON.stringify(response.data.data.admin))
+            window.localStorage.setItem("resources", JSON.stringify(response.data.data.resources))
+            window.localStorage.setItem("roles", JSON.stringify(response.data.data.roles))
+            this.successLogin(response.data.data.roles);
         },
         // 登录成功跳转
         successLogin(roles) {

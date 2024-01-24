@@ -249,6 +249,101 @@ tworice:
 
 该接口会去读取项目根目录下的`/recovery/recovery.sql`SQL脚本文件，并将所有系统数据表进行初始化。
 
+
+
+### 4.9、加密组件
+
+系统中加密组件利用工厂模式实现，支持多种加密方式。
+
+#### 4.9.1、使用
+
+① 加入依赖
+
+```xml
+<dependency>
+    <groupId>cn.tworice</groupId>
+    <artifactId>tworice-cryption</artifactId>
+</dependency>
+```
+
+加入依赖后默认配置如下：
+
+```yaml
+tworice:
+  cryption:
+    enable: true
+    type: AES
+    key: 1234567890hijklm
+    pointcut: execution(public * cn.tworice.client.web..*.*(..)) || execution(public * cn.tworice.*.controller..*.*(..))
+```
+
+② 配置说明
+
+`enable`：可选值是`true`、`false`，分别表示开启和关闭自动加密。
+
+`type`：加密类型，可选值为`AES`、`Base64`，后续会持续增加不同的加密类型支持。
+
+`key`：加密密钥，如果当前加密类型需要密钥。
+
+`pointcut`：配置需要加密的接口切入点。
+
+#### 4.9.2、不加密
+
+系统主要通过Swagger的相关注解进行加密接口返回结果，为接口访问接口添加`@NoEncryption`注解或去掉`@ApiOperation`注解，系统将不对该接口返回的结果进行加密。
+
+```java
+@GetMapping("captcha")
+@ApiOperation("获取验证码图片")
+@NoEncryption
+public RequestResult captcha(String code){
+    CaptchaBase64 captcha = loginService.getLoginCaptcha(code);
+    // 构建返回客户端数据对象
+    return RequestResult.success()
+            .appendData("captcha", captcha.getCaptcha())
+            .appendData("key", captcha.getKey());
+}
+```
+
+#### 4.9.3、扩展加密方式
+
+服务端加密服务主要使用的是工厂模式，如果你需要扩展自己的加密方式。
+
+① 需要实现`cn.tworice.cryption.service.CryptService`接口。
+
+② 并在`CryptionConfig`中配置你的加密实现。
+
+③ 在前端项目中的`crypt.js`中进行同步解密操作即可实现自定义加密方式。
+
+### 4.10、系统登录
+
+#### 4.10.1、二次验证
+
+```
+tworice:
+	login:
+		reAuth: false
+```
+
+二次验证表示在用户登录密码正确的情况下再次向绑定邮箱发送验证口令来确认身份。当账户未绑定邮箱时系统会跳过二次验证。
+
+
+
+### 4.11、状态码
+
+| 状态码 | 含义                       |
+| ------ | -------------------------- |
+| 200    | 请求正常通过，不展示通知   |
+| 201    | 请求正常通过，展示通知消息 |
+| 202    | 请求结果被加密             |
+| 300    | 登录请求需要进行二次验证   |
+|        |                            |
+|        |                            |
+|        |                            |
+|        |                            |
+|        |                            |
+
+
+
 ## 5、第三方支持
 
 ### 5.1、SpringBootAdmin
