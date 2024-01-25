@@ -58,8 +58,6 @@ tworice:
   env: dev # 当前环境
   file:
     path: \upload
-  alipay:
-    appid: 2021000122602703
   monitor:
     flow: true # 是否开启流量监控
   backup:
