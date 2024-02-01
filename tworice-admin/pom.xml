@@ -6,12 +6,12 @@
     <parent>
         <artifactId>tworice-cloud</artifactId>
         <groupId>cn.tworice</groupId>
-        <version>1.2-RC1</version>
+        <version>1.2-RC2</version>
     </parent>
     <artifactId>tworice-admin</artifactId>
-    <version>1.2-RC1</version>
+    <version>1.2-RC2</version>
 
-    <!--   版本-->
+    <!--版本-->
     <properties>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <java.version>8</java.version>
@@ -28,17 +28,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
-        <!-- 数据库备份 -->
-        <dependency>
-            <groupId>cn.tworice</groupId>
-            <artifactId>tworice-backup-starter</artifactId>
-            <version>1.2-RC1</version>
-        </dependency>
         <!-- 代码生成 -->
         <dependency>
             <groupId>cn.tworice</groupId>
             <artifactId>tworice-generate</artifactId>
-            <version>1.2-RC1</version>
+            <version>1.2-RC2</version>
         </dependency>
         <!-- 数据库文档依赖 -->
         <dependency>
@@ -49,7 +43,7 @@
 
     </dependencies>
     <build>
-        <finalName>${artifactId}-${version}</finalName>
+        <finalName>${artifactId}</finalName>
         <plugins>
             <!-- 使用maven插件spring-boot-maven-plugin -->
             <plugin>
