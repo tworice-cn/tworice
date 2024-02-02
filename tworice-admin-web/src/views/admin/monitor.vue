@@ -68,12 +68,12 @@ export default {
                   this.memoryInfo.percentage =
                         (100 -((info.availableMemory / info.totalMemory) * 100 )).toFixed(2);
                   let totalMemory = {
-                        key: "物理总内存",
+                        name: "物理总内存",
                         value: info.totalMemory + "MB",
                   };
                   this.processInfo.push(totalMemory);
                   let availableMemory = {
-                        key: "可用物理内存",
+                        name: "可用物理内存",
                         value: info.availableMemory + "MB",
                   };
                   this.processInfo.push(availableMemory);
