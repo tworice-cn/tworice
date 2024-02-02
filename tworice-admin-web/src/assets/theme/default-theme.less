@@ -96,7 +96,17 @@ th{
             }
             .tabs-box{
                   width: 100%;
-                  
+                  background-color: var(--bgColor);
+
+                  .el-tabs__item{
+                        color: var(--asideTextColor);
+                        border-left: none;
+                  }
+                  .is-active{
+                        font-weight: 700;
+                        background-color: var(--asideTextColor);
+                        color: var(--bgColor);
+                  }
             }
       }
       /*用户菜单样式*/
