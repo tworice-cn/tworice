@@ -15,23 +15,6 @@
                         </el-col>
                   </el-col>
             </el-col>
-            <!-- <el-col :span="24" class="monitor-info">
-                  <el-col :span="10" class="monitor-info-left">
-                        <el-col :span="24" class="monitor-title">系统信息</el-col>
-                        <el-table :data="systemInfo" style="width: 100%" :header-cell-style="$setting.table_header">
-                              <el-table-column prop="key" label="属性" align="center"></el-table-column>
-                              <el-table-column prop="value" label="值" align="center"></el-table-column>
-                        </el-table>
-                  </el-col>
-                  <el-col :span="4" class="min-height"></el-col>
-                  <el-col :span="10" class="monitor-info-left">
-                        <el-col :span="24" class="monitor-title">运行监控</el-col>
-                        <el-table :data="processInfo" style="width: 100%" :header-cell-style="$setting.table_header">
-                              <el-table-column prop="key" label="属性" align="center"></el-table-column>
-                              <el-table-column prop="value" label="值" align="center"></el-table-column>
-                        </el-table>
-                  </el-col>
-            </el-col> -->
       </div>
 </template>
 
