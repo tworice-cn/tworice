@@ -115,7 +115,7 @@ export default {
                         nickName: "",
                         loginName: "",
                         passWord: "",
-                        status: 1,
+                        status: 0,
                   },
                   rules: {
                         nickName: [
