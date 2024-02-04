@@ -154,17 +154,23 @@ export default {
                   this.editVisible=true;
             },
             delNotice(row){
-                  let format=new FormData();
-                  format.append("ids",row.id);
-                  this.$axios({
+                this.$confirm("是否确认删除公告信息?", "提示", {
+                    confirmButtonText: "确定",
+                    cancelButtonText: "取消",
+                    type: "warning",
+                }).then(() => {
+                    let format=new FormData();
+                    format.append("ids",row.id);
+                    this.$axios({
                         method:'delete',
                         url:this.$url+"admin/notice/del",
                         data:format
-                  }).then(
+                    }).then(
                         ()=>{
-                              this.toPage();
+                            this.toPage();
                         }
-                  )
+                    )
+                });
             },
             /**是否置顶状态发生变化 */
             topChange(row){
