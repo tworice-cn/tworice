@@ -90,9 +90,8 @@ export default {
                     data: formData,
                     url: this.$url + "admin/log/recover",
                 }).then(res => {
-                    if (res.data.status.code == 200) {
+                    if (res.data.status.code < 400) {
                         this.toPage();
-                        
                     }
                 })
             })
