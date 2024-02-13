@@ -1,5 +1,5 @@
 <template>
-      <div class="app-body">请输入作者
+      <div class="app-body">
             <!-- 条件查询 -->
             <el-col :span="24" class="info-search-box">
                   <div class="search">

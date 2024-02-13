@@ -133,9 +133,8 @@ export default {
                         url:this.$url+'/admin/system/resources/list',
                   }).then(
                         res=>{
-                              console.log(res);
-                              if(res.data.status.code==200){
-                                    this.tableData=res.data.data.resourceList;
+                              if(res.data.status.code<400) {
+                                  this.tableData = res.data.data.resourceList;
                               }
                         }
                   )
