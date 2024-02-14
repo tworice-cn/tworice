@@ -20,3 +20,11 @@ export function submitForm(form){
         data:formData
     })
 }
+
+export function chart(){
+    return Vue.prototype.$axios({
+        url: '/client/systemFeedback/stat',
+        method: 'GET'
+    })
+}
+

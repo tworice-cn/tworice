@@ -16,13 +16,15 @@ export default {
         creator: '',
         fbType: '',
         fbDescribe: '',
-        fbContact: ''
+        fbContact: '',
+          typeName:''
       },
     };
   },
   methods: {
-    changeType(type){
-      this.form.fbType=type;
+    changeType(typeId,typeName){
+      this.form.fbType=typeId;
+        this.form.typeName=typeName;
     },
     submit(){
       submitForm(this.form).then(res=>{
@@ -43,14 +45,14 @@ export default {
 <template>
   <el-col class="feedback-container">
     <el-col :span="24" class="feedback-header">
-      <h3>{{form.fbType?'请填写【'+form.fbType+'】反馈信息':'请选择反馈类型'}}</h3>
+      <h3>{{form.fbType?'请填写【'+form.typeName+'】反馈信息':'请选择反馈类型'}}</h3>
     </el-col>
 
     <el-col :span="24" class="feedback-type" v-if="form.fbType==''">
-      <el-col :span="24" class="type-item" v-for="item in typeList" :key="item.type" @click.native="changeType(item.type)">
+      <el-col :span="24" class="type-item" v-for="item in typeList" :key="item.id" @click.native="changeType(item.id,item.typeName)">
         <el-col :span="20" class="item-left">
-          <el-col :span="24" class="type-title">{{item.type}}</el-col>
-          <el-col :span="24" class="type-msg">{{item.msg}}</el-col>
+          <el-col :span="24" class="type-title">{{item.typeName}}</el-col>
+          <el-col :span="24" class="type-msg">{{item.typeDesc}}</el-col>
         </el-col>
         <el-col :span="4" class="item-right el-icon-arrow-right"></el-col>
       </el-col>
