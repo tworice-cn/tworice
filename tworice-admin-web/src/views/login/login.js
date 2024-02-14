@@ -161,9 +161,31 @@ export default {
             // 登录成功
             window.localStorage.setItem("token", response.data.data.token);
             window.localStorage.setItem("admin", JSON.stringify(response.data.data.admin))
-            window.localStorage.setItem("resources", JSON.stringify(response.data.data.resources))
+            window.localStorage.setItem("resources", JSON.stringify(this.filterNestedDuplicates(response.data.data.resources)))
             window.localStorage.setItem("roles", JSON.stringify(response.data.data.roles))
             this.successLogin(response.data.data.roles);
+        },
+        /**
+         * 递归过滤数组中的重复对象
+         * @param array
+         * @returns {*}
+         */
+        filterNestedDuplicates(array) {
+            const uniqueIds = new Set();
+            const filteredArray = [];
+
+            for (const item of array) {
+                if (!uniqueIds.has(item.id)) {
+                    uniqueIds.add(item.id);
+                    if (item.children && Array.isArray(item.children)) {
+                        // 递归处理子对象数组
+                        item.children = this.filterNestedDuplicates(item.children);
+                    }
+                    filteredArray.push(item);
+                }
+            }
+
+            return filteredArray;
         },
         // 登录成功跳转
         successLogin(roles) {
