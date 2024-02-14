@@ -63,8 +63,8 @@ export function setupRouter() {
             },
             {path: "/info", name: "信息管理", component: () => import("../views/admin"), children: []},
             {
-                path: "/notice",
-                name: "公告管理",
+                path: "/infra",
+                name: "基础设施",
                 component: () => import("../views/admin"),
                 children: [
                     {
@@ -80,7 +80,12 @@ export function setupRouter() {
                     {
                         path: "feedback",
                         name: "用户反馈",
-                        component: (resolve) => require(["@/views/admin/systemFeedback.vue"], resolve)
+                        component: (resolve) => require(["@/views/admin/feedback/systemFeedback.vue"], resolve)
+                    },
+                    {
+                        path: "feedbackType",
+                        name: "反馈类型",
+                        component: (resolve) => require(["@/views/admin/feedback/systemFeedbackType.vue"], resolve)
                     },
                 ],
             },
