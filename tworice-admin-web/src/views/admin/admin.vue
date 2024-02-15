@@ -61,7 +61,7 @@
                               <el-input placeholder="请输入内容" v-model="form.loginName" @change="isChange = true" :disabled="showAdmin"></el-input>
                         </el-form-item>
                         <el-form-item label="账号状态" :label-width="formLabelWidth">
-                              <el-switch v-model="form.status" active-color="#13ce66" inactive-color="#ff4949" :active-value="1" :inactive-value="-1" :disabled="showAdmin"></el-switch>
+                              <el-switch v-model="form.status" active-color="#13ce66" inactive-color="#ff4949" :active-value="0" :inactive-value="-1" :disabled="showAdmin"></el-switch>
                         </el-form-item>
                   </el-form>
                   <div slot="footer" class="dialog-footer">
