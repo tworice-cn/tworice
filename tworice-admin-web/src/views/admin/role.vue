@@ -304,6 +304,7 @@ export default {
                   }).then(
                         response=>{
                               this.roles=response.data.data.roleList;
+                              this.roleDialog=false;
                         }
                   )
             },
