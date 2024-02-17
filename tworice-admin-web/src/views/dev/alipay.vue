@@ -54,7 +54,7 @@ export default {
                   console.log(this.payForm);
                   this.$axios({
                         method: "post",
-                        url: this.$url + "/pay/aliPay",
+                        url: this.$url + "pay/aliPay",
                         data: format,
                   }).then((res) => {
                         this.payCont=res.data.data.content;
