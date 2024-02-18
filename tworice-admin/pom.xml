@@ -6,10 +6,10 @@
     <parent>
         <artifactId>tworice-cloud</artifactId>
         <groupId>cn.tworice</groupId>
-        <version>1.2-RC4</version>
+        <version>1.2</version>
     </parent>
     <artifactId>tworice-admin</artifactId>
-    <version>1.2-RC4</version>
+    <version>1.2</version>
 
     <!--版本-->
     <properties>
@@ -32,13 +32,17 @@
         <dependency>
             <groupId>cn.tworice</groupId>
             <artifactId>tworice-generate</artifactId>
-            <version>1.2-RC4</version>
         </dependency>
         <!-- 数据库文档依赖 -->
         <dependency>
             <groupId>cn.smallbun.screw</groupId>
             <artifactId>screw-core</artifactId>
             <version>1.0.5</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.tworice</groupId>
+            <artifactId>tworice-alipay</artifactId>
+            <version>1.2</version>
         </dependency>
 
     </dependencies>
