@@ -68,7 +68,7 @@
     </el-col>
 
     <!-- 弹出层 -->
-    <el-dialog :before-close="$utils.handleClose" :visible.sync="reg.dialogVisible" title="注册" width="30%">
+    <el-dialog :before-close="$utils.handleClose" :visible.sync="reg.dialogVisible" title="注册" width="30%" :append-to-body="true">
       <el-form ref="reg" :model="reg.form" :rules="reg.rules" size="mini">
         <el-form-item :label-width="formLabelWidth" label="邮箱" prop="loginName">
           <el-input v-model="reg.form.loginName" placeholder="登录邮箱" @change="isChange = true"></el-input>
