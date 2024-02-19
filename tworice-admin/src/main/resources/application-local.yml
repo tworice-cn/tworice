@@ -57,8 +57,11 @@ tworice:
   dev: false # 开发模式是否开启
   env: dev # 当前环境
   file:
-    path: \upload
+    path: \upload\
   monitor:
     flow: true # 是否开启流量监控
   backup:
     enabled: false
+  cryption:
+    enable: true
+    type: Base64
