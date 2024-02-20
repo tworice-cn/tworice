@@ -31,6 +31,24 @@
       display: block;
       height: 0;
 }
+/* 页面中的条件查询样式 */
+.info-search-box .search{
+      display: flex;
+      line-height: 60px;
+      flex-wrap: wrap;
+}
+.info-search-box .search .search-item{
+      font-size: 12px;
+      padding:0 5px;
+      color: #666;
+      vertical-align: top;
+      font-weight: 600;
+      flex-basis: 210px; /* 设置基础宽度 */
+      flex-grow: 1; /* 允许元素根据需要增长 */
+}
+.info-search-box .search .el-input{
+      width: 150px;
+}
 /* 页面导航标签 */
 .tabs-box{
       background-color: #F2F3F5;
