@@ -43,8 +43,7 @@
       color: #666;
       vertical-align: top;
       font-weight: 600;
-      flex-basis: 210px; /* 设置基础宽度 */
-      flex-grow: 1; /* 允许元素根据需要增长 */
+      flex-basis: auto;
 }
 .info-search-box .search .el-input{
       width: 150px;
