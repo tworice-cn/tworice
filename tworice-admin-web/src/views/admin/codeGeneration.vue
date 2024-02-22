@@ -347,7 +347,7 @@ export default {
                 }
                 // 构建表单
                 if (item.update) {
-                    this.buildVueForm(item,fieldHump,form_item);
+                    form_item = this.buildVueForm(item,fieldHump,form_item);
                 }
                 
                 // 构建data中的form对象
@@ -357,10 +357,11 @@ export default {
                 
                 // 构建data中的search对象
                 if (item.query && item.select) {
-                    this.buildVueSearch(item, fieldHump, search, search_item);
+                    search += fieldHump + ":'',";
+                    search_item = this.buildVueSearch(item, fieldHump, search_item);
                 }
                 // 构建show方法体
-                this.buildVueShow(item, fieldHump, showInfo);
+                showInfo = this.buildVueShow(item, fieldHump, showInfo);
                 
                 // 判断是否选择了字典
                 if (item.queryType == '字典') {
@@ -467,11 +468,9 @@ export default {
          * 构建Vue页面的搜索框
          * @param item
          * @param fieldHump
-         * @param search
          * @param search_item
          */
-        buildVueSearch(item,fieldHump,search,search_item){
-            search += fieldHump + ":'',";
+        buildVueSearch(item,fieldHump,search_item){
             if (item.queryType === '数据表') {
                 search_item += "<div class='search-item'>" + item.name + " : " +
                     "<el-select size='mini' v-model='search." + fieldHump + "' placeholder='通过" + item.name + "查询' clearable>" +
@@ -486,6 +485,7 @@ export default {
                 search_item += "<div class='search-item'>" + item.name + " : " +
                     "<el-input size='mini' v-model='search." + fieldHump + "' placeholder='通过" + item.name + "查询' clearable></el-input></div>";
             }
+            return search_item;
         },
         /**
          * 构建Vue页面的表单
@@ -508,7 +508,9 @@ export default {
                 form_item += "<el-form-item label='" + item.name + "' :label-width='formLabelWidth' prop='" + fieldHump + "'>" +
                     "<el-input placeholder='请输入" + item.name + "' v-model='form." + fieldHump + "' @change='isChange = true' size='small'></el-input></el-form-item>";
             }
+            return form_item;
         },
+        
         /**
          * 构建show方法内容
          * @param item
@@ -516,11 +518,12 @@ export default {
          * @param showInfo
          */
         buildVueShow(item, fieldHump, showInfo) {
-            if(fieldHump==='bigint'){ // 时间戳
-                showInfo += "this.showInfo.push({name: '" + item.name + "', value: this.$utils.formatDateTime( row." + fieldHump + "});";
+            if(item.type==='bigint'){ // 时间戳
+                showInfo += "this.showInfo.push({name: '" + item.name + "', value: this.$utils.formatDateTime( row." + fieldHump + ")});";
             }else{
                 showInfo += "this.showInfo.push({name: '" + item.name + "', value: row." + fieldHump + "});";
             }
+            return showInfo;
         },
         
     },
