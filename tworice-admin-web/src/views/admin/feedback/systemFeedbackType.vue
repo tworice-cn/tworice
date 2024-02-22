@@ -197,8 +197,8 @@ export default {
             this.showInfo = [];
             this.showInfo.push({name: '编号', value: row.id});
             this.showInfo.push({name: '创建人标识', value: row.creator});
-            this.showInfo.push({name: '创建时间', value: this.$utils.formatDate(row.createTime)});
-            this.showInfo.push({name: '更新时间', value: this.$utils.formatDate(row.updateTime)});
+            this.showInfo.push({name: '创建时间', value: this.$utils.formatDateTime(row.createTime)});
+            this.showInfo.push({name: '更新时间', value: this.$utils.formatDateTime(row.updateTime)});
             this.showVisible = true;
         }, edit(row) {
             this.form = row;
