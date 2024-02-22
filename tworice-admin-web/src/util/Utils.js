@@ -50,4 +50,20 @@ export default {
             done();
         });
     },
+
+    mergeJSON(obj1,obj2) {
+        for (let key in obj2) {
+            if (obj2[key] !== null && obj2[key] !== undefined && obj2[key] !== '') {
+                if (typeof obj2[key] === 'object' && !Array.isArray(obj2[key])) {
+                    if (!obj1[key]) {
+                        obj1[key] = {};
+                    }
+                    mergeJSON(obj1[key], obj2[key]);
+                } else {
+                    obj1[key] = obj2[key];
+                }
+            }
+        }
+        return obj1;
+    },
 }

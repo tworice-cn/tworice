@@ -9,17 +9,15 @@ Vue.config.productionTip = false;
 // 全局设置
 import setting from './core/setting.js'
 import utils from './util/Utils.js'
+import screenfull from './util/Screenfull.js'
 Vue.prototype.$setting=setting;
 Vue.prototype.$utils=utils;
 Vue.prototype.$url = setting.baseURL;
+Vue.prototype.$screenfull=screenfull;// 全屏组件
 
 // 增删改查通用方法
 import CRUD from "@/api/CRUD";
 Vue.prototype.$CRUD = CRUD;
-
-// 全屏组件
-import screenfull from './util/Screenfull.js'
-Vue.prototype.$screenfull=screenfull
 
 // 主题
 // import '@/assets/theme/mimicry-theme.less'
@@ -120,23 +118,6 @@ let vue=new Vue({
             }
       }
 }).$mount('#app');
-
-// 全局函数
-Vue.prototype.$mergeJSON=function(obj1,obj2){
-      for (let key in obj2) {
-            if (obj2[key] !== null && obj2[key] !== undefined && obj2[key] !== '') {
-                  if (typeof obj2[key] === 'object' && !Array.isArray(obj2[key])) {
-                        if (!obj1[key]) {
-                              obj1[key] = {};
-                        }
-                        mergeJSON(obj1[key], obj2[key]);
-                  } else {
-                        obj1[key] = obj2[key];
-                  }
-            }
-      }
-      return obj1;
-}
 
 // 导出
 export default Vue.prototype;

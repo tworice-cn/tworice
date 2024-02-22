@@ -115,7 +115,6 @@ export default {
     data() {
         return {
             showAdmin: false, // 当查看是设置为true
-            loading: true,
             form: {
                 id: "",
                 nickName: "",
@@ -146,7 +145,6 @@ export default {
                     },
                 ],
             },
-            
             search: {id: "", loginName: ""},
             pageUrlPath: "/admin/admin",
             adminInfo: {
@@ -156,16 +154,6 @@ export default {
         };
     },
     methods: {
-
-        toPage() {
-            list(this.$mergeJSON({page: this.page, pageSize: this.pageSize}, this.search))
-                .then((response) => {
-                    this.tableData = response.data.data.list;
-                    this.total = response.data.data.total;
-                    this.loading = false;
-                });
-        },
-
         submit() {
             this.loading = true;
             let format = new FormData();

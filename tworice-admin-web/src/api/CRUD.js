@@ -14,7 +14,7 @@ export default class CRUD {
         return Vue.prototype.$axios({
             url: pageUrlPath + '/list',
             method: 'get',
-            params: Vue.prototype.$mergeJSON({page: page, pageSize: pageSize}, search)
+            params: Vue.prototype.$utils.mergeJSON({page: page, pageSize: pageSize}, search)
         })
     }
 
