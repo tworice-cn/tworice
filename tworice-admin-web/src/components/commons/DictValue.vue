@@ -19,7 +19,7 @@
                   <el-table-column type="selection" width="55"></el-table-column>
                   <el-table-column prop='id' label='编号' width="100"></el-table-column>
                   <el-table-column prop='createTime' label='日期' :formatter='formatDate'></el-table-column>
-                  <el-table-column prop='dist' label='字典ID'></el-table-column>
+                  <el-table-column prop='dict' label='字典ID'></el-table-column>
                   <el-table-column prop='content' label='字典内容'></el-table-column>
                   <el-table-column prop='description' label='内容描述'></el-table-column>
                   <el-table-column label="操作"> <template slot-scope="scope">
@@ -35,8 +35,8 @@
             <!-- 弹出层 -->
             <el-dialog :title="formTitle" :visible.sync="formVisible" width="30%" :before-close="handleClose" :append-to-body="true">
                   <el-form :model="form" :rules="rules" ref="form">
-                        <el-form-item label='字典名称' :label-width='formLabelWidth' prop='dist'>
-                              <el-input placeholder='请输入字典' v-model='distName' @change='isChange = true' size='small' disabled></el-input>
+                        <el-form-item label='字典名称' :label-width='formLabelWidth' prop='dict'>
+                              <el-input placeholder='请输入字典' v-model='dictName' @change='isChange = true' size='small' disabled></el-input>
                         </el-form-item>
                         <el-form-item label='字典内容' :label-width='formLabelWidth' prop='content'>
                               <el-input placeholder='请输入字典内容' v-model='form.content' @change='isChange = true' size='small'></el-input>
@@ -61,8 +61,8 @@
       </div>
 </template><script>
 export default {
-      name: 'DistValue',
-      props: ['dist','distName'],
+      name: 'DictValue',
+      props: ['dict','dictName'],
       data() {
             return {
                   loading: true,
@@ -76,7 +76,7 @@ export default {
                   form: {
                         id: "",
                         createTime: "",
-                        dist: "",
+                        dict: "",
                         content: "",
                         description: "",
                   },
@@ -95,7 +95,7 @@ export default {
                                     trigger: "blur",
                               },
                         ],
-                        dist: [
+                        dict: [
                               {
                                     required: true,
                                     message: "请输入字典ID",
@@ -119,7 +119,7 @@ export default {
                   },
                   formLabelWidth: "80px",
                   /** 弹出框标签宽度*/ isChange: false,
-                  search: { id: "", dist: "", content: "" },
+                  search: { id: "", dict: "", content: "" },
                   multipleSelection: [],
             };
       },
@@ -158,9 +158,9 @@ export default {
                   this.toPage();
             },
             toPage() {
-                  console.log("字典ID："+this.dist);
+                  console.log("字典ID："+this.dict);
                   this.loading = true;
-                  this.search.dist=this.dist;
+                  this.search.dict=this.dict;
                   let param = "";
                   Object.keys(this.search).map((key) => {
                         if (
@@ -173,7 +173,7 @@ export default {
                   this.$axios
                         .get(
                               this.$url +
-                                    "/admin/distValue/list?page=" +
+                                    "/admin/dictValue/list?page=" +
                                     this.page +
                                     "&pageSize=" +
                                     this.pageSize +
@@ -191,7 +191,7 @@ export default {
             },
             add() {
                   this.form = this.$options.data().form;
-                  this.form.dist=this.dist;
+                  this.form.dict=this.dict;
                   this.formTitle = "新增";
                   this.formVisible = true;
             },
@@ -213,7 +213,7 @@ export default {
                   });
                   this.$axios({
                         method: "POST",
-                        url: this.$url + "/admin/distValue/add",
+                        url: this.$url + "/admin/dictValue/add",
                         data: formData,
                   }).then(() => {
                         this.toPage();
@@ -239,7 +239,7 @@ export default {
                         this.$axios({
                               method: "DELETE",
                               data: format,
-                              url: this.$url + "/admin/distValue/del",
+                              url: this.$url + "/admin/dictValue/del",
                         }).then(() => {
                               this.toPage();
                               this.$root.loading = false;
@@ -264,7 +264,7 @@ export default {
                         this.$axios({
                               method: "DELETE",
                               data: format,
-                              url: this.$url + "/admin/distValue/del",
+                              url: this.$url + "/admin/dictValue/del",
                         }).then(() => {
                               this.$root.loading = false;
                               this.toPage();
@@ -298,7 +298,7 @@ export default {
                   formData.append("file", files[0]);
                   this.$axios({
                         method: "post",
-                        url: this.$url + "/admin/distValue/inducts",
+                        url: this.$url + "/admin/dictValue/inducts",
                         data: formData,
                         headers: { "Content-Type": "multipart/form-data" },
                   })

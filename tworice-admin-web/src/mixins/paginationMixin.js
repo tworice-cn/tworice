@@ -181,10 +181,10 @@ export default {
          * 初始化字典
          * 为了重写，这里空方法
          */
-        initDist(){}
+        initDict(){}
     },
     mounted() {
         this.init();
-        this.initDist();
+        this.initDict();
     }
 };

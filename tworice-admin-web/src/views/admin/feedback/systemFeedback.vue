@@ -106,7 +106,7 @@ import paginationMixin from "@/mixins/paginationMixin";
 import {type, submitForm, chart} from '@/api/feedback/feedback';
 import Editor from '@/components/commons/Editor.vue'
 import Descriptions from '@/components/commons/Descriptions.vue'
-import {distList} from '@/api/dist/dist.js';
+import {dictList} from '@/api/dict/dict.js';
 import FeedbackChart from "@/views/admin/feedback/FeedbackChart.vue";
 export default {
     mixins: [paginationMixin],
@@ -171,7 +171,7 @@ export default {
             })
         },
         init() {
-            distList(9).then(res=>{
+            dictList(9).then(res=>{
                 this.stateList=res.data.data.list;
             })
             this.toPage();

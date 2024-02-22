@@ -35,7 +35,7 @@
             <el-table-column label="操作">
                 <template slot-scope="scope">
                     <el-button size="mini" type="info" icon="el-icon-notebook-2" circle
-                               @click.native="distValue(scope.row)"></el-button>
+                               @click.native="dictValue(scope.row)"></el-button>
                     <el-button size="mini" type="warning" icon="el-icon-edit" circle
                                @click.native="edit(scope.row)"></el-button>
                     <el-button size="mini" type="danger" icon="el-icon-delete" circle
@@ -84,28 +84,28 @@
             </div>
         </el-dialog>
         <!-- 字典内容 -->
-        <el-dialog title="字典数据" v-if="distVisible" :visible.sync="distVisible" width="60%"
+        <el-dialog title="字典数据" v-if="dictVisible" :visible.sync="dictVisible" width="60%"
                    :before-close="$utils.handleClose">
-            <DistValue :dist="form.id" :distName="form.name"></DistValue>
+            <DictValue :dict="form.id" :dictName="form.name"></DictValue>
             <div slot="footer" class="dialog-footer">
-                <el-button @click="distVisible=false">取 消</el-button>
+                <el-button @click="dictVisible=false">取 消</el-button>
             </div>
         </el-dialog>
     </div>
 </template>
 <script>
-import DistValue from '../../components/commons/DistValue.vue'
+import DictValue from '../../components/commons/DictValue.vue'
 import paginationMixin from "@/mixins/paginationMixin";
 
 export default {
     mixins: [paginationMixin],
     components: {
-        DistValue
+        DictValue
     },
     props: [],
     data() {
         return {
-            distVisible: false,
+            dictVisible: false,
             form: {
                 id: "",
                 createTime: "",
@@ -151,12 +151,12 @@ export default {
                 ],
             },
             search: {id: "", name: "", logo: ""},
-            pageUrlPath: "/admin/dist",
+            pageUrlPath: "/admin/dict",
         };
     },
     methods: {
-        distValue(row) {
-            this.distVisible = true;
+        dictValue(row) {
+            this.dictVisible = true;
             this.form = row;
         },
     },

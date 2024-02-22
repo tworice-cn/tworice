@@ -142,7 +142,7 @@ export default {
             pageUrlPath: '/client/systemFeedbackType'
         }
     }, methods: {
-        initDist() {
+        initDict() {
             this.initRole();
         },
         initRole(){
@@ -156,7 +156,7 @@ export default {
         },
         init() {
             this.toPage();
-            this.initDist();
+            this.initDict();
         }, toPage() {
             this.loading = true;
             let param = '';

@@ -230,8 +230,6 @@ export default {
             this.form.creator = JSON.parse(window.localStorage.getItem('admin')).id;
             return this.form;
         },
-        /**初始化字典 */ initDist() {
-        },
         
         handleSizeChange(size) {
             this.pageSize = size;
@@ -246,7 +244,6 @@ export default {
             this.form.creator = JSON.parse(window.localStorage.getItem('admin')).id;
             this.search.creator = this.form.creator;
             this.toPage();
-            this.initDist();
         },
         toPage() {
             this.loading = true;

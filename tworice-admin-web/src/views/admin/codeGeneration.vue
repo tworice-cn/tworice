@@ -70,11 +70,11 @@
                                 </el-select>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="dist" label="字典" width="110">
+                        <el-table-column prop="dict" label="字典" width="110">
                             <template slot-scope="scope">
                                 <el-select size="mini" v-if="scope.row.queryType=='字典'||scope.row.queryType=='数据表'"
-                                           v-model="scope.row.dist" placeholder="请选择" :disabled="!scope.row.query">
-                                    <el-option v-for="item in dist" :key="item.id" :label="item.name"
+                                           v-model="scope.row.dict" placeholder="请选择" :disabled="!scope.row.query">
+                                    <el-option v-for="item in dict" :key="item.id" :label="item.name"
                                                :value="item.id"></el-option>
                                 </el-select>
                             </template>
@@ -163,7 +163,7 @@ export default {
                             type: "int",
                             query: true,
                             queryType: '=',
-                            dist: '',
+                            dict: '',
                             update: false,
                             table: true,
                             select: true
@@ -174,7 +174,7 @@ export default {
                             type: "bigint",
                             query: false,
                             queryType: '',
-                            dist: '',
+                            dict: '',
                             update: false,
                             table: true,
                             select: false
@@ -185,7 +185,7 @@ export default {
                             type: "bigint",
                             query: false,
                             queryType: '',
-                            dist: '',
+                            dict: '',
                             update: false,
                             table: true,
                             select: false
@@ -196,7 +196,7 @@ export default {
                             type: "varchar(64)",
                             query: true,
                             queryType: '=',
-                            dist: '',
+                            dict: '',
                             update: false,
                             table: true,
                             select: true
@@ -226,7 +226,7 @@ export default {
                 "数据表"
             ],
             /**字典数据 */
-            dist: [],
+            dict: [],
             /**数据表 */
             tables: [],
             tableData:[],
@@ -238,7 +238,7 @@ export default {
             this.form.formData = row;
             this.form.formVisible = true;
             
-            this.initDist();
+            this.initDict();
             this.initTables();
         },
         del(index){
@@ -270,7 +270,7 @@ export default {
         },
         queryTypeChange(val) {
             if (val == '字典') {
-                this.initDist();
+                this.initDict();
             } else if (val == '数据表') {
                 this.initTables();
             }
@@ -279,21 +279,21 @@ export default {
             this.$axios.get(
                 this.$url + "admin/codeGeneration/tables"
             ).then((response) => {
-                this.dist = response.data.data.list;
+                this.dict = response.data.data.list;
             });
         },
-        initDist() {
+        initDict() {
             this.$axios.get(
-                this.$url + "/admin/dist/list?page=0&pageSize=100"
+                this.$url + "/admin/dict/list?page=0&pageSize=100"
             ).then((response) => {
-                this.dist = response.data.data.list;
+                this.dict = response.data.data.list;
             });
         },
         add() {
             this.form.formVisible = true;
             this.form.formData = this.$options.data().form.formData;
             
-            this.initDist();
+            this.initDict();
             this.initTables();
         },
         cancel() {
@@ -323,12 +323,12 @@ export default {
             let search = "";
             // 构建searchItem
             let search_item = "";
-            // 构建data中的各dist
-            let dist = ""
-            // 构建各dist初始化方法
-            let initDist = ""
-            // 构建调用各dist方法的
-            let initDists = ""
+            // 构建data中的各dict
+            let dict = ""
+            // 构建各dict初始化方法
+            let initDict = ""
+            // 构建调用各dict方法的
+            let initDicts = ""
             // 构建show方法体
             let showInfo = "";
             
@@ -365,13 +365,13 @@ export default {
                 
                 // 判断是否选择了字典
                 if (item.queryType == '字典') {
-                    dist += fieldHump + "Dist:[],"
-                    initDist += this.buildInitDist(item, fieldHump)
-                    initDists += 'this.' + fieldHump + "Init();"
+                    dict += fieldHump + "Dict:[],"
+                    initDict += this.buildInitDict(item, fieldHump)
+                    initDicts += 'this.' + fieldHump + "Init();"
                 } else if (item.queryType == '数据表') {
-                    dist += fieldHump + "Dist:[],";
-                    initDist += this.buildTableDist(item, fieldHump);
-                    initDists += 'this.' + fieldHump + "Init();";
+                    dict += fieldHump + "Dict:[],";
+                    initDict += this.buildTableDict(item, fieldHump);
+                    initDicts += 'this.' + fieldHump + "Init();";
                 }
                 
             });
@@ -385,9 +385,9 @@ export default {
             formData.append("rules", rules);
             formData.append("search", search);
             formData.append("searchItem", search_item);
-            formData.append("dist", dist);
-            formData.append("initDist", initDist);
-            formData.append("initDists", initDists);
+            formData.append("dict", dict);
+            formData.append("initDict", initDict);
+            formData.append("initDicts", initDicts);
             formData.append("showInfo", showInfo);
             // formData.append("createServer", this.form.formData.createServer);
             
@@ -410,19 +410,19 @@ export default {
             }
         },
         /**构建字典 */
-        buildInitDist(item, fieldHump) {
-            let axios = fieldHump + "Init(){ this.$axios.get(this.$url +'/admin/distValue/list?page=0&pageSize=100&dist="
-                + item.dist + "').then((response) => {this."
-                + fieldHump + "Dist=response.data.data.list;});},"
+        buildInitDict(item, fieldHump) {
+            let axios = fieldHump + "Init(){ this.$axios.get(this.$url +'/admin/dictValue/list?page=0&pageSize=100&dict="
+                + item.dict + "').then((response) => {this."
+                + fieldHump + "Dict=response.data.data.list;});},"
             
             return axios;
         },
         /*构建数据表字典*/
-        buildTableDist(item, fieldHump) {
-            let tableHump = utils.lineToHump(item.dist);
+        buildTableDict(item, fieldHump) {
+            let tableHump = utils.lineToHump(item.dict);
             let axios = fieldHump + "Init(){ this.$axios.get(this.$url +'/client/" + tableHump
                 + "/list?page=0&pageSize=100').then((response) => {this."
-                + fieldHump + "Dist=response.data.data.list;});},"
+                + fieldHump + "Dict=response.data.data.list;});},"
             return axios;
         },
         
@@ -453,7 +453,7 @@ export default {
                 type: "",
                 query: false,
                 queryType: '',
-                dist: '',
+                dict: '',
                 update: true,
                 table: true,
                 select: true
@@ -474,12 +474,12 @@ export default {
             if (item.queryType === '数据表') {
                 search_item += "<div class='search-item'>" + item.name + " : " +
                     "<el-select size='mini' v-model='search." + fieldHump + "' placeholder='通过" + item.name + "查询' clearable>" +
-                    "<el-option v-for='item in " + fieldHump + "Dist' :key='item.id' :label='item.name' :value='item.id'></el-option>"
+                    "<el-option v-for='item in " + fieldHump + "Dict' :key='item.id' :label='item.name' :value='item.id'></el-option>"
                     + "</el-select></div>"
             } else if (item.queryType === '字典') {
                 search_item += "<div class='search-item'>" + item.name + " : " +
                     "<el-select size='mini' v-model='search." + fieldHump + "' placeholder='通过" + item.name + "查询' clearable>" +
-                    "<el-option v-for='item in " + fieldHump + "Dist' :key='item.id' :label='item.content' :value='item.content'></el-option>"
+                    "<el-option v-for='item in " + fieldHump + "Dict' :key='item.id' :label='item.content' :value='item.content'></el-option>"
                     + "</el-select></div>"
             } else {
                 search_item += "<div class='search-item'>" + item.name + " : " +
@@ -497,12 +497,12 @@ export default {
             if (item.queryType === '数据表') {
                 form_item += "<el-form-item label='" + item.name + "' :label-width='formLabelWidth' prop='" + fieldHump + "'>" +
                     "<el-select size='mini' v-model='form." + fieldHump + "' placeholder='请选择' clearable>" +
-                    "<el-option v-for='item in " + fieldHump + "Dist' :key='item.id' :label='item.name' :value='item.id'></el-option>"
+                    "<el-option v-for='item in " + fieldHump + "Dict' :key='item.id' :label='item.name' :value='item.id'></el-option>"
                     + "</el-select></el-form-item>"
             } else if (item.queryType === '字典') {
                 form_item += "<el-form-item label='" + item.name + "' :label-width='formLabelWidth' prop='" + fieldHump + "'>" +
                     "<el-select size='mini' v-model='form." + fieldHump + "' placeholder='请选择' clearable>" +
-                    "<el-option v-for='item in " + fieldHump + "Dist' :key='item.id' :label='item.content' :value='item.content'></el-option>"
+                    "<el-option v-for='item in " + fieldHump + "Dict' :key='item.id' :label='item.content' :value='item.content'></el-option>"
                     + "</el-select></el-form-item>"
             } else {
                 form_item += "<el-form-item label='" + item.name + "' :label-width='formLabelWidth' prop='" + fieldHump + "'>" +

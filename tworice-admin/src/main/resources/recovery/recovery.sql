@@ -54,10 +54,10 @@ CREATE TABLE `system_deploy_log`  (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for system_dist
+-- Table structure for system_dict
 -- ----------------------------
-DROP TABLE IF EXISTS `system_dist`;
-CREATE TABLE `system_dist`  (
+DROP TABLE IF EXISTS `system_dict`;
+CREATE TABLE `system_dict`  (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
   `create_time` bigint NULL DEFAULT NULL COMMENT '创建时间',
   `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '字典名称',
@@ -71,36 +71,36 @@ CREATE TABLE `system_dist`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统字典表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of system_dist
+-- Records of system_dict
 -- ----------------------------
-INSERT INTO `system_dist` VALUES (1, 1664092965734, '性别', '性别选项', 'SYSTEM_SEX', NULL, NULL, 0);
-INSERT INTO `system_dist` VALUES (2, 1664097012604, '天气', '天气字典', 'SYSTEM_WEATHER', NULL, NULL, 0);
-INSERT INTO `system_dist` VALUES (6, 1681227558864, '调动状态', '调动状态', 'RSDDZT', NULL, NULL, 0);
+INSERT INTO `system_dict` VALUES (1, 1664092965734, '性别', '性别选项', 'SYSTEM_SEX', NULL, NULL, 0);
+INSERT INTO `system_dict` VALUES (2, 1664097012604, '天气', '天气字典', 'SYSTEM_WEATHER', NULL, NULL, 0);
+INSERT INTO `system_dict` VALUES (6, 1681227558864, '调动状态', '调动状态', 'RSDDZT', NULL, NULL, 0);
 
 -- ----------------------------
--- Table structure for system_dist_value
+-- Table structure for system_dict_value
 -- ----------------------------
-DROP TABLE IF EXISTS `system_dist_value`;
-CREATE TABLE `system_dist_value`  (
+DROP TABLE IF EXISTS `system_dict_value`;
+CREATE TABLE `system_dict_value`  (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
   `create_time` bigint NULL DEFAULT NULL COMMENT '创建时间',
-  `dist` int NULL DEFAULT NULL COMMENT '字典编号',
+  `dict` int NULL DEFAULT NULL COMMENT '字典编号',
   `content` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '字典内容',
   `description` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '描述',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '字典数据表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of system_dist_value
+-- Records of system_dict_value
 -- ----------------------------
-INSERT INTO `system_dist_value` VALUES (1, 1664096943799, 1, '男', '性别男');
-INSERT INTO `system_dist_value` VALUES (2, 1664097610129, 1, '女', '性别女');
-INSERT INTO `system_dist_value` VALUES (3, 1664097743834, 2, '晴', '天气晴');
-INSERT INTO `system_dist_value` VALUES (4, 1664097775454, 2, '阴', '天气阴');
-INSERT INTO `system_dist_value` VALUES (5, 1664097842757, 2, '小雨', '天气小雨');
-INSERT INTO `system_dist_value` VALUES (6, 1664097987000, 2, '大雨', '天气大雨');
-INSERT INTO `system_dist_value` VALUES (7, 1664098087375, 2, '大风', '天气大风');
-INSERT INTO `system_dist_value` VALUES (11, 1664098293463, 1, '未知', '性别未知');
+INSERT INTO `system_dict_value` VALUES (1, 1664096943799, 1, '男', '性别男');
+INSERT INTO `system_dict_value` VALUES (2, 1664097610129, 1, '女', '性别女');
+INSERT INTO `system_dict_value` VALUES (3, 1664097743834, 2, '晴', '天气晴');
+INSERT INTO `system_dict_value` VALUES (4, 1664097775454, 2, '阴', '天气阴');
+INSERT INTO `system_dict_value` VALUES (5, 1664097842757, 2, '小雨', '天气小雨');
+INSERT INTO `system_dict_value` VALUES (6, 1664097987000, 2, '大雨', '天气大雨');
+INSERT INTO `system_dict_value` VALUES (7, 1664098087375, 2, '大风', '天气大风');
+INSERT INTO `system_dict_value` VALUES (11, 1664098293463, 1, '未知', '性别未知');
 
 -- ----------------------------
 -- Table structure for system_feedback
@@ -248,7 +248,7 @@ INSERT INTO `system_resources` VALUES (67, '跳转页面', '/dev/jump', 65, 62, 
 INSERT INTO `system_resources` VALUES (75, '文件上传', '/dev/upload', 65, 63, '', 2, '/upload', '@/components/dev/upload.vue');
 INSERT INTO `system_resources` VALUES (78, '在线账户', '/tools/online', 32, 56, '', 2, '/online', '@/components/admin/online.vue');
 INSERT INTO `system_resources` VALUES (80, '版本日志', '/log/versionLog', 29, 43, '', 2, '/versionLog', '@/components/admin/versionLog.vue');
-INSERT INTO `system_resources` VALUES (83, '字典管理', '/tools/dist', 32, 50, '', 2, '/dist', '@/components/admin/dist.vue');
+INSERT INTO `system_resources` VALUES (83, '字典管理', '/tools/dict', 32, 50, '', 2, '/dict', '@/components/admin/dict.vue');
 INSERT INTO `system_resources` VALUES (94, '支付示例', '/dev/alipay/10086', 65, 4, '', 2, 'alipay/:id', '@/components/dev/alipay.vue');
 INSERT INTO `system_resources` VALUES (95, '访问白名单', '/tools/whiteList', 32, 57, '', 2, '/whiteList', '@/components/admin/whiteList.vue');
 INSERT INTO `system_resources` VALUES (96, 'AES加密', '/dev/aes', 65, 97, '', 2, 'aes', '@/components/dev/aes.vue');

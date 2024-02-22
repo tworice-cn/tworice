@@ -4,7 +4,7 @@ export default class CRUD {
 
     /**
      * 查询数据
-     * @param pageUrlPath 服务前缀，如：/admin/dist
+     * @param pageUrlPath 服务前缀，如：/admin/dict
      * @param page 页码，默认为1
      * @param pageSize 页容量，默认为10
      * @param search 查询条件，如{id:1}
@@ -20,7 +20,7 @@ export default class CRUD {
 
     /**
      * 增加数据或更新数据，取决于参数中的id是否为空
-     * @param pageUrlPath 服务前缀，如：/admin/dist
+     * @param pageUrlPath 服务前缀，如：/admin/dict
      * @param params 请求参数，如：{name:‘测试’}
      * @returns {AxiosPromise}
      */
@@ -34,7 +34,7 @@ export default class CRUD {
 
     /**
      * 删除数据
-     * @param pageUrlPath 服务前缀，如：/admin/dist
+     * @param pageUrlPath 服务前缀，如：/admin/dict
      * @param params 请求参数，如：{ids:1}
      * @returns {AxiosPromise}
      */

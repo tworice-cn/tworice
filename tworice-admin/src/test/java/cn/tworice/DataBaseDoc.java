@@ -59,8 +59,8 @@ public class DataBaseDoc {
         ArrayList<String> ignoreTableName = new ArrayList<>();
         ignoreTableName.add("system_department");
         ignoreTableName.add("system_deploy_log");
-        ignoreTableName.add("system_dist");
-        ignoreTableName.add("system_dist_value");
+        ignoreTableName.add("system_dict");
+        ignoreTableName.add("system_dict_value");
         ignoreTableName.add("system_feedback");
         ignoreTableName.add("system_file");
         ignoreTableName.add("system_white_list");

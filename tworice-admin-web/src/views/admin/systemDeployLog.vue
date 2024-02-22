@@ -46,7 +46,7 @@
                   <el-form :model="form" :rules="rules" ref="form">
                         <el-form-item label="调动状态" :label-width="formLabelWidth" prop="state"
                               ><el-select size="mini" v-model="form.state" placeholder="请选择" clearable
-                                    ><el-option v-for="item in stateDist" :key="item.id" :label="item.content" :value="item.content"></el-option></el-select></el-form-item
+                                    ><el-option v-for="item in stateDict" :key="item.id" :label="item.content" :value="item.content"></el-option></el-select></el-form-item
                         ><el-form-item label="调动人" :label-width="formLabelWidth" prop="userId"
                               ><el-input placeholder="请输入调动人" v-model="form.userId" @change="isChange = true" size="small"></el-input
                         ></el-form-item>
@@ -86,17 +86,17 @@ export default {
             },
             
             search: {id: "", creator: "", state: "", userId: "", deployId: ""},
-            stateDist: [],
+            stateDict: [],
             pageUrlPath: "/client/systemDeployLog",
         };
     },
     methods: {
         stateInit() {
-            this.$axios.get(this.$url + "/admin/distValue/list?page=0&pageSize=100&dist=6").then((response) => {
-                this.stateDist = response.data.data.list;
+            this.$axios.get(this.$url + "/admin/dictValue/list?page=0&pageSize=100&dict=6").then((response) => {
+                this.stateDict = response.data.data.list;
             });
         },
-        initDist() {
+        initDict() {
             this.stateInit();
         },
         toPage() {

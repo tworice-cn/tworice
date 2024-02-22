@@ -100,10 +100,15 @@ router.beforeEach((to, from, next) => {
       } else {
             document.title = setting.systemTitle;
       }
-      if(to.path === '/'){
-            Vue.prototype.$axios.get(setting.baseURL+'admin/index/').then(()=>{
-                  next(window.localStorage.getItem('index')||'/login');
-            })
+      if (to.path === '/') {
+            if(setting.needLogin){
+                  Vue.prototype.$axios.get(setting.baseURL + 'admin/index/').then(() => {
+                        next(window.localStorage.getItem('index') || '/login');
+                  });
+            }else{
+                  next(setting.defaultTab || '/admin')
+            }
+
       }
       next()
 });
