@@ -44,68 +44,56 @@ export default {
         },
         /**初始化侧栏资源 */
         initResources(){
-            this.resources=JSON.parse(window.localStorage.getItem('resources')||[]);
+            this.resources=window.localStorage.getItem('resources')?JSON.parse(window.localStorage.getItem('resources')):[];
             this.handleSelect(this.$route.path);
         },
         // 初始化系统
         systemInit(){
             this.$root.loading=true;
+            // 初始化界面
             this.initInterface();
             /**是否需要登录才能访问 */
             if(this.$setting.needLogin){
                 // 需要的话判断当前用户的登录状态
                 this.$axios.get(this.$url+'admin/index/').then(
                     ()=>{
-                        // 初始化登录状态
-                        this.loginStatus=true;
                         // 初始化菜单
                         this.initResources();
-                        // 停止加载
                         this.$root.loading=false;
                     }
                 )
-            }else{
+            }else {
                 // 初始化资源
                 this.initResources();
-                // 当前用户没有角色设置角色为游客
-                if(window.localStorage.getItem('roles')==null||window.localStorage.getItem('roles')==undefined){
-                    this.roles=[{id:0,roleName:'游客'}];
-                    // 设置登录状态为未登录
-                    this.loginStatus=false;
-                    this.asideStatus=true;
-                }else{
-                    this.loginStatus=true;
-                    this.roles=JSON.parse(window.localStorage.getItem('roles'));
-                }
-                this.$root.loading=false;
             }
-            /**如果当前页是根路径 那么跳转默认的Tab */
-            if(this.$route.path=='/admin'){
-                if(this.$setting.defaultTab!=null && this.$setting.defaultTab!=undefined && this.$setting.defaultTab!=''){
-                    this.handleSelect(this.$setting.defaultTab);
-                    this.$router.push(this.$setting.defaultTab);
-                }
+            /**
+             * 如果当前页是根路径 那么跳转默认的Tab
+             * */
+            if(this.$route.path==='/admin' && this.$setting.defaultTab){
+                this.handleSelect(this.$setting.defaultTab);
+                this.$router.push(this.$setting.defaultTab);
             }
-
-            if(window.localStorage.getItem('admin')!=null&&window.localStorage.getItem('admin')!=undefined){
-                this.admin=JSON.parse(window.localStorage.getItem('admin'));
-            }
+            this.$root.loading = false;
         },
-        // 初始化界面展示
+        /**
+         * 界面初始化
+         */
         initInterface(){
             // 初始化角色
             let roles=window.localStorage.getItem('roles');
-            if(roles==null||roles==undefined){
-                this.roles=[];
-                this.isAdmin=false
-            }else{
-                this.roles=JSON.parse(window.localStorage.getItem('roles'));
-            }
-            // 如果登录为用户则收起侧栏
-            if(this.roles.length==0||this.roles[0].id==4){
-                this.asideStatus=true;
-            }else{
-                this.isAdmin=true
+            if(!roles){ // 当前为游客
+                this.roles = [{id: 0, roleName: '游客'}];
+                this.isAdmin=false; // 是否管理员状态
+                this.loginStatus = false; // 登录状态
+                this.asideStatus = true; // 侧边栏收回状态
+            }else{ // 当前非游客
+                this.roles=JSON.parse(roles);
+                if(this.roles[0].id !== 4){
+                    this.isAdmin = true;} // 是否管理员状态
+                this.loginStatus = true; // 登录状态
+                if (window.localStorage.getItem('admin')) {
+                    this.admin = JSON.parse(window.localStorage.getItem('admin'));
+                }
             }
         },
         // 切换全屏展示
@@ -179,7 +167,7 @@ export default {
             if (activeName === targetName) {
                 tabs.forEach((tab, index) => {
                     if (tab.name === targetName) {
-                        let nextTab = tabs[admin + 1] || tabs[admin - 1];
+                        let nextTab = tabs[index + 1] || tabs[index - 1];
                         if (nextTab) {
                             activeName = nextTab.name;
                             this.clickTab(nextTab)
