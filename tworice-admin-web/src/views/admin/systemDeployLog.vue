@@ -68,161 +68,53 @@
       </div></template
 >
 <script>
+import paginationMixin from "@/mixins/paginationMixin";
+
 export default {
-      props: ['id'],
-      data() {
-            return {
-                  loading: true,
-                  page: 1,
-                  pageSize: 10,
-                  total: 0,
-                  tableData: [],
-                  formTitle: "",
-                  formVisible: false,
-                  inductsVisible: false,
-                  form: { id: "", createTime: "", updateTime: "", creator: "", state: "", userId: "" },
-                  rules: {
-                        id: [{ required: true, message: "请输入编号", trigger: "blur" }],
-                        createTime: [{ required: true, message: "请输入创建时间", trigger: "blur" }],
-                        updateTime: [{ required: true, message: "请输入更新时间", trigger: "blur" }],
-                        creator: [{ required: true, message: "请输入操作人", trigger: "blur" }],
-                        state: [{ required: true, message: "请输入调动状态", trigger: "blur" }],
-                        userId: [{ required: true, message: "请输入调动人", trigger: "blur" }],
-                  },
-                  formLabelWidth: "80px",
-                  /** 弹出框标签宽度*/ isChange: false,
-                  search: { id: "", creator: "", state: "", userId: "",deployId:""},
-                  multipleSelection: [],
-                  stateDist: [],
-                  pageUrlPath: "/client/systemDeployLog",
-            };
-      },
-      methods: {
-            stateInit() {
-                  this.$axios.get(this.$url + "/admin/distValue/list?page=0&pageSize=100&dist=6").then((response) => {
-                        this.stateDist = response.data.data.list;
-                  });
+    mixins: [paginationMixin],
+    props: ['id'],
+    data() {
+        return {
+            form: {id: "", createTime: "", updateTime: "", creator: "", state: "", userId: ""},
+            rules: {
+                id: [{required: true, message: "请输入编号", trigger: "blur"}],
+                createTime: [{required: true, message: "请输入创建时间", trigger: "blur"}],
+                updateTime: [{required: true, message: "请输入更新时间", trigger: "blur"}],
+                creator: [{required: true, message: "请输入操作人", trigger: "blur"}],
+                state: [{required: true, message: "请输入调动状态", trigger: "blur"}],
+                userId: [{required: true, message: "请输入调动人", trigger: "blur"}],
             },
-            /**初始化字典 */ initDist() {
-                  this.stateInit();
-            },
-            handleSizeChange(size) {
-                  this.pageSize = size;
-                  this.toPage();
-            },
-            init() {
-                  this.toPage();
-                  this.initDist();
-            },
-            toPage() {
-                  this.loading = true;
-                  let param = "";
-                  this.search.deployId=this.id;
-                  Object.keys(this.search).map((key) => {
-                        if (this.search[key] != undefined && this.search[key] != "") {
-                              param += "&" + key + "=" + this.search[key];
-                        }
-                  });
-                  this.$axios.get(this.$url + this.pageUrlPath + "/list?page=" + this.page + "&pageSize=" + this.pageSize + param).then((response) => {
-                        this.tableData = response.data.data.list;
-                        this.total = response.data.data.total;
-                        this.loading = false;
-                  });
-            },
-            /**监听页码发生变化 */ changePage(e) {
-                  this.page = e;
-                  this.toPage();
-            },
-            add() {
-                  this.form = this.$options.data().form;
-                  this.formTitle = "新增";
-                  this.formVisible = true;
-            },
-            submit() {
-                  this.$root.loading = true;
-                  let formData = new FormData();
-                  Object.keys(this.form).map((key) => {
-                        if (this.form[key] != undefined && this.form[key] != "") {
-                              formData.append(key, this.form[key]);
-                        }
-                  });
-                  this.$axios({ method: "POST", url: this.$url + this.pageUrlPath + "/add", data: formData }).then((res) => {
-                        if (res.data.status.code < 400) {
-                              this.toPage();
-                              this.formVisible = false;
-                        }
-                  });
-            },
-            edit(row) {
-                  this.form = row;
-                  this.formTitle = "编辑";
-                  this.formVisible = true;
-            },
-            /*删除*/ del(row) {
-                  this.$confirm("此操作将永久删除该信息, 是否继续?", "提示", { confirmButtonText: "确定", cancelButtonText: "取消", type: "warning" }).then(() => {
-                        this.$root.loading = true;
-                        let format = new FormData();
-                        format.append("ids", row.id);
-                        this.$axios({ method: "DELETE", data: format, url: this.$url + this.pageUrlPath + "/del" }).then((res) => {
-                              if (res.data.status.code == 200) {
-                                    this.toPage();
-                              }
-                        });
-                  });
-            },
-            /**下载表 */ templateDownload() {
-                  window.open(this.$url + this.pageUrlPath + "/template");
-            },
-            /**批量删除 */ delList() {
-                  this.$confirm("此操作将永久删除信息, 是否继续?", "提示", { confirmButtonText: "确定", cancelButtonText: "取消", type: "warning" }).then(() => {
-                        this.$root.loading = true;
-                        let format = new FormData();
-                        this.multipleSelection.forEach((item) => {
-                              format.append("ids", item.id);
-                        });
-                        this.$axios({ method: "DELETE", data: format, url: this.$url + this.pageUrlPath + "/del" }).then((res) => {
-                              if (res.data.status.code == 200) {
-                                    this.toPage();
-                              }
-                        });
-                  });
-            },
-            /**选择框 val为当前所有选择的内容数组 */ handleSelectionChange(val) {
-                  this.multipleSelection = val;
-            },
-            /**点击批量导入 */ inducts() {
-                  this.inductsVisible = true;
-            },
-            /**选择批量 */ inductsChange() {
-                  let files = this.$refs.inducts.files;
-                  /*获取选择的文件*/ let len = files.length;
-                  /*文件个数*/ if (len != 1) {
-                        this.$msg({ message: "需要且只能上传一个文件", type: "warning" });
-                        return;
-                  }
-                  let formData = new FormData();
-                  formData.append("file", files[0]);
-                  this.$axios({ method: "post", url: this.$url + this.pageUrlPath + "/inducts", data: formData, headers: { "Content-Type": "multipart/form-data" } })
-                        .then((res) => {
-                              /*上传成功后是否需要将选择的文件滞空*/ this.$refs.inducts.value = null;
-                              if (res.data.status.code == 200) {
-                                    this.inductsVisible = false;
-                                    this.toPage();
-                              }
-                        })
-                        .catch(() => {
-                              this.$refs.inducts.value = null;
-                              this.$msg({ message: "上传失败，请检查文件合法性！", type: "error" });
-                        });
-            },
-            submitSearch() {
-                  this.page = 1;
-                  this.toPage();
-            },
-      },
-      mounted() {
-            this.init();
-      },
+            
+            search: {id: "", creator: "", state: "", userId: "", deployId: ""},
+            stateDist: [],
+            pageUrlPath: "/client/systemDeployLog",
+        };
+    },
+    methods: {
+        stateInit() {
+            this.$axios.get(this.$url + "/admin/distValue/list?page=0&pageSize=100&dist=6").then((response) => {
+                this.stateDist = response.data.data.list;
+            });
+        },
+        initDist() {
+            this.stateInit();
+        },
+        toPage() {
+            this.loading = true;
+            let param = "";
+            this.search.deployId = this.id;
+            Object.keys(this.search).map((key) => {
+                if (this.search[key] != undefined && this.search[key] != "") {
+                    param += "&" + key + "=" + this.search[key];
+                }
+            });
+            this.$axios.get(this.$url + this.pageUrlPath + "/list?page=" + this.page + "&pageSize=" + this.pageSize + param).then((response) => {
+                this.tableData = response.data.data.list;
+                this.total = response.data.data.total;
+                this.loading = false;
+            });
+        }
+    },
 };
 </script>
 <style lang="less" scoped></style>

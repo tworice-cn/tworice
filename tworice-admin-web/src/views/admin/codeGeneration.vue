@@ -126,7 +126,7 @@
 </template>
 
 <script>
-import utils from '@/core/utils.js'
+import utils from '@/util/Utils.js'
 
 export default {
     props: [],
@@ -229,7 +229,8 @@ export default {
             dist: [],
             /**数据表 */
             tables: [],
-            tableData:[]
+            tableData:[],
+            
         };
     },
     methods: {
@@ -308,12 +309,8 @@ export default {
         
         // },
         submit() {
-            
-            
             this.$root.loading = true;
-            
             let formData = new FormData();
-            
             // 构建table_item
             let table_item = "";
             // 构建form_item
@@ -332,6 +329,8 @@ export default {
             let initDist = ""
             // 构建调用各dist方法的
             let initDists = ""
+            // 构建show方法体
+            let showInfo = "";
             
             // 表字段设置
             this.form.formData.paramTable.forEach((item) => {
@@ -348,20 +347,7 @@ export default {
                 }
                 // 构建表单
                 if (item.update) {
-                    if (item.queryType == '数据表') {
-                        form_item += "<el-form-item label='" + item.name + "' :label-width='formLabelWidth' prop='" + fieldHump + "'>" +
-                            "<el-select size='mini' v-model='form." + fieldHump + "' placeholder='请选择' clearable>" +
-                            "<el-option v-for='item in " + fieldHump + "Dist' :key='item.id' :label='item.name' :value='item.id'></el-option>"
-                            + "</el-select></el-form-item>"
-                    } else if (item.queryType == '字典') {
-                        form_item += "<el-form-item label='" + item.name + "' :label-width='formLabelWidth' prop='" + fieldHump + "'>" +
-                            "<el-select size='mini' v-model='form." + fieldHump + "' placeholder='请选择' clearable>" +
-                            "<el-option v-for='item in " + fieldHump + "Dist' :key='item.id' :label='item.content' :value='item.content'></el-option>"
-                            + "</el-select></el-form-item>"
-                    } else {
-                        form_item += "<el-form-item label='" + item.name + "' :label-width='formLabelWidth' prop='" + fieldHump + "'>" +
-                            "<el-input placeholder='请输入" + item.name + "' v-model='form." + fieldHump + "' @change='isChange = true' size='small'></el-input></el-form-item>";
-                    }
+                    this.buildVueForm(item,fieldHump,form_item);
                 }
                 
                 // 构建data中的form对象
@@ -371,22 +357,10 @@ export default {
                 
                 // 构建data中的search对象
                 if (item.query && item.select) {
-                    search += fieldHump + ":'',";
-                    if (item.queryType == '数据表') {
-                        search_item += "<div class='search-item'>" + item.name + " : " +
-                            "<el-select size='mini' v-model='search." + fieldHump + "' placeholder='通过" + item.name + "查询' clearable>" +
-                            "<el-option v-for='item in " + fieldHump + "Dist' :key='item.id' :label='item.name' :value='item.id'></el-option>"
-                            + "</el-select></div>"
-                    } else if (item.queryType == '字典') {
-                        search_item += "<div class='search-item'>" + item.name + " : " +
-                            "<el-select size='mini' v-model='search." + fieldHump + "' placeholder='通过" + item.name + "查询' clearable>" +
-                            "<el-option v-for='item in " + fieldHump + "Dist' :key='item.id' :label='item.content' :value='item.content'></el-option>"
-                            + "</el-select></div>"
-                    } else {
-                        search_item += "<div class='search-item'>" + item.name + " : " +
-                            "<el-input size='mini' v-model='search." + fieldHump + "' placeholder='通过" + item.name + "查询' clearable></el-input></div>";
-                    }
+                    this.buildVueSearch(item, fieldHump, search, search_item);
                 }
+                // 构建show方法体
+                this.buildVueShow(item, fieldHump, showInfo);
                 
                 // 判断是否选择了字典
                 if (item.queryType == '字典') {
@@ -413,6 +387,7 @@ export default {
             formData.append("dist", dist);
             formData.append("initDist", initDist);
             formData.append("initDists", initDists);
+            formData.append("showInfo", showInfo);
             // formData.append("createServer", this.form.formData.createServer);
             
             if (this.form.formData.createVue) {
@@ -487,7 +462,67 @@ export default {
         /* 删除表格条目 */
         reduceField(scope) {
             this.form.formData.paramTable.splice(scope.$index)
-        }
+        },
+        /**
+         * 构建Vue页面的搜索框
+         * @param item
+         * @param fieldHump
+         * @param search
+         * @param search_item
+         */
+        buildVueSearch(item,fieldHump,search,search_item){
+            search += fieldHump + ":'',";
+            if (item.queryType === '数据表') {
+                search_item += "<div class='search-item'>" + item.name + " : " +
+                    "<el-select size='mini' v-model='search." + fieldHump + "' placeholder='通过" + item.name + "查询' clearable>" +
+                    "<el-option v-for='item in " + fieldHump + "Dist' :key='item.id' :label='item.name' :value='item.id'></el-option>"
+                    + "</el-select></div>"
+            } else if (item.queryType === '字典') {
+                search_item += "<div class='search-item'>" + item.name + " : " +
+                    "<el-select size='mini' v-model='search." + fieldHump + "' placeholder='通过" + item.name + "查询' clearable>" +
+                    "<el-option v-for='item in " + fieldHump + "Dist' :key='item.id' :label='item.content' :value='item.content'></el-option>"
+                    + "</el-select></div>"
+            } else {
+                search_item += "<div class='search-item'>" + item.name + " : " +
+                    "<el-input size='mini' v-model='search." + fieldHump + "' placeholder='通过" + item.name + "查询' clearable></el-input></div>";
+            }
+        },
+        /**
+         * 构建Vue页面的表单
+         * @param item
+         * @param fieldHump
+         * @param form_item
+         */
+        buildVueForm(item,fieldHump,form_item) {
+            if (item.queryType === '数据表') {
+                form_item += "<el-form-item label='" + item.name + "' :label-width='formLabelWidth' prop='" + fieldHump + "'>" +
+                    "<el-select size='mini' v-model='form." + fieldHump + "' placeholder='请选择' clearable>" +
+                    "<el-option v-for='item in " + fieldHump + "Dist' :key='item.id' :label='item.name' :value='item.id'></el-option>"
+                    + "</el-select></el-form-item>"
+            } else if (item.queryType === '字典') {
+                form_item += "<el-form-item label='" + item.name + "' :label-width='formLabelWidth' prop='" + fieldHump + "'>" +
+                    "<el-select size='mini' v-model='form." + fieldHump + "' placeholder='请选择' clearable>" +
+                    "<el-option v-for='item in " + fieldHump + "Dist' :key='item.id' :label='item.content' :value='item.content'></el-option>"
+                    + "</el-select></el-form-item>"
+            } else {
+                form_item += "<el-form-item label='" + item.name + "' :label-width='formLabelWidth' prop='" + fieldHump + "'>" +
+                    "<el-input placeholder='请输入" + item.name + "' v-model='form." + fieldHump + "' @change='isChange = true' size='small'></el-input></el-form-item>";
+            }
+        },
+        /**
+         * 构建show方法内容
+         * @param item
+         * @param fieldHump
+         * @param showInfo
+         */
+        buildVueShow(item, fieldHump, showInfo) {
+            if(fieldHump==='bigint'){ // 时间戳
+                showInfo += "this.showInfo.push({name: '" + item.name + "', value: this.$utils.formatDateTime( row." + fieldHump + "});";
+            }else{
+                showInfo += "this.showInfo.push({name: '" + item.name + "', value: row." + fieldHump + "});";
+            }
+        },
+        
     },
     mounted() {
         this.init();

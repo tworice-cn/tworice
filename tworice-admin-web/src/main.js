@@ -8,14 +8,17 @@ Vue.config.productionTip = false;
 
 // 全局设置
 import setting from './core/setting.js'
-import utils from './core/utils.js'
+import utils from './util/Utils.js'
 Vue.prototype.$setting=setting;
 Vue.prototype.$utils=utils;
 Vue.prototype.$url = setting.baseURL;
 
+// 增删改查通用方法
+import CRUD from "@/api/CRUD";
+Vue.prototype.$CRUD = CRUD;
 
 // 全屏组件
-import screenfull from './core/screenfull.js'
+import screenfull from './util/Screenfull.js'
 Vue.prototype.$screenfull=screenfull
 
 // 主题

@@ -91,338 +91,255 @@
             </el-dialog>
       </div>
 </template><script>
-export default {
-      props: [],
-      data() {
-            return {
-                  header:{},
-                  info:{},
-                  startUpload:false,/**是否显示进度条，一般开始上传后开始显示 */
-                  progress:0,/**上传进度 */
-                  loading: true,
-                  page: 1,
-                  pageSize: 10,
-                  total: 0,
-                  tableData: [],
-                  formTitle: "",
-                  formVisible: false,
-                  inductsVisible: false,
-                  form: {
-                        id: "",
-                        createTime: "",
-                        updateTime: "",
-                        path: "",
-                        name: "",
-                        creator: "",
-                        type:'',
-                        parent:1,
-                        size:'',
-                        share:0
-                  },
-                  rules: {
-                        id: [
-                              {
-                                    required: true,
-                                    message: "请输入编号",
-                                    trigger: "blur",
-                              },
-                        ],
-                        createTime: [
-                              {
-                                    required: true,
-                                    message: "请输入创建时间",
-                                    trigger: "blur",
-                              },
-                        ],
-                        updateTime: [
-                              {
-                                    required: true,
-                                    message: "请输入更新时间",
-                                    trigger: "blur",
-                              },
-                        ],
-                        path: [
-                              {
-                                    required: true,
-                                    message: "请输入文件路径",
-                                    trigger: "blur",
-                              },
-                        ],
-                        name: [
-                              {
-                                    required: true,
-                                    message: "请输入文件名称",
-                                    trigger: "blur",
-                              },
-                        ],
-                        creator: [
-                              {
-                                    required: true,
-                                    message: "请输入创建人",
-                                    trigger: "blur",
-                              },
-                        ],
-                  },
-                  formLabelWidth: "80px",
-                  /** 弹出框标签宽度*/ isChange: false,
-                  search: { id: "", name: "", creator: "",parent:'1' },
-                  multipleSelection: [],
-                  pageUrlPath: "/file/systemFile",
-            
-            };
-      },
-      methods: {
-            createFolder(){
-                  this.form = this.$options.data().form;
-                  this.inductsVisible=true
-            },
-            cancelShare(row){
-                  this.$axios.get(this.$url+this.pageUrlPath+'/cancel?id='+row.id).then(()=>{
-                        this.toPage();
-                  })
-            },
-            share(row,type){
-                  this.form=row;
-                  this.form.share=type;
-                  this.submit();
-            },
-            changeSize(limit){
-                  if(limit){
-                        var size = "";
-                        if(limit < 0.1 * 1024){                            //小于0.1KB，则转化成B
-                              size = limit.toFixed(2) + "B"
-                        }else if(limit < 0.1 * 1024 * 1024){            //小于0.1MB，则转化成KB
-                              size = (limit/1024).toFixed(2) + "KB"
-                        }else if(limit < 0.1 * 1024 * 1024 * 1024){        //小于0.1GB，则转化成MB
-                              size = (limit/(1024 * 1024)).toFixed(2) + "MB"
-                        }else{                                            //其他转化成GB
-                              size = (limit/(1024 * 1024 * 1024)).toFixed(2) + "GB"
-                        }
-                        var sizeStr = size + "";                        //转成字符串
-                        var index = sizeStr.indexOf(".");                    //获取小数点处的索引
-                        var dou = sizeStr.substr(index + 1 ,2)            //获取小数点后两位的值
-                        if(dou == "00"){                                //判断后两位是否为00，如果是则删除00               
-                              return sizeStr.substring(0, index) + sizeStr.substr(index + 3, 2)
-                        }
-                        return size;
-                  }
-            },
-            toParent(parent){
-                  this.clickFile({type:2,id:parent});
-            },
-            initInfo(){
-                  this.$axios.get(this.$url+this.pageUrlPath+'/info?id='+this.search.parent).then(res=>{
-                        this.info=res.data.data.info;
-                  })
-            },
-            clickFile(row){
-                  if(row.type==1){
-                        window.open(this.$url+row.path)
-                  }else{
-                        this.$router.push({
-                              path:'/admin/file',
-                              query:{
-                                    parent:row.id
-                              }
-                        })
-                  }
-            },
-            getData(){
-                  // 设置文件上传时的参数
-                  if(this.$route.query.parent){
-                        this.search.parent=this.$route.query.parent;
-                        this.form.parent=this.$route.query.parent;
-                  }
-                  this.form.type=1;
-                  this.form.creator=JSON.parse(window.localStorage.getItem('admin')).id;
-                  return this.form;
-            },
-            /**初始化字典 */ initDist() {},
-            
-            handleSizeChange(size) {
-                  this.pageSize = size;
-                  this.toPage();
-            },
-            init() {
-                  this.header={
-                        token:window.localStorage.getItem('token'),
-                        adminID:JSON.parse(window.localStorage.getItem('admin')).id
-                  }
+import paginationMixin from "@/mixins/paginationMixin";
 
-                  this.form.creator=JSON.parse(window.localStorage.getItem('admin')).id;
-                  this.search.creator=this.form.creator;
-                  this.toPage();
-                  this.initDist();
+export default {
+    mixins: [paginationMixin],
+    props: [],
+    data() {
+        return {
+            header: {},
+            info: {},
+            startUpload: false, /**是否显示进度条，一般开始上传后开始显示 */
+            progress: 0, /**上传进度 */
+            inductsVisible: false,
+            form: {
+                id: "",
+                createTime: "",
+                updateTime: "",
+                path: "",
+                name: "",
+                creator: "",
+                type: '',
+                parent: 1,
+                size: '',
+                share: 0
             },
-            toPage() {
-                  this.loading = true;
-                  this.inductsVisible=false;
-                  this.formVisible=false;
-                  if(this.$route.query.parent){
-                        this.search.parent=this.$route.query.parent;
-                        this.form.parent=this.$route.query.parent;
-                  }
-                  this.initInfo();
-                  let param = "";
-                  Object.keys(this.search).map((key) => {
-                        if (
-                              this.search[key] != undefined &&
-                              this.search[key] != ""
-                        ) {
-                              param += "&" + key + "=" + this.search[key];
-                        }
-                  });
-                  this.$axios
-                        .get(
-                              this.$url +
-                                    this.pageUrlPath +
-                                    "/list?page=" +
-                                    this.page +
-                                    "&pageSize=" +
-                                    this.pageSize +
-                                    param
-                        )
-                        .then((response) => {
-                              this.tableData = response.data.data.list;
-                              this.total = response.data.data.total;
-                              this.loading = false;
-                        });
+            rules: {
+                id: [
+                    {
+                        required: true,
+                        message: "请输入编号",
+                        trigger: "blur",
+                    },
+                ],
+                createTime: [
+                    {
+                        required: true,
+                        message: "请输入创建时间",
+                        trigger: "blur",
+                    },
+                ],
+                updateTime: [
+                    {
+                        required: true,
+                        message: "请输入更新时间",
+                        trigger: "blur",
+                    },
+                ],
+                path: [
+                    {
+                        required: true,
+                        message: "请输入文件路径",
+                        trigger: "blur",
+                    },
+                ],
+                name: [
+                    {
+                        required: true,
+                        message: "请输入文件名称",
+                        trigger: "blur",
+                    },
+                ],
+                creator: [
+                    {
+                        required: true,
+                        message: "请输入创建人",
+                        trigger: "blur",
+                    },
+                ],
             },
-            /**监听页码发生变化 */ changePage(e) {
-                  this.page = e;
-                  this.toPage();
-            },
-            add() {
-                  this.form = this.$options.data().form;
-                  this.formTitle = "新增";
-                  this.formVisible = true;
-            },
-            mkdir(){
-                  this.form.type=2;
-                  this.submit();
-            },
-            submit() {
-                  // 创建文件夹
-                  this.$root.loading = true;
-                  
-                  let formData = new FormData();
-                  Object.keys(this.form).map((key) => {
-                        console.log(this.form[key]);
-                        if (
-                              this.form[key] != undefined &&
-                              this.form[key] != ""
-                        ) {
-                              formData.append(key, this.form[key]);
-                        }
-                  });
-                  this.$axios({
-                        method: "POST",
-                        url: this.$url + this.pageUrlPath + "/add",
-                        data: formData,
-                  }).then((res) => {
-                        if (res.data.status.code < 400) {
-                              this.toPage();
-                              this.inductsVisible = false;
-                        }
-                  });
-            },
-            edit(row) {
-                  console.log(row);
-                  this.form = this.$options.data().form;
-                  this.form = row;
-                  this.formTitle = "编辑";
-                  this.inductsVisible = true;
-            },
-            /*删除*/ del(row) {
-                  this.$confirm("此操作将永久删除该信息, 是否继续?", "提示", {
-                        confirmButtonText: "确定",
-                        cancelButtonText: "取消",
-                        type: "warning",
-                  }).then(() => {
-                        this.$root.loading = true;
-                        let format = new FormData();
-                        format.append("ids", row.id);
-                        this.$axios({
-                              method: "DELETE",
-                              data: format,
-                              url: this.$url + this.pageUrlPath + "/del",
-                        }).then((res) => {
-                              if (res.data.status.code == 200) {
-                                    this.toPage();
-                              }
-                        });
-                  });
-            },
-            /**下载表 */ templateDownload() {
-                  window.open(this.$url + this.pageUrlPath + "/template");
-            },
-            /**批量删除 */ delList() {
-                  this.$confirm("此操作将永久删除信息, 是否继续?", "提示", {
-                        confirmButtonText: "确定",
-                        cancelButtonText: "取消",
-                        type: "warning",
-                  }).then(() => {
-                        this.$root.loading = true;
-                        let format = new FormData();
-                        this.multipleSelection.forEach((item) => {
-                              format.append("ids", item.id);
-                        });
-                        this.$axios({
-                              method: "DELETE",
-                              data: format,
-                              url: this.$url + this.pageUrlPath + "/del",
-                        });
-                  });
-            },
-            /**选择框 val为当前所有选择的内容数组 */ handleSelectionChange(
-                  val
-            ) {
-                  this.multipleSelection = val;
-            },
-            /**点击批量导入 */ inducts() {
-                  this.inductsVisible = true;
-            },
-            /**选择批量 */ inductsChange() {
-                  let files = this.$refs.inducts.files;
-                  /*获取选择的文件*/ let len = files.length;
-                  /*文件个数*/ if (len != 1) {
-                        this.$msg({
-                              message: "需要且只能上传一个文件",
-                              type: "warning",
-                        });
-                        return;
-                  }
-                  let formData = new FormData();
-                  formData.append("file", files[0]);
-                  this.$axios({
-                        method: "post",
-                        url: this.$url + this.pageUrlPath + "/inducts",
-                        data: formData,
-                        headers: { "Content-Type": "multipart/form-data" },
-                  })
-                        .then((res) => {
-                              /*上传成功后是否需要将选择的文件滞空*/ this.$refs.inducts.value =
-                                    null;
-                              if (res.data.status.code == 200) {
-                                    this.inductsVisible = false;
-                                    this.toPage();
-                              }
-                        })
-                        .catch(() => {
-                              this.$refs.inducts.value = null;
-                              this.$msg({
-                                    message: "上传失败，请检查文件合法性！",
-                                    type: "error",
-                              });
-                        });
-            },
-      },
-      mounted() {
-            this.init();
-      },
-      watch:{
-            '$route':'toPage'
-      }
+            search: {id: "", name: "", creator: "", parent: '1'},
+            pageUrlPath: "/file/systemFile",
+            
+        };
+    },
+    methods: {
+        createFolder() {
+            this.form = this.$options.data().form;
+            this.inductsVisible = true
+        },
+        cancelShare(row) {
+            this.$axios.get(this.$url + this.pageUrlPath + '/cancel?id=' + row.id).then(() => {
+                this.toPage();
+            })
+        },
+        share(row, type) {
+            this.form = row;
+            this.form.share = type;
+            this.submit();
+        },
+        changeSize(limit) {
+            if (limit) {
+                var size = "";
+                if (limit < 0.1 * 1024) {                            //小于0.1KB，则转化成B
+                    size = limit.toFixed(2) + "B"
+                } else if (limit < 0.1 * 1024 * 1024) {            //小于0.1MB，则转化成KB
+                    size = (limit / 1024).toFixed(2) + "KB"
+                } else if (limit < 0.1 * 1024 * 1024 * 1024) {        //小于0.1GB，则转化成MB
+                    size = (limit / (1024 * 1024)).toFixed(2) + "MB"
+                } else {                                            //其他转化成GB
+                    size = (limit / (1024 * 1024 * 1024)).toFixed(2) + "GB"
+                }
+                var sizeStr = size + "";                        //转成字符串
+                var index = sizeStr.indexOf(".");                    //获取小数点处的索引
+                var dou = sizeStr.substr(index + 1, 2)            //获取小数点后两位的值
+                if (dou == "00") {                                //判断后两位是否为00，如果是则删除00
+                    return sizeStr.substring(0, index) + sizeStr.substr(index + 3, 2)
+                }
+                return size;
+            }
+        },
+        toParent(parent) {
+            this.clickFile({type: 2, id: parent});
+        },
+        initInfo() {
+            this.$axios.get(this.$url + this.pageUrlPath + '/info?id=' + this.search.parent).then(res => {
+                this.info = res.data.data.info;
+            })
+        },
+        clickFile(row) {
+            if (row.type == 1) {
+                window.open(this.$url + row.path)
+            } else {
+                this.$router.push({
+                    path: '/admin/file',
+                    query: {
+                        parent: row.id
+                    }
+                })
+            }
+        },
+        getData() {
+            // 设置文件上传时的参数
+            if (this.$route.query.parent) {
+                this.search.parent = this.$route.query.parent;
+                this.form.parent = this.$route.query.parent;
+            }
+            this.form.type = 1;
+            this.form.creator = JSON.parse(window.localStorage.getItem('admin')).id;
+            return this.form;
+        },
+        /**初始化字典 */ initDist() {
+        },
+        
+        handleSizeChange(size) {
+            this.pageSize = size;
+            this.toPage();
+        },
+        init() {
+            this.header = {
+                token: window.localStorage.getItem('token'),
+                adminID: JSON.parse(window.localStorage.getItem('admin')).id
+            }
+            
+            this.form.creator = JSON.parse(window.localStorage.getItem('admin')).id;
+            this.search.creator = this.form.creator;
+            this.toPage();
+            this.initDist();
+        },
+        toPage() {
+            this.loading = true;
+            this.inductsVisible = false;
+            this.formVisible = false;
+            if (this.$route.query.parent) {
+                this.search.parent = this.$route.query.parent;
+                this.form.parent = this.$route.query.parent;
+            }
+            this.initInfo();
+            let param = "";
+            Object.keys(this.search).map((key) => {
+                if (
+                    this.search[key] != undefined &&
+                    this.search[key] != ""
+                ) {
+                    param += "&" + key + "=" + this.search[key];
+                }
+            });
+            this.$axios
+                .get(
+                    this.$url +
+                    this.pageUrlPath +
+                    "/list?page=" +
+                    this.page +
+                    "&pageSize=" +
+                    this.pageSize +
+                    param
+                )
+                .then((response) => {
+                    this.tableData = response.data.data.list;
+                    this.total = response.data.data.total;
+                    this.loading = false;
+                });
+        },
+        mkdir() {
+            this.form.type = 2;
+            this.submit();
+        },
+        submit() {
+            // 创建文件夹
+            this.$root.loading = true;
+            
+            let formData = new FormData();
+            Object.keys(this.form).map((key) => {
+                console.log(this.form[key]);
+                if (
+                    this.form[key] != undefined &&
+                    this.form[key] != ""
+                ) {
+                    formData.append(key, this.form[key]);
+                }
+            });
+            this.$axios({
+                method: "POST",
+                url: this.$url + this.pageUrlPath + "/add",
+                data: formData,
+            }).then((res) => {
+                if (res.data.status.code < 400) {
+                    this.toPage();
+                    this.inductsVisible = false;
+                }
+            });
+        },
+        edit(row) {
+            console.log(row);
+            this.form = this.$options.data().form;
+            this.form = row;
+            this.formTitle = "编辑";
+            this.inductsVisible = true;
+        },
+        /**批量删除 */ delList() {
+            this.$confirm("此操作将永久删除信息, 是否继续?", "提示", {
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                type: "warning",
+            }).then(() => {
+                this.$root.loading = true;
+                let format = new FormData();
+                this.multipleSelection.forEach((item) => {
+                    format.append("ids", item.id);
+                });
+                this.$axios({
+                    method: "DELETE",
+                    data: format,
+                    url: this.$url + this.pageUrlPath + "/del",
+                });
+            });
+        },
+    },
+    watch: {
+        '$route': 'toPage'
+    }
 };
 </script><style lang="less" scoped>
 .file-icon{

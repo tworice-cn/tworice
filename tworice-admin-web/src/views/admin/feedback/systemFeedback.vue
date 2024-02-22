@@ -6,7 +6,7 @@
                     <el-input v-model='search.id' clearable placeholder='通过编号查询' size='mini'></el-input>
                 </div>
                 <div class='search-item'>反馈类型 :
-                    <el-select v-model="search.fbType" placeholder="请选择" size="mini">
+                    <el-select v-model="search.fbType" placeholder="请选择" size="mini" clearable>
                         <el-option v-for="item in typeList" :key="item.id" :label="item.typeName"
                                    :value="item.id"></el-option>
                     </el-select>
@@ -96,18 +96,20 @@
                 <el-button @click.native="showVisible=false">关 闭</el-button>
             </div>
         </el-dialog>
-        <el-dialog title="统计报告" :visible.sync="chartsVisible" width="50%" :before-close="$utils.handleClose">
+        <el-dialog title="统计报告" :visible.sync="chartsVisible" width="60%" :before-close="$utils.handleClose">
             <FeedbackChart :value="stateList"></FeedbackChart>
         </el-dialog>
     </div>
 </template>
 <script>
+import paginationMixin from "@/mixins/paginationMixin";
 import {type, submitForm, chart} from '@/api/feedback/feedback';
 import Editor from '@/components/commons/Editor.vue'
 import Descriptions from '@/components/commons/Descriptions.vue'
 import {distList} from '@/api/dist/dist.js';
 import FeedbackChart from "@/views/admin/feedback/FeedbackChart.vue";
 export default {
+    mixins: [paginationMixin],
     components: {
         Editor,
         Descriptions,
@@ -115,15 +117,6 @@ export default {
     },
     props: [], data() {
         return {
-            loading: true,
-            page: 1,
-            pageSize: 10,
-            total: 0,
-            tableData: [],
-            formTitle: '',
-            formVisible: false,
-            inductsVisible: false,
-            showVisible: false,
             chartsVisible: false,
             form: {
                 id: '',
@@ -136,7 +129,6 @@ export default {
                 fbState: '',
                 fbDeal: '',
             },
-            showInfo: [],
             rules: {
                 id: [{required: true, message: '请输入编号', trigger: 'blur'}],
                 createTime: [{required: true, message: '请输入创建时间', trigger: 'blur'}],
@@ -147,10 +139,7 @@ export default {
                 fbContact: [{required: true, message: '请输入联系方式', trigger: 'blur'}],
                 fbImg: [{required: true, message: '请输入反馈图片', trigger: 'blur'}],
             },
-            formLabelWidth: '80px',
-            /** 弹出框标签宽度*/                  isChange: false,
             search: {id: '', creator: '', fbType: '', fbContact: '', typeLevel: []},
-            multipleSelection: [],
             pageUrlPath: '/client/systemFeedback',
             typeList: [],
             stateList:[]
@@ -167,18 +156,14 @@ export default {
             this.showInfo = [];
             this.showInfo.push({name: '编号', value: row.id});
             this.showInfo.push({name: '创建人标识', value: row.creator});
-            this.showInfo.push({name: '创建时间', value: this.$utils.formatDate(row.createTime)});
-            this.showInfo.push({name: '更新时间', value: this.$utils.formatDate(row.updateTime)});
+            this.showInfo.push({name: '创建时间', value: this.$utils.formatDateTime(row.createTime)});
+            this.showInfo.push({name: '更新时间', value: this.$utils.formatDateTime(row.updateTime)});
             this.showInfo.push({name: '反馈类型', value: row.typeName});
             this.showInfo.push({name: '联系方式', value: row.fbContact});
             this.showInfo.push({name: '处理状态', value: row.fbState});
             this.showInfo.push({name: '反馈内容', value: row.fbDescribe});
             this.showInfo.push({name: '当前处理结果', value: row.fbDeal});
             this.showVisible = true;
-        },
-        handleSizeChange(size) {
-            this.pageSize = size;
-            this.toPage();
         },
         initType() {
             type().then(res => {
@@ -208,13 +193,6 @@ export default {
                 this.total = response.data.data.total;
                 this.loading = false;
             })
-        }, /**监听页码发生变化 */            changePage(e) {
-            this.page = e;
-            this.toPage();
-        }, add() {
-            this.form = this.$options.data().form;
-            this.formTitle = '新增';
-            this.formVisible = true;
         },
         submit() {
             this.$root.loading=true;
@@ -225,79 +203,8 @@ export default {
                 }
             });
         },
-        edit(row) {
-            this.form = row;
-            this.formTitle = '编辑';
-            this.formVisible = true;
-        },
-        del(row) {
-            this.$confirm('此操作将永久删除该信息, 是否继续?', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-            }).then(() => {
-                this.$root.loading = true;
-                let format = new FormData();
-                format.append("ids", row.id);
-                this.$axios({method: 'DELETE', data: format, url: this.$url + this.pageUrlPath + "/del",}).then(res => {
-                    if (res.data.status.code == 200) {
-                        this.toPage();
-                    }
-                });
-            });
-        }, /**下载表 */            templateDownload() {
-            window.open(this.$url + this.pageUrlPath + '/template');
-        }, /**批量删除 */            delList() {
-            this.$confirm('此操作将永久删除信息, 是否继续?', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-            }).then(() => {
-                this.$root.loading = true;
-                let format = new FormData();
-                this.multipleSelection.forEach(item => {
-                    format.append("ids", item.id);
-                });
-                this.$axios({method: 'DELETE', data: format, url: this.$url + this.pageUrlPath + "/del",}).then(res => {
-                    if (res.data.status.code == 200) {
-                        this.toPage();
-                    }
-                })
-            })
-        }, /**选择框 val为当前所有选择的内容数组 */            handleSelectionChange(val) {
-            this.multipleSelection = val;
-        }, /**点击批量导入 */            inducts() {
-            this.inductsVisible = true;
-        }, /**选择批量 */            inductsChange() {
-            let files = this.$refs.inducts.files;/*获取选择的文件*/
-            let len = files.length;/*文件个数*/
-            if (len != 1) {
-                this.$msg({message: '需要且只能上传一个文件', type: 'warning'});
-                return;
-            }
-            let formData = new FormData();
-            formData.append("file", files[0]);
-            this.$axios({
-                method: 'post',
-                url: this.$url + this.pageUrlPath + '/inducts',
-                data: formData,
-                headers: {'Content-Type': 'multipart/form-data'}
-            }).then(res => {                        /*上传成功后是否需要将选择的文件滞空*/
-                this.$refs.inducts.value = null;
-                if (res.data.status.code == 200) {
-                    this.inductsVisible = false;
-                    this.toPage();
-                }
-            }).catch(() => {
-                this.$refs.inducts.value = null;
-                this.$msg({message: '上传失败，请检查文件合法性！', type: 'error'})
-            })
-        }, submitSearch() {
-            this.page = 0;
-            this.toPage();
-        }
-    }, mounted() {
-        this.init();
+        
+        
     }
 };</script>
 <style lang="less" scoped></style>
