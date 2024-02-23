@@ -1,4 +1,4 @@
-FROM java:8
+FROM openjdk:8
 LABEL authors="TwoRice"
 # 将Spring Boot JAR文件复制到容器中
 COPY ./jar/tworice-admin.jar /jar/tworice-admin.jar

@@ -1,5 +1,16 @@
 # 二饭单服务快速开发框架
 
+ <p align="center">
+    <img src="https://img.shields.io/badge/beta-V1.2.2-green.svg" alt="Downloads">
+    <img src="https://img.shields.io/badge/JDK-1.8+-green.svg" alt="Build Status">
+    <img src="https://img.shields.io/badge/Spring%20Cloud-Hoxton.SR12-blue.svg" alt="Coverage Status">
+    <img src="https://img.shields.io/badge/Spring%20Boot-2.3.12.RELEASE-blue.svg" alt="Downloads">
+    <img src="https://img.shields.io/badge/Vue-2.6.11-blue.svg" alt="Downloads">
+     <img src="https://img.shields.io/badge/MySQL-8.0+-blue.svg" alt="Downloads">
+</p>
+
+
+
 ## 0、简介
 
 本系统基于SpringBoot、MyBatis、Vue & Element实现的后台系统，支持RBAC动态菜单&权限；
@@ -31,6 +42,42 @@
 所有角色、所有用户的登录界面都是同一个，系统在接收登录请求后，获取当前用户的角色绑定了哪些权限（菜单），就把哪些菜单渲染到界面左侧，所以决定当前账户有哪些菜单项是通过给角色设置权限。
 
 两个不同角色的用户登录系统后左侧菜单列表也不同，但两个相同角色下的用户登录系统后的菜单项是相同的。
+
+
+
+### 0.5、快速上手
+
+#### 0.5.1、如何快速创建页面
+
+##### ① 代码生成
+
+在“系统工具-代码生成”功能中，您可以填写表名、字段以及字段类型等信息，然后执行生成操作。
+
+生成成功后，后端项目会自动生成包括`client`、`service`、`dao`、`po`等文件，同时会在数据库中创建相应的表结构。
+
+前端项目则会在`code`文件夹下生成相应的`vue`页面文件。
+
+##### ② 重启后端项目
+
+由于后端项目不支持热加载，所以需要重启项目来使刚刚生成代码生效。
+
+##### ③ 添加菜单
+
+在“系统管理-资源菜单”中，您可以将刚刚生成的 Vue 页面名称填入相应位置。
+
+“更新路由”操作表示将当前页面的路径添加到本地的 `VueRouter` 文件中，以便在前端项目中能够访问到这个新生成的页面。
+
+![image-20230421231613140](https://gitee.com/StandFast/tworice/raw/master/IMG/添加菜单.png)
+
+##### ④ 重新登录
+
+重新登录系统，获取最新的资源菜单，即可看到刚刚生成的页面了。
+
+
+
+#### 0.5.2、改造系统底层
+
+系统通过依赖注入的方式实现了代码的灵活性，如果需要修改系统底层代码，可以通过继承相关类并重写方法来实现。此外，系统还提供了丰富的配置和插件功能，几乎所有功能都可以通过配置文件来进行配置。您可以查看下方的详细文档，通过标题快速索引以获取更多信息。
 
 
 
@@ -86,19 +133,20 @@ SQL文件在`sql`目录下，文件以日期命名，请使用最新版本的SQL
 
 ## 2、技术选型
 
-| 技术        | 说明                  | 官网                                           |
-| ----------- | --------------------- | ---------------------------------------------- |
-| SpringBoot  | v2.4.3，容器+MVC框架  | https://spring.io/projects/spring-boot         |
-| MyBatis     | v2.1.4，ORM框架       | http://www.mybatis.org/mybatis-3/zh/index.html |
-| MySQL       | 关系型数据库          | https://www.oracle.com/kr/mysql/               |
-| Druid       | 数据库连接池          | https://github.com/alibaba/druid               |
-| JWT         | JWT登录支持           | https://github.com/jwtk/jjwt                   |
-| Lombok      | 简化对象封装工具      | https://github.com/rzwitserloot/lombok         |
-| Swagger-UI  | 文档生成工具          | https://github.com/swagger-api/swagger-ui      |
-| zXing       | 谷歌二维码生成技术    | https://github.com/*zxing*/zxing               |
-| EasyCaptcha | Java图形验证码        | https://gitee.com/ele-admin/EasyCaptcha        |
-| wangEditor  | 富文本编辑器          | https://www.wangeditor.com/                    |
-| easyExcel   | 阿里巴巴Excel操作工具 | https://easyexcel.opensource.alibaba.com/      |
+| 技术         | 说明                    | 官网                                                 |
+| ------------ | ----------------------- | ---------------------------------------------------- |
+| SpringBoot   | v2.4.3，容器+MVC框架    | https://spring.io/projects/spring-boot               |
+| MyBatis      | v2.1.4，ORM框架         | http://www.mybatis.org/mybatis-3/zh/index.html       |
+| MyBatis-Plus | v3.5.4，简化MyBatis开发 | [MyBatis-Plus (baomidou.com)](https://baomidou.com/) |
+| MySQL        | 数据库                  | https://www.oracle.com/kr/mysql/                     |
+| Hikari       | 数据库连接池            | https://github.com/alibaba/druid                     |
+| JWT          | JWT登录支持             | https://github.com/jwtk/jjwt                         |
+| Lombok       | 简化对象封装工具        | https://github.com/rzwitserloot/lombok               |
+| Swagger-UI   | 文档生成工具            | https://github.com/swagger-api/swagger-ui            |
+| zXing        | 谷歌二维码生成技术      | https://github.com/*zxing*/zxing                     |
+| EasyCaptcha  | Java图形验证码          | https://gitee.com/ele-admin/EasyCaptcha              |
+| wangEditor   | 富文本编辑器            | https://www.wangeditor.com/                          |
+| easyExcel    | 阿里巴巴Excel操作工具   | https://easyexcel.opensource.alibaba.com/            |
 
 
 
@@ -259,7 +307,7 @@ tworice:
 
 系统中加密组件利用工厂模式实现，支持多种加密方式。
 
-#### 4.9.1、使用
+#### 4.9.1、使用加密组件
 
 ① 加入依赖
 
@@ -291,7 +339,7 @@ tworice:
 
 `pointcut`：配置需要加密的接口切入点。
 
-#### 4.9.2、不加密
+#### 4.9.2、排除加密接口
 
 系统主要通过Swagger的相关注解进行加密接口返回结果，为接口访问接口添加`@NoEncryption`注解或去掉`@ApiOperation`注解，系统将不对该接口返回的结果进行加密。
 
@@ -340,10 +388,7 @@ tworice:
 | 201    | 请求正常通过，展示通知消息 |
 | 202    | 请求结果被加密             |
 | 300    | 登录请求需要进行二次验证   |
-|        |                            |
-|        |                            |
-|        |                            |
-|        |                            |
+| 500+   | 系统处理错误               |
 |        |                            |
 
 
@@ -362,11 +407,11 @@ Maven引入：
 <dependency>
     <groupId>cn.tworice</groupId>
     <artifactId>tworice-admin-starter</artifactId>
-    <version>1.0</version>
+    <version>${version}</version>
 </dependency>
 ```
 
-增加配置文件：
+增加配置文件（以下配置文件为默认，可根据实际需求调整）：
 
 ```yml
 spring:
@@ -375,7 +420,7 @@ spring:
   boot:
     admin:
       client:
-        url: http://localhost:88
+        url: http://localhost:${server.port}
         instance:
           prefer-ip: true
 management:
@@ -389,8 +434,6 @@ management:
     shutdown:
       enabled: true
 ```
-
-可根据实际需求调整。
 
 
 
@@ -407,7 +450,7 @@ tworice:
 		captchaType: arithmetic # 算数验证码
 ```
 
-type的取值：`arithmetic`（算数），`character`（字符）；其中字符验证码不分大小写。
+type的取值：`arithmetic`（算数），`character`（字符）；字符验证码不分大小写。
 
 
 
@@ -447,24 +490,26 @@ type的取值：`arithmetic`（算数），`character`（字符）；其中字�
 
 ① package打包项目
 
-② 项目根目录执行
+② 将生成的jar包放到`/docker/jar/`中。
 
-```bash
+③ 将配置文件放到`/docker/config`中。
+
+④ 将docker目录上传到服务器。
+
+⑤ 在服务器进入docker目录，运行docker运行如下命令来构建镜像：
+
+```sh
 docker build -t tworice-admin:1.0 .
 ```
 
-③ 运行docker运行命令
+⑥ 启动容器
 
 ```bash
-docker run -d --name tworice-admin -p 888:88 tworice-admin:1.0
+docker run -d --name {替换为容器名称} -v {替换为jar目录绝对路径}:/jar -v {替换为config目录绝对路径}:/config -v {替换为文件上传目录绝对路径}:/upload -v {替换为日志文件目录绝对路径}:/logs -p {替换为外部端口}:88 tworice-admin:1.0
 ```
 
-④ 将镜像打包，到另一个机器上运行
+⑦ 更新配置文件或jar包
 
-```bash
-# 生成一个名为 tworice.tar 的文件，其中 tworice-admin:1.0 是之前构建的镜像的名称和标签，后面可以跟多个镜像
-docker save -o tworice.tar tworice-admin:1.0
-# 导入镜像到另一台计算机的Docker中
-docker load -i images.tar
-```
+替换本地的jar目录中的jar包及config目录下的配置文件即可。
 
+替换完成后重启Docker容器：`docker restart {替换为容器名称}`。
