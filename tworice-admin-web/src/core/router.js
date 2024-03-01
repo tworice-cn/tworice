@@ -5,6 +5,8 @@ Vue.use(VueRouter);
 
 export function setupRouter() {
     const router =
+
+
 //$start
         [{
             path: "/login",
@@ -23,12 +25,12 @@ export function setupRouter() {
             component: () => import("@/views/front/feedback"),
             meta: {title: "用户反馈"}
         }, {
-            path: "/home",
+            path: "/home", /*客户端*/
             name: "欢迎",
             component: () => import("@/views/front/index/index.vue"),
             children: [],
         }, {
-            path: "/admin",
+            path: "/admin", /*管理端*/
             name: "首页",
             component: () => import("@/views/admin"),
             children: [{
@@ -172,5 +174,7 @@ export function setupRouter() {
             }, {path: "ws", name: "WebSocket", component: (resolve) => require(["@/views/dev/ws.vue"], resolve)},],
         },];
 //$end
+
+
     return new VueRouter({routes: router, base: "/"});
 }
