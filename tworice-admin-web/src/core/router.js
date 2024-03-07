@@ -17,6 +17,10 @@ export function setupRouter() {
             component: () => import("@/views/admin/home.vue"),
             meta: {title: "实时监控"}
         }, {
+            path: "/download/:id",
+            component: () => import("@/views/admin/file/download.vue"),
+            meta: {title: "下载中心"}
+        },{
             path: "/admin/userCenter/:id",
             component: () => import("@/views/admin/userCenter/userCenter.vue"),
             meta: {title: "用户中心"}
@@ -40,8 +44,10 @@ export function setupRouter() {
             }, {
                 path: "file",
                 name: "我的文件",
-                component: (resolve) => require(["@/views/admin/systemFile.vue"], resolve)
-            },],
+                component: (resolve) => require(["@/views/admin/file/systemFile.vue"], resolve)
+            },
+
+            ],
         }, {
             path: "/system",
             name: "系统管理",

@@ -51,6 +51,12 @@ export default {
         });
     },
 
+    /**
+     * 合并两个JSON对象
+     * @param obj1
+     * @param obj2
+     * @returns {*}
+     */
     mergeJSON(obj1,obj2) {
         for (let key in obj2) {
             if (obj2[key] !== null && obj2[key] !== undefined && obj2[key] !== '') {
@@ -66,4 +72,29 @@ export default {
         }
         return obj1;
     },
+
+    /**
+     * 深拷贝
+     * @param obj
+     * @returns {*|*[]|{}}
+     */
+    deepCopy(obj) {
+        // 检查如果是基本类型或者null，则直接返回
+        if (obj === null || typeof obj !== 'object') {
+            return obj;
+        }
+
+        // 创建一个新的对象或数组来存储复制的内容
+        const copy = Array.isArray(obj) ? [] : {};
+
+        // 遍历原始对象的所有属性，并递归调用deepCopy函数进行复制
+        for (let key in obj) {
+            if (Object.prototype.hasOwnProperty.call(obj, key)) {
+                copy[key] = this.deepCopy(obj[key]);
+            }
+        }
+
+        return copy;
+    }
+
 }

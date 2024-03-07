@@ -1,96 +1,114 @@
 <template>
-      <div class="app-body">
-            <!-- 条件查询 -->
-            <el-col :span="24" class="info-search-box">
-                  <div class="search">
-                        <div class='search-item'>文件名称 : <el-input size='mini' v-model='search.name' placeholder='通过文件名称查询' clearable></el-input>
-                        </div>
-                        <div class="search-item">
-                              <el-button size="mini" type="primary" @click="toPage">查询</el-button>
-                        </div>
-                  </div>
-            </el-col>
-            <el-col :span="24" class="button-box">
-                  <el-button size="mini" type="primary" icon="el-icon-document-add" @click="add">上传</el-button>
-                  <el-button size="mini" type="success" icon="el-icon-folder-add" @click="createFolder">新建文件夹</el-button>
-                  <el-button size="mini" type="danger" icon="el-icon-delete" @click="delList">批量删除</el-button>
-            </el-col>
-            <el-col :span="24" class="button-box">
-                  <el-breadcrumb separator="/">
-                        <el-breadcrumb-item><a @click="toParent(1)">根目录</a></el-breadcrumb-item>
-                        <el-breadcrumb-item v-if="info.id!='1'">{{info.name}}</el-breadcrumb-item>
-                  </el-breadcrumb>
-            </el-col>
-            <el-table @selection-change="handleSelectionChange" size="mini" v-loading="loading" :header-cell-style="$setting.table_header" :stripe="true" :fit="true" :data="tableData" style="width: 100%">
-                  <el-table-column type="selection" width="55"></el-table-column>
-                  <el-table-column prop='id' label='类型' width="55" >
-                        <template slot-scope="scope">
-                              <i :class="scope.row.type==1?'el-icon-document':'el-icon-folder'" class="file-icon"></i>
-                        </template>
-                  </el-table-column>
-                  <el-table-column prop='name' label='文件名称'>
-                        <template slot-scope="scope">
-                              <el-link @click="clickFile(scope.row)">{{scope.row.name}}</el-link>
-                        </template>
-                  </el-table-column>
-                  <el-table-column prop='createTime' label='创建时间' :formatter='(row)=>$utils.formatDate(row.createTime)'></el-table-column>
-                  <el-table-column prop='nickName' label='创建人'></el-table-column>
-                  <el-table-column prop='share' label='分享'>
-                        <template slot-scope="scope">
-                              <el-popover v-if="scope.row.share=='1'" placement="top" width="200" trigger="click" :content="$url+pageUrlPath+'/downloadLocal/'+scope.row.id">
-                                    <el-button size="mini" type="primary" slot="reference">分享中</el-button>
-                              </el-popover>
-                        </template>
-                  </el-table-column>
-                  <el-table-column prop='size' label='大小' :formatter='(row)=>changeSize(row.size)' width="80"></el-table-column>
-                  <el-table-column label="操作"> <template slot-scope="scope">
-                        <el-tooltip content="取消分享">
-                              <el-button v-if="scope.row.type==1&&scope.row.share==1" size="mini" type="danger" icon="el-icon-share" circle @click.native="cancelShare(scope.row)"></el-button>
-                        </el-tooltip>
-                        <el-tooltip content="分享文件">
-                              <el-button v-if="scope.row.type==1&&scope.row.share==0" size="mini" type="info" icon="el-icon-share" circle @click.native="share(scope.row,1)"></el-button>
-                        </el-tooltip>
-                        <el-tooltip content="编辑文件夹">
-                              <el-button v-if="scope.row.type==2" size="mini" type="warning" icon="el-icon-edit" circle @click.native="edit(scope.row)"></el-button>
-                        </el-tooltip>
-                        <el-tooltip content="删除">
-                              <el-button size="mini" type="danger" icon="el-icon-delete" circle @click.native="del(scope.row)"></el-button>
-                        </el-tooltip>
-                        </template> </el-table-column>
-            </el-table>
-            <el-col :span="24">
-                  <div class="page-box">
-                        <el-pagination @size-change="handleSizeChange" :small="true" :hide-on-single-page="true" @current-change="changePage" background layout="total, sizes, prev, pager, next" :total="total"
-                              :page-size="pageSize"></el-pagination>
-                  </div>
-            </el-col> <!-- 弹出层 -->
-            <el-dialog title="上传文件" :visible.sync="formVisible" top="5vh" width="30%" :before-close="$utils.handleClose">
-                  <el-form :model="form" :rules="rules" ref="form">
-                        <el-upload
-                                    class="upload-demo"
-                                    :data="getData()"
-                                    drag
-                                    :show-file-list="false"
-                                    :action="$url+pageUrlPath+'/add'"
-                                    :on-success="toPage"
-                                    :headers="header"
-                                    :multiple="false">
-                                    <i class="el-icon-upload"></i>
-                                    <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-                              </el-upload>
-                  </el-form>
-            </el-dialog>
-            <el-dialog title="文件夹" :visible.sync="inductsVisible" width="30%" :before-close="$utils.handleClose">
-                  <el-form size="mini">
-                        <el-input :validate-event="true" :show-word-limit="true" minlength="2" maxlength="12" v-model="form.name" size="mini" placeholder="请输入文件夹名称"></el-input>
-                  </el-form>
-                  <div slot="footer" class="dialog-footer">
-                        <el-button size="mini" @click="inductsVisible=false">取 消</el-button>
-                        <el-button size="mini" type="primary" @click="mkdir">确定</el-button>
-                  </div>
-            </el-dialog>
-      </div>
-</template><script>
+    <div class="app-body">
+        <!-- 条件查询 -->
+        <el-col :span="24" class="info-search-box">
+            <div class="search">
+                <div class='search-item'>文件名称 :
+                    <el-input size='mini' v-model='search.name' placeholder='通过文件名称查询' clearable></el-input>
+                </div>
+                <div class="search-item">
+                    <el-button size="mini" type="primary" @click="toPage">查询</el-button>
+                </div>
+            </div>
+        </el-col>
+        <el-col :span="24" class="button-box">
+            <el-button size="mini" type="primary" icon="el-icon-document-add" @click="add">上传</el-button>
+            <el-button size="mini" type="success" icon="el-icon-folder-add" @click="createFolder">新建文件夹</el-button>
+            <el-button size="mini" type="danger" icon="el-icon-delete" @click="delList">批量删除</el-button>
+        </el-col>
+        <el-col :span="24" class="button-box">
+            <el-breadcrumb separator="/">
+                <el-breadcrumb-item><a @click="toParent(1)">根目录</a></el-breadcrumb-item>
+                <el-breadcrumb-item v-if="info.id!='1'">{{ info.name }}</el-breadcrumb-item>
+            </el-breadcrumb>
+        </el-col>
+        <el-table @selection-change="handleSelectionChange" size="mini" v-loading="loading"
+                  :header-cell-style="$setting.table_header" :stripe="true" :fit="true" :data="tableData"
+                  style="width: 100%">
+            <el-table-column type="selection" width="55"></el-table-column>
+            <el-table-column prop='id' label='类型' width="55">
+                <template slot-scope="scope">
+                    <i :class="scope.row.type==1?'el-icon-document':'el-icon-folder'" class="file-icon"></i>
+                </template>
+            </el-table-column>
+            <el-table-column prop='name' label='文件名称'>
+                <template slot-scope="scope">
+                    <el-link @click="clickFile(scope.row)">{{ scope.row.name }}</el-link>
+                </template>
+            </el-table-column>
+            <el-table-column prop='createTime' label='创建时间'
+                             :formatter='(row)=>$utils.formatDate(row.createTime)'></el-table-column>
+<!--            <el-table-column prop='nickName' label='创建人'></el-table-column>-->
+            <el-table-column prop='share' label='分享'>
+                <template slot-scope="scope">
+                    <el-popover v-if="scope.row.share=='1'" placement="top" width="200" trigger="click"
+                                :content="window.location.origin+'/#/download/'+scope.row.id">
+                        <el-button size="mini" type="primary" slot="reference">分享中</el-button>
+                    </el-popover>
+                    <el-tag type="info" v-else>未分享</el-tag>
+                </template>
+            </el-table-column>
+            <el-table-column prop='size' label='大小' :formatter='(row)=>changeSize(row.size)'
+                             width="80"></el-table-column>
+            <el-table-column label="操作">
+                <template slot-scope="scope">
+                    <el-tooltip content="取消分享">
+                        <el-button v-if="scope.row.type==1&&scope.row.share==1" size="mini" type="danger"
+                                   icon="el-icon-share" circle @click.native="cancelShare(scope.row)"></el-button>
+                    </el-tooltip>
+                    <el-tooltip content="分享文件">
+                        <el-button v-if="scope.row.type==1&&scope.row.share==0" size="mini" type="info"
+                                   icon="el-icon-share" circle @click.native="share(scope.row,1)"></el-button>
+                    </el-tooltip>
+                    <el-tooltip content="编辑文件夹">
+                        <el-button v-if="scope.row.type==2" size="mini" type="warning" icon="el-icon-edit" circle
+                                   @click.native="edit(scope.row)"></el-button>
+                    </el-tooltip>
+                    <el-tooltip content="删除">
+                        <el-button size="mini" type="danger" icon="el-icon-delete" circle
+                                   @click.native="del(scope.row)"></el-button>
+                    </el-tooltip>
+                </template>
+            </el-table-column>
+        </el-table>
+        <el-col :span="24">
+            <div class="page-box">
+                <el-pagination @size-change="handleSizeChange" :small="true" :hide-on-single-page="true"
+                               @current-change="changePage" background layout="total, sizes, prev, pager, next"
+                               :total="total"
+                               :page-size="pageSize"></el-pagination>
+            </div>
+        </el-col> <!-- 弹出层 -->
+        <el-dialog title="上传文件" :visible.sync="formVisible" top="5vh" width="30%"
+                   :before-close="$utils.handleClose">
+            <el-form :model="form" :rules="rules" ref="form">
+                <el-upload
+                    class="upload-demo"
+                    :data="getData()"
+                    drag
+                    :show-file-list="false"
+                    :action="$url+pageUrlPath+'/add'"
+                    :on-success="toPage"
+                    :headers="header"
+                    :multiple="false">
+                    <i class="el-icon-upload"></i>
+                    <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                </el-upload>
+            </el-form>
+        </el-dialog>
+        <el-dialog title="文件夹" :visible.sync="inductsVisible" width="30%" :before-close="$utils.handleClose">
+            <el-form size="mini">
+                <el-input :validate-event="true" :show-word-limit="true" minlength="2" maxlength="12"
+                          v-model="form.name" size="mini" placeholder="请输入文件夹名称"></el-input>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button size="mini" @click="inductsVisible=false">取 消</el-button>
+                <el-button size="mini" type="primary" @click="mkdir">确定</el-button>
+            </div>
+        </el-dialog>
+    </div>
+</template>
+<script>
 import paginationMixin from "@/mixins/paginationMixin";
 
 export default {
@@ -209,8 +227,8 @@ export default {
             })
         },
         clickFile(row) {
-            if (row.type == 1) {
-                window.open(this.$url + row.path)
+            if (row.type === 1) {
+                window.open(this.$url + "/receive/preview/" + row.path)
             } else {
                 this.$router.push({
                     path: '/admin/file',
@@ -289,7 +307,6 @@ export default {
             
             let formData = new FormData();
             Object.keys(this.form).map((key) => {
-                console.log(this.form[key]);
                 if (
                     this.form[key] != undefined &&
                     this.form[key] != ""
@@ -309,9 +326,9 @@ export default {
             });
         },
         edit(row) {
-            console.log(row);
-            this.form = this.$options.data().form;
-            this.form = row;
+            // this.form = this.$options.data().form;
+            
+            this.form = this.$utils.deepCopy(row);
             this.formTitle = "编辑";
             this.inductsVisible = true;
         },
@@ -338,8 +355,9 @@ export default {
         '$route': 'toPage'
     }
 };
-</script><style lang="less" scoped>
-.file-icon{
-      font-size: 20px!important;
+</script>
+<style lang="less" scoped>
+.file-icon {
+    font-size: 20px !important;
 }
 </style>
