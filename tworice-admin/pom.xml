@@ -6,10 +6,10 @@
     <parent>
         <artifactId>tworice-cloud</artifactId>
         <groupId>cn.tworice</groupId>
-        <version>1.2.2-beta</version>
+        <version>1.2.2-RC2</version>
     </parent>
     <artifactId>tworice-admin</artifactId>
-    <version>1.2.2-beta</version>
+    <version>1.2.2-RC2</version>
 
     <!--版本-->
     <properties>
@@ -42,7 +42,7 @@
 <!--        <dependency>-->
 <!--            <groupId>cn.tworice</groupId>-->
 <!--            <artifactId>tworice-alipay</artifactId>-->
-<!--            <version>1.2.2-beta</version>-->
+<!--            <version>1.2.2-RC2</version>-->
 <!--        </dependency>-->
 
     </dependencies>

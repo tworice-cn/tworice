@@ -51,7 +51,7 @@ export default {
         },
         showNotice(item) {
             // 跳转到showNotice路由并携带id参数
-            this.$router.push({path: '/notice/showNotice', query: {id: item.id}});
+            this.$router.push({path: '/infra/showNotice', query: {id: item.id}});
         },
         submit() {
             this.$root.loading = true;

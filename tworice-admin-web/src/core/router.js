@@ -121,7 +121,7 @@ export function setupRouter() {
             }, {
                 path: "codeGeneration",
                 name: "代码生成",
-                component: (resolve) => require(["@/views/admin/codeGeneration.vue"], resolve)
+                component: (resolve) => require(["@/views/admin/codeGeneration/codeGeneration.vue"], resolve)
             }, {
                 path: "online",
                 name: "在线账户",

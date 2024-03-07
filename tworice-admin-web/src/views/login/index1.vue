@@ -10,7 +10,7 @@
             <!-- <i class="iconfont icon-logo"></i> -->
             登 录
           </el-col>
-          <el-form @submit="loginSubmit">
+          <el-form>
             <el-col :span="24" class="content-form">
               <el-col :span="24">
                 <el-input placeholder="请输入用户名" ref='userInput' type="text" suffix-icon="el-icon-user" v-model="login.loginName" @keyup.enter.native="loginSubmit" @blur="isEmpty('u')"></el-input>
