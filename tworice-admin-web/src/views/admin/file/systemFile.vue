@@ -38,11 +38,11 @@
             </el-table-column>
             <el-table-column prop='createTime' label='创建时间'
                              :formatter='(row)=>$utils.formatDate(row.createTime)'></el-table-column>
-<!--            <el-table-column prop='nickName' label='创建人'></el-table-column>-->
+            <!--            <el-table-column prop='nickName' label='创建人'></el-table-column>-->
             <el-table-column prop='share' label='分享'>
                 <template slot-scope="scope">
                     <el-popover v-if="scope.row.share=='1'" placement="top" width="200" trigger="click"
-                                :content="window.location.origin+'/#/download/'+scope.row.id">
+                                :content="downloadLink(scope.row.id)">
                         <el-button size="mini" type="primary" slot="reference">分享中</el-button>
                     </el-popover>
                     <el-tag type="info" v-else>未分享</el-tag>
@@ -183,6 +183,9 @@ export default {
         };
     },
     methods: {
+        downloadLink(id) {
+            return window.location.origin + "/#/download/" + id;
+        },
         createFolder() {
             this.form = this.$options.data().form;
             this.inductsVisible = true

@@ -138,15 +138,15 @@ export default {
                 data: format
             }).then(
                 response => {
-                    if (response.data.status.code === 200) {
+                    if(response.data.data.reAuth){
+                        // 二次验证
+                        this.login.key=response.data.data.key;
+                        this.showState='reAuth';
+                    }else if (response.data.status.code === 200) {
                         if (this.login.remember) {
                             localStorage.setItem("loginForm", JSON.stringify(this.login));
                         }
                         this.checkLoginResult(response);
-                    } else if(response.data.status.code === 300){
-                        // 二次验证
-                        this.login.key=response.data.data.key;
-                        this.showState='reAuth';
                     }else{
                         this.initCaptcha();
                         this.login.password = '';
