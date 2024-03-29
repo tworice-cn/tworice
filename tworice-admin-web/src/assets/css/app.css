@@ -104,3 +104,7 @@
             min-width: 300px !important;
       }
 }
+/* 查看的Descriptions组件 */
+.el-descriptions-item__label{
+      min-width: 70px!important;
+}
