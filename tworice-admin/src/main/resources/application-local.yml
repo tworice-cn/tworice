@@ -53,8 +53,9 @@ tworice:
     captchaType: character
   generate:
     vue-project: tworice-admin-web # 前端项目与当前项目平级的相对路径，要包含前端项目根路径
+    admin-project: tworice-admin
     template: template  # 代码生成模板在resources目录下的路径
-  dev: false # 开发模式是否开启
+  dev: true # 开发模式是否开启
   env: dev # 当前环境
   file:
     path: \upload\
