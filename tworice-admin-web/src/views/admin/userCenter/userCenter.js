@@ -143,6 +143,7 @@ export default {
                 });
         },
         initUserInfo(){
+            this.userInfo = [];
             this.userInfo.push({icon:'el-icon-user', name:'用户名', value: this.adminInfo.nickName})
             this.userInfo.push({icon:'el-icon-coordinate', name:'角色', value: this.adminInfo.roleName})
             this.userInfo.push({icon:'el-icon-male', name:'性别', value: this.adminInfo.adminSex === 1 ? '男' : this.adminInfo.adminSex === 2 ? '女' : '未知'})
