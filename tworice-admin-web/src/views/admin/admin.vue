@@ -70,7 +70,7 @@
                               :disabled="showAdmin"></el-input>
                 </el-form-item>
                 <el-form-item label="账号状态" :label-width="formLabelWidth">
-                    <el-switch v-model="form.status" active-color="#13ce66" inactive-color="#ff4949" :active-value="0"
+                    <el-switch v-model="form.status" active-color="#13ce66" inactive-color="#ff4949" :active-value="1"
                                :inactive-value="-1" :disabled="showAdmin"></el-switch>
                 </el-form-item>
             </el-form>
