@@ -298,7 +298,7 @@ export default {
         },
         /* 删除表格条目 */
         reduceField(scope) {
-            this.form.formData.paramTable.splice(scope.$index)
+            this.form.formData.paramTable.splice(scope.$index,1)
         },
         /**
          * 构建show方法内容

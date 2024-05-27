@@ -18,9 +18,9 @@
             </el-table-column>
         </el-table>
         
-        <!-- 弹出层 -->
+        <!-- 代码生成弹出层 -->
         <el-dialog :title="form.formTitle" :visible.sync="form.formVisible" width="70%"
-                   :before-close="$utils.handleClose">
+                   :before-close="$utils.handleClose" :fullscreen="true">
             <el-form :model="form.formData" size="mini" :rules="form.rules" ref="form.formData">
                 <el-form-item label="表名称" :label-width="form.formLabelWidth" prop="tableName">
                     <el-input placeholder="请输入内容" v-model="form.formData.tableName"
