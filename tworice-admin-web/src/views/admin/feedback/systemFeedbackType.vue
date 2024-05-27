@@ -34,7 +34,7 @@
                     <el-tag :type="scope.row.typeState==1?'success':'info'">{{scope.row.typeState==1?'展示':'不展示'}}</el-tag>
                 </template>
             </el-table-column>
-            <el-table-column prop='typeLevel' label='反馈类型级别'></el-table-column>
+            <el-table-column prop='roleName' label='反馈类型级别'></el-table-column>
             <el-table-column label="操作">
                 <template slot-scope="scope">
                     <el-button size="mini" type="warning" icon="el-icon-edit" circle
