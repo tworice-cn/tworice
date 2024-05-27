@@ -2,14 +2,14 @@
     <div class="app-body">
         <!-- 条件查询 -->
         <el-col :span="24" class="info-search-box">
-            <div class="search">
+            <el-form class="search" @submit.native.prevent="submitSearch">
                 <div class='search-item'>文件名称 :
                     <el-input size='mini' v-model='search.name' placeholder='通过文件名称查询' clearable></el-input>
                 </div>
                 <div class="search-item">
-                    <el-button size="mini" type="primary" @click="toPage">查询</el-button>
+                    <el-button size="mini" type="primary" @click="submitSearch" native-type="submit">查询</el-button>
                 </div>
-            </div>
+            </el-form>
         </el-col>
         <el-col :span="24" class="button-box">
             <el-button size="mini" type="primary" icon="el-icon-document-add" @click="add">上传</el-button>

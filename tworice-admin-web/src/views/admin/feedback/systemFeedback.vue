@@ -1,7 +1,7 @@
 <template>
     <div class="app-body">            <!-- 条件查询 -->
         <el-col :span="24" class="info-search-box">
-            <div class="search">
+            <el-form class="search" @submit.native.prevent="submitSearch">
                 <div class='search-item'>编号 :
                     <el-input v-model='search.id' clearable placeholder='通过编号查询' size='mini'></el-input>
                 </div>
@@ -16,9 +16,9 @@
                               size='mini'></el-input>
                 </div>
                 <div class="search-item">
-                    <el-button size="mini" type="primary" @click="submitSearch">查询</el-button>
+                    <el-button size="mini" type="primary" @click="submitSearch" native-type="submit">查询</el-button>
                 </div>
-            </div>
+            </el-form>
         </el-col>
         <el-col :span="24" class="button-box">
             <el-button icon="el-icon-delete" size="mini" type="danger" @click="delList">批量删除</el-button>

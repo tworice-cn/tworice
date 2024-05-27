@@ -1,14 +1,14 @@
 <template>
     <div class="notice app-body">
         <el-col :span="24" class="info-search-box">
-            <div class="search">
+            <el-form class="search" @submit.native.prevent="submitSearch">
                 <div class='search-item'>标题 :
                     <el-input size='mini' v-model='search.title' placeholder='请输入标题' clearable></el-input>
                 </div>
                 <div class="search-item">
-                    <el-button size="mini" type="primary" @click="toPage">查询</el-button>
+                    <el-button size="mini" type="primary" @click="submitSearch" native-type="submit">查询</el-button>
                 </div>
-            </div>
+            </el-form>
         </el-col>
         <el-col :span="24" class="notice-list">
             <el-col :span="24" class="button-box">

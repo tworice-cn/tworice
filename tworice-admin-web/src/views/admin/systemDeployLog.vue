@@ -1,71 +1,94 @@
 <template>
-      <div class="app-body">
-            <!-- 条件查询 -->
-            <el-col :span="24" class="info-search-box">
-                  <div class="search">
-                        <div class="search-item">操作人 : <el-input size="mini" v-model="search.creator" placeholder="通过操作人查询" clearable></el-input></div>
-                        <div class="search-item">调动人 : <el-input size="mini" v-model="search.userId" placeholder="通过调动人查询" clearable></el-input></div>
-                        <div class="search-item"><el-button size="mini" type="primary" @click="submitSearch">查询</el-button></div>
-                  </div>
-            </el-col>
-            <el-table
-                  @selection-change="handleSelectionChange"
-                  size="mini"
-                  v-loading="loading"
-                  :header-cell-style="$setting.table_header"
-                  :stripe="true"
-                  :fit="true"
-                  :data="tableData"
-                  border
-                  style="width: 100%"
+    <div class="app-body">
+        <!-- 条件查询 -->
+        <el-col :span="24" class="info-search-box">
+            <el-form class="search" @submit.native.prevent="submitSearch">
+                <div class="search-item">操作人 :
+                    <el-input size="mini" v-model="search.creator" placeholder="通过操作人查询" clearable></el-input>
+                </div>
+                <div class="search-item">调动人 :
+                    <el-input size="mini" v-model="search.userId" placeholder="通过调动人查询" clearable></el-input>
+                </div>
+                <div class="search-item">
+                    <el-button size="mini" type="primary" @click="submitSearch" native-type="submit">查询</el-button>
+                </div>
+            </el-form>
+        </el-col>
+        <el-table
+            @selection-change="handleSelectionChange"
+            size="mini"
+            v-loading="loading"
+            :header-cell-style="$setting.table_header"
+            :stripe="true"
+            :fit="true"
+            :data="tableData"
+            border
+            style="width: 100%"
+        >
+            <el-table-column prop="createTime" label="调动时间"
+                             :formatter="(row) => $utils.formatDate(row.createTime)"></el-table-column
             >
-                  <el-table-column prop="createTime" label="调动时间" :formatter="(row) => $utils.formatDate(row.createTime)"></el-table-column
-                  ><el-table-column prop="creator" label="操作人编号"></el-table-column><el-table-column prop="state" label="调动状态"></el-table-column
-                  >
-                  <el-table-column prop="userId" label="调动人编号"></el-table-column>
-                  <el-table-column prop="nickName" label="调动人"></el-table-column>
-                  
-            </el-table>
-            <el-col :span="24">
-                  <div class="page-box">
-                        <el-pagination
-                              @size-change="handleSizeChange"
-                              :small="true"
-                              :hide-on-single-page="true"
-                              @current-change="changePage"
-                              background
-                              layout="total, sizes, prev, pager, next"
-                              :total="total"
-                              :page-size="pageSize"
-                              :current-page="page"
-                        ></el-pagination>
-                  </div>
-            </el-col>
-            <!-- 弹出层 -->
-            <el-dialog :title="formTitle" :visible.sync="formVisible" top="5vh" width="30%" :before-close="$utils.handleClose">
-                  <el-form :model="form" :rules="rules" ref="form">
-                        <el-form-item label="调动状态" :label-width="formLabelWidth" prop="state"
-                              ><el-select size="mini" v-model="form.state" placeholder="请选择" clearable
-                                    ><el-option v-for="item in stateDict" :key="item.id" :label="item.content" :value="item.content"></el-option></el-select></el-form-item
-                        ><el-form-item label="调动人" :label-width="formLabelWidth" prop="userId"
-                              ><el-input placeholder="请输入调动人" v-model="form.userId" @change="isChange = true" size="small"></el-input
-                        ></el-form-item>
-                  </el-form>
-                  <div slot="footer" class="dialog-footer">
-                        <el-button size="mini" @click="formVisible = false">取 消</el-button> <el-button size="mini" type="primary" @click="submit">确 定</el-button>
-                  </div>
-            </el-dialog>
-            <el-dialog title="选择数据表格" :visible.sync="inductsVisible" width="40%" :before-close="$utils.handleClose">
-                  <el-form size="mini">
-                        <el-form-item label="选择表格" :label-width="formLabelWidth">
-                              <input type="file" class="file-left-input" @change="inductsChange()" ref="inducts" multiple accept=".xls,.xlsx" />
-                        </el-form-item>
-                  </el-form>
-                  <div slot="footer" class="dialog-footer">
-                        <el-button size="mini" @click="inductsVisible = false">取 消</el-button> <el-button size="mini" type="primary" @click="templateDownload">下载模板</el-button>
-                  </div>
-            </el-dialog>
-      </div></template
+            <el-table-column prop="creator" label="操作人编号"></el-table-column>
+            <el-table-column prop="state" label="调动状态"></el-table-column
+            >
+            <el-table-column prop="userId" label="调动人编号"></el-table-column>
+            <el-table-column prop="nickName" label="调动人"></el-table-column>
+        
+        </el-table>
+        <el-col :span="24">
+            <div class="page-box">
+                <el-pagination
+                    @size-change="handleSizeChange"
+                    :small="true"
+                    :hide-on-single-page="true"
+                    @current-change="changePage"
+                    background
+                    layout="total, sizes, prev, pager, next"
+                    :total="total"
+                    :page-size="pageSize"
+                    :current-page="page"
+                ></el-pagination>
+            </div>
+        </el-col>
+        <!-- 弹出层 -->
+        <el-dialog :title="formTitle" :visible.sync="formVisible" top="5vh" width="30%"
+                   :before-close="$utils.handleClose">
+            <el-form :model="form" :rules="rules" ref="form">
+                <el-form-item label="调动状态" :label-width="formLabelWidth" prop="state"
+                >
+                    <el-select size="mini" v-model="form.state" placeholder="请选择" clearable
+                    >
+                        <el-option v-for="item in stateDict" :key="item.id" :label="item.content"
+                                   :value="item.content"></el-option>
+                    </el-select>
+                </el-form-item
+                >
+                <el-form-item label="调动人" :label-width="formLabelWidth" prop="userId"
+                >
+                    <el-input placeholder="请输入调动人" v-model="form.userId" @change="isChange = true"
+                              size="small"></el-input
+                    >
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button size="mini" @click="formVisible = false">取 消</el-button>
+                <el-button size="mini" type="primary" @click="submit">确 定</el-button>
+            </div>
+        </el-dialog>
+        <el-dialog title="选择数据表格" :visible.sync="inductsVisible" width="40%" :before-close="$utils.handleClose">
+            <el-form size="mini">
+                <el-form-item label="选择表格" :label-width="formLabelWidth">
+                    <input type="file" class="file-left-input" @change="inductsChange()" ref="inducts" multiple
+                           accept=".xls,.xlsx"/>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button size="mini" @click="inductsVisible = false">取 消</el-button>
+                <el-button size="mini" type="primary" @click="templateDownload">下载模板</el-button>
+            </div>
+        </el-dialog>
+    </div>
+</template
 >
 <script>
 import paginationMixin from "@/mixins/paginationMixin";

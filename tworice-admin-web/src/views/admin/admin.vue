@@ -1,7 +1,7 @@
 <template>
     <div class="app-body">
         <el-col :span="24" class="info-search-box">
-            <div class="search">
+            <el-form class="search" @submit.native.prevent="submitSearch">
                 <div class='search-item'>人员ID :
                     <el-input size='mini' v-model='search.id' placeholder='请输入人员ID' clearable></el-input>
                 </div>
@@ -10,9 +10,9 @@
                     <el-input size='mini' v-model='search.loginName' placeholder='请输入人员账号' clearable></el-input>
                 </div>
                 <div class="search-item">
-                    <el-button size="mini" type="primary" @click="toPage">查询</el-button>
+                    <el-button  size="mini" type="primary" @click="submitSearch" native-type="submit">查询</el-button>
                 </div>
-            </div>
+            </el-form>
         </el-col>
         <el-col :span="24" class="button-box">
             <el-button type="primary" icon="el-icon-plus" size="mini" @click="add">新增</el-button>

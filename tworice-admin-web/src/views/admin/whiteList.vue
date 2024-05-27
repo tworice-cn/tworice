@@ -2,13 +2,13 @@
       <div class="app-body">
             <!-- 条件查询 -->
             <el-col :span="24" class="info-search-box">
-                  <div class="search">
+                 <el-form class="search" @submit.native.prevent="submitSearch">
                         <div class='search-item'>编号 : <el-input size='mini' v-model='search.id' placeholder='通过编号查询' clearable></el-input>
                         </div>
                         <div class="search-item">
-                              <el-button size="mini" type="primary" @click="toPage">查询</el-button>
+                              <el-button size="mini" type="primary" @click="submitSearch" native-type="submit">查询</el-button>
                         </div>
-                  </div>
+                  </el-form>
             </el-col>
             <el-col :span="24" class="button-box">
                   <el-button size="mini" type="primary" icon="el-icon-plus" @click="add">新增</el-button>
