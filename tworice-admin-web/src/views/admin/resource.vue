@@ -9,7 +9,6 @@
                         <el-table size="mini" :data="tableData" style="width: 100%;margin-bottom: 20px;" row-key="id" border :tree-props="{children: 'children', hasChildren: 'hasChildren'}" :header-cell-style="$setting.table_header">
                               <el-table-column prop="name" label="资源名称"></el-table-column>
                               <el-table-column prop="url" label="页面路径"></el-table-column>
-                              <!-- <el-table-column prop="path" label="请求路径"></el-table-column> -->
                               <el-table-column prop="pid" label="上级ID"></el-table-column>
                               <el-table-column prop="sort" label="排序" sortable></el-table-column>
                               <el-table-column prop="icon" label="图标">
