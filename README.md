@@ -366,6 +366,35 @@ public RequestResult captcha(String code){
 
 ③ 在前端项目中的`crypt.js`中进行同步解密操作即可实现自定义加密方式。
 
+
+
+#### 4.9.4、数据库加密方式
+
+为Service层实现`DataBaseCryption<T>`接口，其中`<T>`是数据库对应的实体类。
+
+实现`DataBaseCryption`接口中的`encrypt`和`decrypt`方法，示例如下：
+
+```java
+@Resource
+private CryptService cryptService;
+
+@Override
+public ChatLog encrypt(ChatLog entity) {
+    entity.setMsgContent(cryptService.encrypt(entity.getMsgContent()));
+    return entity;
+}
+
+@Override
+public ChatLog decrypt(ChatLog entity) {
+    entity.setMsgContent(cryptService.decrypt(entity.getMsgContent()));
+    return entity;
+}
+```
+
+`CryptService`是组件提供的默认加密接口。
+
+
+
 ### 4.10、系统登录
 
 #### 4.10.1、二次验证
