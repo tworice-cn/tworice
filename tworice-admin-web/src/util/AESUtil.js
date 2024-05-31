@@ -1,7 +1,9 @@
 import CryptoJS from 'crypto-js';
 const KEY = CryptoJS.enc.Utf8.parse('1234567890hijklm');
 const IV = CryptoJS.enc.Utf8.parse('1234567890abcdef');
+// AES加解密工具
 export default {
+      // 解密
       Decrypt:function (word, keyStr, ivStr) {
             let key = KEY;
             let iv = IV;
@@ -23,7 +25,7 @@ export default {
             var decryptedStr = decrypt.toString(CryptoJS.enc.Utf8);
             return decryptedStr.toString();
       },
-
+      // 加密
       Encrypt:function (word, keyStr, ivStr) {
             let key = KEY;
             let iv = IV;

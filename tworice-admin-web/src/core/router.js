@@ -25,10 +25,6 @@ export function setupRouter() {
             component: () => import("@/views/admin/userCenter/userCenter.vue"),
             meta: {title: "用户中心"}
         }, {
-            path: "/front/feedback",
-            component: () => import("@/views/front/feedback"),
-            meta: {title: "用户反馈"}
-        }, {
             path: "/home", /*客户端*/
             name: "欢迎",
             component: () => import("@/views/front/index/index.vue"),

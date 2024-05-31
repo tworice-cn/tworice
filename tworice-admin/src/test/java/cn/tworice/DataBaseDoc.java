@@ -17,7 +17,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import javax.sql.DataSource;
 import java.util.ArrayList;
 
-
 @SpringBootTest
 @RunWith(SpringRunner.class)
 public class DataBaseDoc {
@@ -61,8 +60,6 @@ public class DataBaseDoc {
         ignoreTableName.add("system_deploy_log");
         ignoreTableName.add("system_dict");
         ignoreTableName.add("system_dict_value");
-        ignoreTableName.add("system_feedback");
-        ignoreTableName.add("system_file");
         ignoreTableName.add("system_white_list");
         ignoreTableName.add("system_version_log");
         //忽略表前缀
