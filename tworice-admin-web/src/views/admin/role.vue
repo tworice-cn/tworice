@@ -41,7 +41,7 @@
                     <span class="title">设置人员</span>
                     <el-col :span="24" class="role-content" v-if="currentRole">
                         <el-col :span="24" class="role-add">
-                            <el-button size="mini" type="primary" icon="el-icon-edit" @click.native="addUser">设置人员
+                            <el-button :disabled="!currentRole.roleName" size="mini" type="primary" icon="el-icon-edit" @click.native="addUser">设置人员
                             </el-button>
                         </el-col>
                         <el-col :span="24">
