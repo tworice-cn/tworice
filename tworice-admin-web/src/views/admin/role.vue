@@ -160,7 +160,7 @@ export default {
         addUser() {
             this.addUserDialog = true;
             // 获取不是该角色的人员
-            this.$axios.get(this.$url + 'admin/system/role/getAdminByStatus?status=0').then(
+            this.$axios.get(this.$url + 'admin/system/role/getAdminByStatus?status=1').then(
                 response => {
                     // 初始化待选人员
                     let result = [];
