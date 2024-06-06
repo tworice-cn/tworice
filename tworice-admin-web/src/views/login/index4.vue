@@ -19,7 +19,7 @@
                         <el-form @submit="loginSubmit">
                             <el-col :span="24" class="content-form">
                                 <el-col :span="24">
-                                    <el-input ref='userInput' v-model="login.loginName" placeholder="请输入用户名"
+                                    <el-input ref='userInput' v-model="login.loginName" placeholder="请输入邮箱或账号"
                                               suffix-icon="el-icon-user"
                                               type="text" @blur="isEmpty('u')"
                                               @keyup.enter.native="loginSubmit"></el-input>
