@@ -2,6 +2,7 @@ import setting from "@/core/setting";
 import log from "@/views/admin/log.vue";
 import {submitForm} from "@/api/feedback/feedback";
 import ReAuth from "@/views/login/common/reAuth.vue";
+import routerUtils from "@/util/RouterUtils";
 export default {
     props: [],
     components:{
@@ -163,7 +164,14 @@ export default {
             window.localStorage.setItem("admin", JSON.stringify(response.data.data.admin))
             window.localStorage.setItem("resources", JSON.stringify(this.filterNestedDuplicates(response.data.data.resources)))
             window.localStorage.setItem("roles", JSON.stringify(response.data.data.roles))
-            this.successLogin(response.data.data.roles);
+
+            // 动态添加VueRouter路由
+            routerUtils.addRoutes(response.data.data.resources).then(() => {
+                this.successLogin(response.data.data.roles);
+            }).catch((error) => {
+                console.error("Failed to add routes:", error);
+                // 可以在这里处理添加路由失败的情况
+            });
         },
         /**
          * 递归过滤数组中的重复对象

@@ -56,6 +56,7 @@ export default {
             });
         }
         window.localStorage.clear();
+        window.sessionStorage.clear();
         vue.$router.push('/login')
         vue.$msg({
             type: 'success',

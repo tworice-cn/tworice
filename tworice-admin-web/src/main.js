@@ -4,6 +4,7 @@ import './assets/css/icon.css'
 import '@/assets/css/app.css'
 import Crypt from "@/components/commons/crypt/crypt";
 import 'default-passive-events'
+import RouterUtils from './util/RouterUtils.js'
 Vue.config.productionTip = false;
 
 // 全局设置
@@ -41,8 +42,7 @@ import Loading from './components/commons/loading.vue'
 Vue.component("Loading",Loading);//注册全局组件
 
 // Vue路由
-import {setupRouter} from '@/core/router.js'
-let router = setupRouter();
+import router from '@/core/router.js'
 
 // Axios
 import axios from 'axios'
@@ -92,25 +92,31 @@ service.interceptors.response.use(
 )
 Vue.prototype.$axios = service;
 
+window.onbeforeunload = function () {//刷新会触发这个事件
+      if(window.localStorage.getItem("resources")){
+            sessionStorage.setItem("RefreshRouter", false);
+                  }
+};
 // 设置全局前置守卫配置
 router.beforeEach((to, from, next) => {
-      /* 路由发生变化修改页面title */
-      if (to.meta.title) {
-            document.title = to.meta.title;
-      } else {
-            document.title = setting.systemTitle;
-      }
-      if (to.path === '/') {
-            if(setting.needLogin){
-                  Vue.prototype.$axios.get(setting.baseURL + 'admin/index/').then(() => {
-                        next(window.localStorage.getItem('index') || '/login');
-                  });
-            }else{
-                  next(setting.defaultTab || '/admin')
+      RouterUtils.refreshRouter().then(() => {
+            /* 路由发生变化修改页面title */
+            if (to.meta.title) {
+                  document.title = to.meta.title;
+            } else {
+                  document.title = setting.systemTitle;
             }
-
-      }
-      next()
+            if (to.path === '/') {
+                  if(setting.needLogin){
+                        Vue.prototype.$axios.get(setting.baseURL + 'admin/index/').then(() => {
+                              next(window.localStorage.getItem('index') || '/login');
+                        });
+                  }else{
+                        next(setting.defaultTab || '/admin')
+                  }
+            }
+            next()
+      })
 });
 
 // 初始化Vue
