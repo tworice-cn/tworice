@@ -6,10 +6,10 @@
     <parent>
         <artifactId>tworice-cloud</artifactId>
         <groupId>cn.tworice</groupId>
-        <version>1.2.2-RC4</version>
+        <version>1.2.3-Bate</version>
     </parent>
     <artifactId>tworice-admin</artifactId>
-    <version>1.2.2-RC4</version>
+    <version>1.2.3-Bate</version>
 
     <!--版本-->
     <properties>
@@ -42,40 +42,39 @@
 
         <dependency>
             <groupId>cn.tworice</groupId>
-            <artifactId>tworice-file</artifactId>
+            <artifactId>tworice-netty-starter</artifactId>
             <version>${version}</version>
         </dependency>
-
     </dependencies>
-    <build>
-        <finalName>${artifactId}</finalName>
-        <plugins>
-            <!-- 使用maven插件spring-boot-maven-plugin -->
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.5.6</version>
-                <!-- 设置可执行Jar的入口类 -->
-                <configuration>
-                    <mainClass>cn.tworice.Application</mainClass>
-                </configuration>
-                <!-- 绑定到maven的package阶段，运行mvn package时会执行 -->
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+<!--    <build>-->
+<!--        <finalName>${artifactId}</finalName>-->
+<!--        <plugins>-->
+<!--            &lt;!&ndash; 使用maven插件spring-boot-maven-plugin &ndash;&gt;-->
+<!--            <plugin>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--                <version>2.5.6</version>-->
+<!--                &lt;!&ndash; 设置可执行Jar的入口类 &ndash;&gt;-->
+<!--                <configuration>-->
+<!--                    <mainClass>cn.tworice.Application</mainClass>-->
+<!--                </configuration>-->
+<!--                &lt;!&ndash; 绑定到maven的package阶段，运行mvn package时会执行 &ndash;&gt;-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <goals>-->
+<!--                            <goal>repackage</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
+<!--    </build>-->
 
-<repositories>
-    <repository>
-        <id>nexus</id>
-        <name>Nexus Repository</name>
-        <url>http://www.tworice.online:18081/nexus/repository/maven-releases/</url>
-    </repository>
-</repositories>
+<!--<repositories>-->
+<!--    <repository>-->
+<!--        <id>nexus</id>-->
+<!--        <name>Nexus Repository</name>-->
+<!--        <url>http://www.tworice.online:18081/nexus/repository/maven-releases/</url>-->
+<!--    </repository>-->
+<!--</repositories>-->
 </project>
