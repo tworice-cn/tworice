@@ -55,7 +55,7 @@ export default {
         },
         submit() {
             this.$root.loading = true;
-            // 判断用户名是否被修改
+            // 判断昵称是否被修改
             if (this.adminInfo.nickName != JSON.parse(window.localStorage.getItem('admin')).nickName) {
                 this.updateNickName();
             }
@@ -100,7 +100,7 @@ export default {
                     () => {
                         this.$notify.success({
                             title: '提醒',
-                            message: '更新用户名成功，重新登录生效'
+                            message: '更新昵称成功，重新登录生效'
                         });
                     }
                 )
@@ -144,7 +144,7 @@ export default {
         },
         initUserInfo(){
             this.userInfo = [];
-            this.userInfo.push({icon:'el-icon-user', name:'用户名', value: this.adminInfo.nickName})
+            this.userInfo.push({icon:'el-icon-user', name:'昵称', value: this.adminInfo.nickName})
             this.userInfo.push({icon:'el-icon-coordinate', name:'角色', value: this.adminInfo.roleName})
             this.userInfo.push({icon:'el-icon-male', name:'性别', value: this.adminInfo.adminSex === 1 ? '男' : this.adminInfo.adminSex === 2 ? '女' : '未知'})
             this.userInfo.push({icon:'el-icon-mobile-phone', name:'手机号', value: this.adminInfo.adminPhone})

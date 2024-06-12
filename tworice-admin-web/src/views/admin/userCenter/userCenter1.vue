@@ -121,8 +121,8 @@ export { default } from './userCenter';
     </el-col>
     <el-dialog title="编辑我的信息" :visible.sync="formVisible" width="40%" :before-close="$utils.handleClose">
       <el-form :model="adminInfo">
-        <el-form-item label='用户名' :label-width='$setting.formLabelWidth'>
-          <el-input placeholder='请输入用户名' v-model='adminInfo.nickName' size="small"></el-input>
+        <el-form-item label='昵称' :label-width='$setting.formLabelWidth'>
+          <el-input placeholder='请输入昵称' v-model='adminInfo.nickName' size="small"></el-input>
         </el-form-item>
         <el-form-item label='性别' :label-width='$setting.formLabelWidth'>
           <el-select v-model="adminInfo.adminSex" placeholder="请选择性别" size="small"  @change='isChange = true'>
