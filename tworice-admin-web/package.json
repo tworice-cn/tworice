@@ -15,6 +15,7 @@
     "crypto-js": "^4.1.1",
     "default-passive-events": "^2.0.0",
     "echarts": "^5.4.1",
+    "echarts-wordcloud": "^2.1.0",
     "element-ui": "^2.15.5",
     "less": "^3.5.0",
     "less-loader": "^7.0.0",
