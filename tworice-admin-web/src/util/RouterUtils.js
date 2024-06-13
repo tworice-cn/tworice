@@ -74,12 +74,13 @@ export default {
      * 刷新页面后重新添加路由
      * @returns {Promise<unknown>}
      */
-    refreshRouter: function () {
+    refreshRouter: function (router,to) {
         return new Promise((resolve, reject) => {
             try {
                 if(sessionStorage.getItem("RefreshRouter") && !JSON.parse(sessionStorage.getItem("RefreshRouter")) && window.localStorage.getItem("resources")){
                     sessionStorage.setItem("RefreshRouter", true);
                     this.addRoutes(JSON.parse(window.localStorage.getItem("resources"))).then(() => {
+                        router.push(to);
                         resolve(); // 所有路由添加完成后调用 resolve()
                     })
                 }else {

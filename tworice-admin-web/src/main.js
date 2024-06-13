@@ -99,7 +99,8 @@ window.onbeforeunload = function () {//刷新会触发这个事件
 };
 // 设置全局前置守卫配置
 router.beforeEach((to, from, next) => {
-      RouterUtils.refreshRouter().then(() => {
+      RouterUtils.refreshRouter(router,to).then(() => {
+            // router.push(to);
             /* 路由发生变化修改页面title */
             if (to.meta.title) {
                   document.title = to.meta.title;
