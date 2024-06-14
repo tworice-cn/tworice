@@ -97,7 +97,7 @@ export default {
             }
         },
         // 切换全屏展示
-        switechFullScreen(){
+        switchFullScreen(){
             if(this.isFullScreen){
                 this.$screenfull.exitScreenFull();
 

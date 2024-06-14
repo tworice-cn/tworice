@@ -8,7 +8,7 @@
                         </template>
                         <Menu :menuList="item.children"></Menu>
                   </el-submenu>
-                  <el-menu-item v-if="item.type==2" :key="item.id" :index="item.url">
+                  <el-menu-item v-if="item.type===2 && item.menu" :key="item.id" :index="item.url">
                         <i :class="item.icon"></i>
                         <span v-if="!asideStatus">{{item.name}}</span>
                   </el-menu-item>

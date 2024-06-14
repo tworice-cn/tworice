@@ -30,7 +30,7 @@
                                           <div class="zhan"></div>
                                           <!-- 刷新图标 -->
                                           <el-tooltip class="item" effect="dark" :content="isFullScreen?'退出全屏':'全屏'" placement="bottom">
-                                            <i class="iconfont" :class="isFullScreen?'icon-suoxiao':'icon-quanping'" @click="switechFullScreen"></i>
+                                            <i class="iconfont" :class="isFullScreen?'icon-suoxiao':'icon-quanping'" @click="switchFullScreen"></i>
                                           </el-tooltip>
                                           <div class="zhan"></div>
                                           <el-tag effect="dark" type="success" size="mini" class="role-box">{{roles.length==0?'0':roles[0].roleName}}</el-tag>
