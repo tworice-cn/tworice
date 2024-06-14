@@ -6,10 +6,10 @@
     <parent>
         <artifactId>tworice-cloud</artifactId>
         <groupId>cn.tworice</groupId>
-        <version>1.2.3-Bate</version>
+        <version>1.2.3-Beta</version>
     </parent>
     <artifactId>tworice-admin</artifactId>
-    <version>1.2.3-Bate</version>
+    <version>1.2.3-Beta</version>
 
     <!--版本-->
     <properties>
@@ -40,11 +40,11 @@
             <version>1.0.5</version>
         </dependency>
 
-        <dependency>
-            <groupId>cn.tworice</groupId>
-            <artifactId>tworice-netty-starter</artifactId>
-            <version>${version}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>cn.tworice</groupId>-->
+<!--            <artifactId>tworice-netty-starter</artifactId>-->
+<!--            <version>${version}</version>-->
+<!--        </dependency>-->
     </dependencies>
 <!--    <build>-->
 <!--        <finalName>${artifactId}</finalName>-->
