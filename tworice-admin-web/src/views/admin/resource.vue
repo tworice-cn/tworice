@@ -21,9 +21,9 @@
                     </el-table-column>
                     <el-table-column prop="type" label="类型" width="100">
                         <template slot-scope="scope">
-                            <el-tag type="success" v-if="scope.row.type==1">模块</el-tag>
-                            <el-tag type="primary" v-if="scope.row.type==2">页面</el-tag>
-                            <el-tag type="warning" v-if="scope.row.type==3">功能</el-tag>
+                            <el-tag type="success" v-if="scope.row.type===1">模块</el-tag>
+                            <el-tag type="primary" v-if="scope.row.type===2">页面</el-tag>
+                            <el-tag type="warning" v-if="scope.row.type===3">功能</el-tag>
                         </template>
                     </el-table-column>
                     <el-table-column prop="state" label="状态" width="100">
@@ -40,7 +40,7 @@
                     </el-table-column>
                     <el-table-column label="操作">
                         <template slot-scope="scope">
-                            <el-button v-if="scope.row.type!=3" size="mini" type="primary" icon="el-icon-plus" circle
+                            <el-button v-if="scope.row.type!==3" size="mini" type="primary" icon="el-icon-plus" circle
                                        @click.native="addResource(scope.row)"></el-button>
                             <el-button size="mini" type="warning" icon="el-icon-edit" circle
                                        @click.native="editResource($event,scope.row)"></el-button>
@@ -277,7 +277,7 @@ export default {
         // 强制按钮失去焦点
         forceBlur(e) {
             let target = e.target;
-            if (target.nodeName == "I") {
+            if (target.nodeName === "I") {
                 target = e.target.parentNode;
             }
             target.blur();
