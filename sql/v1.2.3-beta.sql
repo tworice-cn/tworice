@@ -310,7 +310,7 @@ INSERT INTO `system_resources` VALUES (67, '跳转页面', '/dev/jump', 65, 62, 
 INSERT INTO `system_resources` VALUES (75, '文件上传', '/dev/upload', 65, 63, '', 2, 'views/dev/upload.vue', 1, 'upload', 1);
 INSERT INTO `system_resources` VALUES (78, '在线账户', '/tools/online', 32, 56, '', 2, 'views/admin/online.vue', 1, 'online', 1);
 INSERT INTO `system_resources` VALUES (80, '版本日志', '/log/versionLog', 29, 43, '', 2, 'views/admin/versionLog.vue', 1, 'versionLog', 1);
-INSERT INTO `system_resources` VALUES (83, '字典管理', '/tools/dict', 32, 50, '', 2, 'views/admin/dist.vue', 1, 'dict', 1);
+INSERT INTO `system_resources` VALUES (83, '字典管理', '/tools/dict', 32, 50, '', 2, 'views/admin/dict.vue', 1, 'dict', 1);
 INSERT INTO `system_resources` VALUES (94, '支付示例', '/dev/alipay/10086', 65, 4, '', 2, 'views/dev/alipay.vue', 1, 'alipay/:id', 1);
 INSERT INTO `system_resources` VALUES (95, '访问白名单', '/tools/whiteList', 32, 57, '', 2, 'views/admin/whiteList.vue', 1, 'whiteList', 1);
 INSERT INTO `system_resources` VALUES (96, 'AES加密', '/dev/aes', 65, 97, '', 2, 'views/dev/aes.vue', 1, 'aes', 1);

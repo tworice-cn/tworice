@@ -64,6 +64,9 @@
                 <el-form-item label="路由" :label-width="formLabelWidth" prop="path">
                     <el-input v-model="form.path" @change="isChange = true" placeholder="路由路径"></el-input>
                 </el-form-item>
+                <el-form-item label="文件地址" :label-width="formLabelWidth" prop="path">
+                    <el-input v-model="form.component" @change="isChange = true" placeholder="文件地址"></el-input>
+                </el-form-item>
                 <el-form-item label="排序" :label-width="formLabelWidth" prop="sort">
                     <el-input-number v-model="form.sort" :step="1" step-strictly @change="isChange = true"></el-input-number>
                 </el-form-item>
@@ -124,7 +127,8 @@ export default {
                 icon: '',
                 type: 1,
                 menu:true,
-                state: true
+                state: true,
+                component:'components\\code\\test.vue'
             },
             formLabelWidth: '80px', // 弹出框标签宽度
             // 表单校验规则
