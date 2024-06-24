@@ -128,7 +128,7 @@ export default {
                 type: 1,
                 menu:true,
                 state: true,
-                component:'components\\code\\test.vue'
+                component:'components/code/test.vue'
             },
             formLabelWidth: '80px', // 弹出框标签宽度
             // 表单校验规则
