@@ -9,10 +9,12 @@
             <el-table-column label="操作">
                 <template slot-scope="scope">
                     <el-tooltip content="编辑">
-                        <el-button size="mini" type="warning" icon="el-icon-edit" circle @click="edit(scope.row)"></el-button>
+                        <el-button size="mini" type="warning" icon="el-icon-edit" circle
+                                   @click="edit(scope.row)"></el-button>
                     </el-tooltip>
                     <el-tooltip content="删除">
-                        <el-button size="mini" type="danger" icon="el-icon-delete" circle @click="del(scope.$index)"></el-button>
+                        <el-button size="mini" type="danger" icon="el-icon-delete" circle
+                                   @click="del(scope.$index)"></el-button>
                     </el-tooltip>
                 </template>
             </el-table-column>
@@ -33,13 +35,13 @@
                     <el-table :data="form.formData.paramTable" style="width: 100%" size="mini">
                         <el-table-column prop="field" label="" width="50">
                             <template slot-scope="scope">
-                                <el-button :disabled="scope.row.field=='id' || scope.row.field=='create_time'"
+                                <el-button :disabled="scope.$index<4"
                                            icon="el-icon-minus" circle @click="reduceField(scope)"></el-button>
                             </template>
                         </el-table-column>
                         <el-table-column prop="field" label="字段名">
                             <template slot-scope="scope">
-                                <el-input :disabled="scope.row.field=='id'" placeholder="请输入内容" size="mini"
+                                <el-input :disabled="scope.$index<4" placeholder="请输入内容" size="mini"
                                           v-model="scope.row.field"></el-input>
                             </template>
                         </el-table-column>
@@ -86,8 +88,10 @@
                         </el-table-column>
                         <el-table-column prop="dict" label="编辑表单" width="110">
                             <template slot-scope="scope">
-                                <el-select size="mini" v-if="scope.row.update" v-model="scope.row.inputForm" placeholder="请选择">
-                                    <el-option v-for="item in formInput" :key="item" :label="item" :value="item"></el-option>
+                                <el-select size="mini" v-if="scope.row.update" v-model="scope.row.inputForm"
+                                           placeholder="请选择">
+                                    <el-option v-for="item in formInput" :key="item" :label="item"
+                                               :value="item"></el-option>
                                 </el-select>
                             </template>
                         </el-table-column>
