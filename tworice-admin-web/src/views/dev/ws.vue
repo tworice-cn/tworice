@@ -70,7 +70,7 @@ export default {
                 this.socket = socket;
                 
                 let data = {
-                    uid: JSON.parse(window.localStorage.getItem('admin')).id,
+                    uid: this.$utils.getLoginUserID(),
                     type: 'LOGIN'
                 }
                 if (this.form.group) {
@@ -104,7 +104,7 @@ export default {
         sendMessage() {
             if (this.socket && this.socket.readyState === WebSocket.OPEN) {
                 let message = {
-                    uid: JSON.parse(window.localStorage.getItem('admin')).id,
+                    uid: this.$utils.getLoginUserID(),
                     content: this.form.message,
                     to: this.form.receiver,
                     type: this.form.mode

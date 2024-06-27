@@ -248,7 +248,7 @@ export default {
                 this.form.parent = this.$route.query.parent;
             }
             this.form.type = 1;
-            this.form.creator = JSON.parse(window.localStorage.getItem('admin')).id;
+            this.form.creator = this.$utils.getLoginUserID();
             return this.form;
         },
         
@@ -259,10 +259,10 @@ export default {
         init() {
             this.header = {
                 token: window.localStorage.getItem('token'),
-                adminID: JSON.parse(window.localStorage.getItem('admin')).id
+                adminID: this.$utils.getLoginUserID()
             }
             
-            this.form.creator = JSON.parse(window.localStorage.getItem('admin')).id;
+            this.form.creator = this.$utils.getLoginUserID();
             this.search.creator = this.form.creator;
             this.toPage();
         },

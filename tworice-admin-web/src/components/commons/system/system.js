@@ -15,7 +15,7 @@ export default {
                 return;
             }
             let formData = new FormData();
-            formData.append("id", JSON.parse(window.localStorage.getItem('admin')).id);
+            formData.append("id", this.$utils.getLoginUserID());
             formData.append("passWord", value);
             vue.$axios({
                 url: vue.$url + 'admin/admin/update',

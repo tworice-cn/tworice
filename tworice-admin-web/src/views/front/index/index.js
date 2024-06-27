@@ -32,12 +32,12 @@ export default {
         showUser(e){
             if(e==this.$route.path.substring(0,17)){
                 this.handleSelect(e);
-                e += '/'+JSON.parse(window.localStorage.getItem('admin')).id;
+                e += '/'+this.$utils.getLoginUserID();
                 this.$router.push(e);
                 window.location.reload();
             }else{
                 this.handleSelect(e);
-                e += '/'+JSON.parse(window.localStorage.getItem('admin')).id;
+                e += '/'+this.$utils.getLoginUserID();
 
                 this.$router.push(e);
             }
