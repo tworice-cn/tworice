@@ -9,12 +9,12 @@
 
 
 export default {
-      name: 'App',
-      components: {
-      },
-      methods:{
-            
-      }
+    name: 'App',
+    created(){
+        if(window.localStorage.getItem("resources")){
+            sessionStorage.setItem("RefreshRouter", false);
+        }
+    }
 }
 </script>
 
