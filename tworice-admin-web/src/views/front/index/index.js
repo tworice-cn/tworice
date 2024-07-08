@@ -116,24 +116,19 @@ export default {
         },
         /**切换菜单 */
         handleSelect(e){
-            if(!this.isAdmin || e==null || e=='' || e=='/admin'){
+            if (!this.isAdmin || !e || e === '/admin') {
                 return;
             }
 
-            this.editableTabsValue=e;
-            let is=true;
+            this.editableTabsValue = e;
+
             // 判断该标签是否已经存在
-            this.editableTabs.forEach(item=>{
-                if(item.name==e){
-                    is=false;
-                    return
-                }
-            })
-            // 不存在则添加一个标签
-            if(is){
+            const tabExists = this.editableTabs.some(item => item.name === e);
+
+            // 如果标签不存在则添加
+            if (!tabExists) {
                 this.addTab(e);
             }
-
         },
         /**添加标签 */
         addTab(e){
@@ -146,16 +141,20 @@ export default {
             }else{
                 // 在资源列表中寻找该资源
                 this.resources.forEach(item=>{
-                    if(item.children){
-                        item.children.forEach(child=>{
-                            if(child.url==e){
+                    if (item.children && item.children.length !== 0) {
+                        item.children.forEach(child => {
+                            if (child.url === e) {
                                 this.editableTabs.push({
                                     title: child.name,
-                                    name:e
+                                    name: e
                                 });
-                                return;
                             }
-                        })
+                        });
+                    } else if (item.url === e) {
+                        this.editableTabs.push({
+                            title: item.name,
+                            name: e
+                        });
                     }
                 })
             }
