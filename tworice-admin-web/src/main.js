@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import './assets/css/icon.css'
 import '@/assets/css/app.css'
+import '@/assets/css/layout.css'
 import Crypt from "@/components/commons/crypt/crypt";
 import 'default-passive-events'
 import RouterUtils from './util/RouterUtils.js'

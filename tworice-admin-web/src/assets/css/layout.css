@@ -1,0 +1,11 @@
+/*响应式布局*/
+@media screen and (max-width: 768px) {
+    .hidden-xs {
+        display: none !important;
+    }
+}
+@media screen and (max-width: 500px) {
+    .hidden-phone {
+        display: none !important;
+    }
+}
