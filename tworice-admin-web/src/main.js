@@ -75,6 +75,7 @@ service.interceptors.response.use(
                 if(code>=400){
                       Notification({ title: '提示', type: code===400?'info':(code===401?'warning':'error'), message: response.data.status.message });
                       if(code === 401) {router.push('/login');}
+                      return Promise.reject(response);
                 } else if(code === 201){ // 显示通知
                       Message({ type:'success', message:response.data.status.message });
                       response.data.status.code=200;
