@@ -116,7 +116,7 @@ export default {
     },
     methods: {
         linkNotice(row) {
-            this.$router.push('/infra/showNotice?id=' + row.id)
+            this.$router.push('/admin/showNotice?id=' + row.id)
         },
         showNotice(row) {
             this.descriptions = [];

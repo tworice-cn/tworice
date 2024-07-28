@@ -23,8 +23,8 @@ Vue.prototype.$CRUD = CRUD;
 
 // 主题
 // import '@/assets/theme/mimicry-theme.less'
-// import '@/assets/theme/arco-pro-theme.less'
-import '@/assets/theme/default-theme.less'
+import '@/assets/theme/arco-pro-theme.less'
+// import '@/assets/theme/default-theme.less'
 // import '@/assets/theme/jzk-theme.less'
 
 // Echarts
