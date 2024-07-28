@@ -4,13 +4,13 @@ export default {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             inputPattern: /^(?![\d]+$)(?![a-zA-Z]+$)(?![^\da-zA-Z]+$).{6,20}$/,
-            inputErrorMessage: '密码应6~10位的数字+字母、字母+特殊字符、特殊字符+数字'
+            inputErrorMessage: '密码应6~20位的数字+字母、字母+特殊字符、特殊字符+数字'
         }).then(({value}) => {
             let passwordExd = /^(?![\d]+$)(?![a-zA-Z]+$)(?![^\da-zA-Z]+$).{6,20}$/
             if (!passwordExd.test(value)) {
                 vue.$msg({
                     type: 'warning',
-                    message: '密码应6~10位的数字+字母、字母+特殊字符、特殊字符+数字'
+                    message: '密码应6~20位的数字+字母、字母+特殊字符、特殊字符+数字'
                 })
                 return;
             }
@@ -32,10 +32,7 @@ export default {
                         }).then(() => {
                             vue.$router.push('/login');
                         }).catch(() => {
-                            vue.$msg({
-                                type: 'error',
-                                message: '密码更新失败'
-                            })
+                            vue.$router.push('/login');
                         });
                     }
                 }
