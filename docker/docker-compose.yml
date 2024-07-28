@@ -1,0 +1,12 @@
+version: '3'
+services:
+  tworice-server:
+    image: tworice-server:latest
+    container_name: tworice-server
+    environment:
+      - TZ=Asia/Shanghai # 配置程序默认时区为上海（中国标准时间）
+    volumes:
+      - ./jar:/jar
+      - ./upload:/upload
+      - ./config:/config
+    network_mode: "host" # 配置容器与宿主机共享网络，可根据实际情况修改
