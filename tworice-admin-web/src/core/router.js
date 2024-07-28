@@ -24,14 +24,27 @@ export const constantRoutes = [{
     name: "欢迎",
     component: () => import("@/views/front/index/index.vue"),
     children: [],
-},{
+}, {
     path: "/admin",
     component: () => import("@/views/admin/index"),
-    children: [],
+    children: [
+        {
+            path: "/admin/home",
+            name: "首页",
+            component: () => import("@/views/admin/home.vue"),
+            meta: {title: "首页"}
+        },
+        {
+            path: "showNotice",
+            name:'查看公告',
+            component: () => import("@/views/admin/showNotice.vue"),
+            meta: {title: "查看公告"}
+        }
+    ],
 }];
 
 export default new Router({
-    scrollBehavior: () => ({ y: 0 }),
+    scrollBehavior: () => ({y: 0}),
     routes: constantRoutes,
     base: "/"
 })
