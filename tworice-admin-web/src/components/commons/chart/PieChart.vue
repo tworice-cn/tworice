@@ -7,7 +7,7 @@
  * 饼状图
  * [{name:'',value:''}]
  */
-import * as echarts from 'echarts';
+import {loadECharts} from "@/components/commons/chart/EchartsLoader";
 
 export default {
     props: {
@@ -16,7 +16,8 @@ export default {
             required: true
         }
     },
-    mounted() {
+    async mounted() {
+        await loadECharts();
         const chart = echarts.init(this.$refs.pieChart);
         const option = {
             series: [

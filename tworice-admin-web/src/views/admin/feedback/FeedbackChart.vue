@@ -3,6 +3,7 @@
         <div ref="chart" style="width: 1000px; height: 400px;"></div>
     </div>
 </template><script>
+import {loadECharts} from "@/components/commons/chart/EchartsLoader";
 export default {
     name: 'FeedbackChart',
     props: ['value'],
@@ -15,7 +16,7 @@ export default {
         init(){
             console.log(this.value)
             const chartDom = this.$refs.chart;
-            const myChart = this.$echarts.init(chartDom);
+            const myChart = echarts.init(chartDom);
             const option = {
                 title: {
                     text: '用户反馈统计报告'
@@ -45,7 +46,8 @@ export default {
             myChart.setOption(option);
         }
     },
-    mounted() {
+    async mounted() {
+        await loadECharts();
         this.init();
     },
 };

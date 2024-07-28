@@ -27,10 +27,6 @@ import '@/assets/theme/arco-pro-theme.less'
 // import '@/assets/theme/default-theme.less'
 // import '@/assets/theme/jzk-theme.less'
 
-// Echarts
-import * as echarts from 'echarts';
-Vue.prototype.$echarts=echarts;
-
 // ElementUI
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';

@@ -89,6 +89,7 @@
 </template>
 
 <script>
+import {loadECharts} from "@/components/commons/chart/EchartsLoader";
 export default {
     name: 'BigScreen',
     props: [],
@@ -208,7 +209,7 @@ export default {
                             type: "bar",
                             itemStyle: {
                                 barBorderRadius: [2, 2, 0, 0], //柱体圆角
-                                color: new this.$echarts.graphic.LinearGradient(
+                                color: new echarts.graphic.LinearGradient(
                                     //前四个参数用于配置渐变色的起止位置，这四个参数依次对应 右下左上 四个方位。也就是从右边开始顺时针方向。
                                     //通过修改前4个参数，可以实现不同的渐变方向
                                     /*第五个参数则是一个数组，用于配置颜色的渐变过程。
@@ -392,16 +393,17 @@ export default {
             }, 1000);
         }
     },
-    mounted() {
+    async mounted() {
+        await loadECharts();
         this.initTime();
         var chartDom = document.getElementById("chart-1");
-        this.echarts1 = this.$echarts.init(chartDom);
+        this.echarts1 = echarts.init(chartDom);
         chartDom = document.getElementById("chart-2");
-        this.echarts2 = this.$echarts.init(chartDom);
+        this.echarts2 = echarts.init(chartDom);
         chartDom = document.getElementById("chart-6");
-        this.echarts6 = this.$echarts.init(chartDom);
+        this.echarts6 = echarts.init(chartDom);
         chartDom = document.getElementById("chart-7");
-        this.echarts7 = this.$echarts.init(chartDom);
+        this.echarts7 = echarts.init(chartDom);
         
         
         this.initECharts();
