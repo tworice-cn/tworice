@@ -104,7 +104,7 @@
 <script>
 import paginationMixin from "@/mixins/paginationMixin";
 import {type, submitForm, chart} from '@/api/feedback/feedback';
-import Editor from '@/components/commons/Editor.vue'
+import Editor from '@/components/commons/editor/Editor.vue'
 import Descriptions from '@/components/commons/Descriptions.vue'
 import {dictList} from '@/api/dict/dict.js';
 import FeedbackChart from "@/views/admin/feedback/FeedbackChart.vue";

@@ -12,7 +12,7 @@
 
 <script>
 
-import Editor from '@/components/commons/Editor.vue'
+import Editor from '@/components/commons/editor/Editor.vue'
 export default {
       components:{
             Editor

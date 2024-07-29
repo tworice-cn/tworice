@@ -87,7 +87,7 @@
 </template>
 
 <script>
-import Editor from '@/components/commons/Editor.vue'
+import Editor from '@/components/commons/editor/Editor.vue'
 import Descriptions from '@/components/commons/Descriptions.vue'
 import paginationMixin from "@/mixins/paginationMixin";
 
