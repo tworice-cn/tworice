@@ -28,13 +28,8 @@
         },
         methods:{
             getBreadcrumb() {
-                let matched = this.$route.matched.filter(item => item.name)  //获取路由信息，并过滤保留路由名称信息存入数组
-                this.levelList = matched
-                this.jump(matched[matched.length-1].path);
+                this.levelList = this.$route.matched.filter(item => item.name)  //获取路由信息，并过滤保留路由名称信息存入数组
             },
-            jump(e){
-                this.$emit('handleSelect',e);
-            }
         }
     }
 </script>
