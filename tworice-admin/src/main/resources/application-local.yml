@@ -49,6 +49,17 @@ logging:
     root: info
     cn.tworice: debug
 tworice:
+  auth:
+    sqlInjection: false
+    exclude-paths:
+      - /admin/login/**
+      - /editor/**
+      - /admin/admin/template
+      - /admin/system/offline
+      - /client/auth/login
+      - /receive/preview/**
+      - /admin/notice/top
+      - /admin/notice/info
   login:
     captchaType: character
   generate:
