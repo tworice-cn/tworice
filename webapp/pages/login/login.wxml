@@ -1,0 +1,35 @@
+<!--pages/login/login.wxml-->
+<view class="top">
+  <view class="top-logo">
+    <image src="/icon/favicon.ico" mode=""/>
+  </view>
+</view>
+<view class="bottom">
+  <view class="input-item">
+    <view class="input-text">账号</view>
+    <view class="input-box">
+      <input type="text" placeholder="请输入邮箱或账号" bindinput="inputName"/>
+    </view>
+  </view>
+  <view class="input-item">
+    <view class="input-text">密码</view>
+    <view class="input-box">
+      <input type="password" placeholder="请输入密码" bindinput="inputPwd"/>
+    </view>
+  </view>
+  <!-- 验证码 -->
+  <view class="code-box">
+    <view class="code-input-box">
+      <input type="text" placeholder="请输入验证码" bindinput="inputCaptcha"/>
+    </view>
+    <view class="get-code" bindtap="send_captcha">
+      <image bindtap="initCaptcha" src="{{captcha}}" mode="heightFix"></image>
+    </view>
+  </view>
+  <view class="login-box">
+    <button type="primary" bindtap="login">登录</button>
+  </view>
+  <view class="reg-box">
+    <view class="iconfont icon-tianjia" bindtap="toReg"></view>
+  </view>
+</view>

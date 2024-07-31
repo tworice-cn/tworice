@@ -1,0 +1,30 @@
+<!--pages/search/index.wxml-->
+<view class="search_row">
+  <input type="text" placeholder="请输入您要搜索的信息" confirm-type="search" bindconfirm="handBut"></input>
+</view>
+
+<swiper wx:if="{{name==''}}" autoplay circular indicator-dots="true">
+  <!-- 公告内容 -->
+  <swiper-item wx:for="{{notices}}" wx:for-item="item" wx:for-index="index" wx:key="id">
+    <navigator hover-class="none" style="width: 100%;padding: 0;" url="/pages/showNotice/showNotice?id={{item.id}}">
+      <view class="index-notice">
+        <view class="notice-content" style="background: url({{noticeBG}});background-size: 100%;">
+          <view class="notice-bg">
+            <view class="content-title">{{item.title}}</view>
+            <view class="content-date">{{item.updateTime}}</view>
+          </view>
+        </view>
+      </view>
+    </navigator>
+  </swiper-item>
+</swiper>
+
+<view class="p_item" wx:for="{{arr}}" wx:key="id">
+  <navigator url="/pages/detail/detail?id={{item.id}}" class="item-nav">
+    <view class="p_top">
+      <view class="p_top_left">{{item.mealName}}</view>
+      <view class="p_top_right">￥{{item.price}}</view>
+    </view>
+  </navigator>
+</view>
+<view class="none-more">- 没有更多 -</view>

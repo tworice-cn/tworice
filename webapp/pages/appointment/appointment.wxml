@@ -1,0 +1,18 @@
+<view class="container">
+  <view class="package">
+    <view class="name">{{mealName}}</view>
+    <view class="price">价格：{{price}}元</view>
+  </view>
+  <view class="datetime">
+    <picker mode="date" value="{{date}}" start="{{startDate}}" end="{{endDate}}" bindchange="bindDateChange">
+      <view class="picker">选择日期：{{date}}</view>
+    </picker>
+    <picker mode="selector" range="{{timeRange}}" value="{{timeIndex}}" bindchange="bindTimeChange">
+      <view class="picker">选择时间：{{timeRange[timeIndex]}}</view>
+    </picker>
+  </view>
+</view>
+
+<view class="button-box">
+  <button type="primary" bindtap="handleReg">点击提交</button>
+</view>

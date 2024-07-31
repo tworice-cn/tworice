@@ -1,0 +1,8 @@
+<view class="p_item" wx:for="{{arr}}" wx:key="id" wx:if="{{item!=null}}">
+  <view class="p_top" bind:tap="tapItem" data-mealId="{{item.mealId}}" data-time="{{item.appointmentTime}}" data-id="{{item.id}}">
+    <view class="p_top_left">{{item.mealName}}</view>
+    <view class="p_top_right" wx:if="{{item.state=='预约成功'}}">预约时间：{{item.time}}</view>
+    <view class="p_top_right" wx:else>{{item.state}}</view>
+  </view>
+</view>
+<view class="none-more">- 没有更多 -</view>

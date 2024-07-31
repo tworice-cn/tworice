@@ -1,0 +1,42 @@
+<view class="top">
+    <view class="top-logo">
+        <image src="/icon/favicon.ico" mode=""/>
+    </view>
+</view>
+<view class="input-item">
+  <view class="input-text">您的唯一标识</view>
+  <view class="input-box">
+      <input type="text" value="{{admin.id}}" disabled="true"/>
+  </view>
+</view>
+
+<view class="input-item">
+    <view class="input-text">姓名</view>
+    <view class="input-box">
+        <input type="text" placeholder="请输入姓名" value="{{info.nickName}}" bindinput="inputNickName"/>
+    </view>
+</view>
+
+<view class="input-item">
+  <view class="input-text">联系电话</view>
+  <view class="input-box">
+      <input type="number" placeholder="请输入联系电话" value="{{info.adminPhone}}" bindinput="inputPhone"/>
+  </view>
+</view>
+
+<view class="input-item">
+  <view class="input-text">您的邮箱</view>
+  <view class="input-box">
+      <input type="text" placeholder="请输入邮箱" value="{{info.adminEmail}}" bindinput="inputAdminEmail"/>
+  </view>
+</view>
+
+<view class="input-item">
+  <view class="input-text">其他信息</view>
+  <view class="input-box">
+      <textarea placeholder="请输入其他信息" value="{{info.adminNote}}" bindinput="inputAdminNote"/>
+  </view>
+</view>
+<view class="button-box">
+  <button type="primary" bindtap="submitUser">保存信息</button>
+</view>

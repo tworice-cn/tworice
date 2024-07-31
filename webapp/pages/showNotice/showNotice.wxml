@@ -1,0 +1,10 @@
+<!--pages/showNotice/showNotice.wxml-->
+<view class="main">
+      <view class="notice-box">
+            <view class="notice-date">{{notice.date}}</view>
+            <view class="title">{{notice.title}}</view>
+            <view class="content">
+              <rich-text nodes="{{notice.content}}"></rich-text>
+            </view>
+      </view>
+</view>

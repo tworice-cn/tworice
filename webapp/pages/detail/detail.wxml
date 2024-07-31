@@ -1,0 +1,13 @@
+<!--pages/detail/detail.wxml-->
+<view class="container">
+  <view class="package">
+    <view class="name">{{info.mealName}}</view>
+    <view class="price">价格：{{info.price}}元</view>
+    <view class="time">发布时间：{{info.date}}</view>
+    <view class="description">套餐详情：</view>
+    <rich-text nodes="{{info.mealDesc}}"></rich-text>
+  </view>
+</view>
+<view class="button-box">
+  <button type="primary" bindtap="handleReg">点击预约</button>
+</view>

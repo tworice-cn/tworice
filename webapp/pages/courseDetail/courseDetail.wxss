@@ -1,0 +1,17 @@
+/* pages/courseDetail/courseDetail.wxss */
+.main{
+  padding: 40rpx 30rpx;
+}
+.video-box video{
+  width: 100%;
+}
+.author-box{
+  font-weight: 700;
+  font-size: 34rpx;
+  padding: 15rpx 10rpx;
+}
+.title-box{
+  font-size: 34rpx;
+  padding: 15rpx 10rpx;
+  line-height: 60rpx;
+}

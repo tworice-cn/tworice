@@ -1,0 +1,44 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/user/user",
+    "pages/login/login",
+    "pages/reg/reg",
+    "pages/userInfo/userInfo",
+    "pages/myJoin/myJoin",
+    "pages/detail/detail",
+    "pages/showNotice/showNotice",
+    "pages/course/course",
+    "pages/courseDetail/courseDetail",
+    "pages/appointment/appointment"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#00A3FF",
+    "navigationBarTitleText": "二饭快速开发框架",
+    "navigationBarTextStyle": "white"
+  },
+  "style": "v2",
+  "tabBar": {
+    "color": "#999",
+    "selectedColor": "#00A3FF",
+    "position": "bottom",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "./icon/主页0.png",
+        "selectedIconPath": "./icon/主页1.png"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "text": "我的",
+        "iconPath": "./icon/我的0.png",
+        "selectedIconPath": "./icon/我的1.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

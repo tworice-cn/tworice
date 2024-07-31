@@ -1,0 +1,60 @@
+/* 样式根据实际需求进行调整 */
+.feedback-container {
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.feedback-header {
+  text-align: center;
+  margin-bottom: 40px;
+  margin-top: 40px;
+}
+
+.feedback-type .type-item {
+  padding: 12px 34px;
+  align-items: center;
+  display: flex;
+  border-top: 1px solid rgba(0,0,0,.1);
+  cursor: pointer;
+}
+
+.item-right{
+  flex: 1;
+}
+.item-left{
+  flex: 9;
+}
+
+.feedback-form .form-group {
+  margin-bottom: 10px;
+}
+
+input[type="text"], input[type="email"], textarea {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.reset {
+  margin-top: 10px;
+  text-align: center;
+}
+
+
+.type-title{
+  font-weight: 700;
+  
+}
+
+

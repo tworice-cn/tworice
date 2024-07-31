@@ -1,0 +1,71 @@
+<view class="big">
+  <view class="top-box">
+    <view class="top">
+      <view class="top-left">
+        <navigator url="/pages/userInfo/userInfo">
+          <view class="avatar">
+            <image src="/icon/favicon.ico" mode=""/>
+          </view>
+        </navigator>
+      </view>
+      <view class="top-right">
+        <view class="nickName">{{admin.nickName}}</view>
+        <view class="identity">{{role.roleName}}</view>
+      </view>
+    </view>
+  </view>
+  <view class="bottom">
+    <view class="item-border"><view class="border-box"></view></view>
+    <view class="setting-item">
+          <view class="item-icon iconfont icon-zhongyao"></view>
+          <navigator url="/pages/myJoin/myJoin" style="height: 100%;width: 100%;"></navigator>
+          <view class="item-left">
+                我的订单
+          </view>
+          <view class="item-right">
+                <icon class="iconfont icon-youjiantou"></icon>
+          </view>
+    </view>
+    <view class="item-border"><view class="border-box"></view></view>
+    <view class="setting-item">
+          <view class="item-icon iconfont icon-dayi1"></view>
+          <button open-type="contact" style="height: 100%;width: 100%;"></button>
+          <view class="item-left">
+                联系客服
+          </view>
+          <view class="item-right">
+                <icon class="iconfont icon-youjiantou"></icon>
+          </view>
+    </view>
+    <view class="item-border"><view class="border-box"></view></view>
+    <view class="setting-item">
+          <view class="item-icon iconfont icon-yijianfankui"></view>
+          <button open-type="feedback" style="height: 100%;width: 100%;"></button>
+          <view class="item-left">
+                意见建议
+          </view>
+          <view class="item-right">
+                <icon class="iconfont icon-youjiantou"></icon>
+          </view>
+    </view>
+    <view class="setting-item">
+          <view class="item-icon iconfont icon-mima"></view>
+          <button bind:tap="editPwd" style="height: 100%;width: 100%;"></button>
+          <view class="item-left">
+                修改密码
+          </view>
+          <view class="item-right">
+                <icon class="iconfont icon-youjiantou"></icon>
+          </view>
+    </view>
+    <!-- <view class="item-border"><view class="border-box"></view></view>
+    <view class="bottom-item" bindtap="toJoin">
+      <view class="item-icon iconfont icon-huodongxiangqu"></view>
+      <view class="item-text">我的预约</view>
+    </view> -->
+    <view style="height:50rpx;"></view>
+    <view class="bottom-item exit-button" bindtap="exit">
+      退出登录
+    </view>
+  </view>
+</view>

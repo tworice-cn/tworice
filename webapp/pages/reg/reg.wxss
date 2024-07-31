@@ -1,0 +1,72 @@
+.top{
+  height: 20vh;
+
+}
+.top-logo{
+  font-size: 120rpx;
+  text-align: center;
+  line-height: 20vh;
+  color: var(--themeColor);
+}
+
+.menu-box{
+  line-height: 100rpx;
+  border-bottom: 8rpx solid var(--themeColor);
+  text-align: center;
+  display: flex;
+}
+.menu-item{
+  width: 50vw;
+}
+.select-menu{
+  background-color: var(--themeColor);
+  color: white;
+  font-weight: 600;
+}
+.menu-left{
+  border-top-right-radius: 32rpx;
+}
+.menu-right{
+  border-top-left-radius: 32rpx;
+}
+
+/*表单*/
+.input-item{
+  padding: 20rpx 0;
+}
+.input-text{
+  font-size: 35rpx;
+  padding: 0 40rpx;
+  line-height: 60rpx;
+}
+.input-box input{
+  height: 80rpx;
+  border-top: 1rpx solid #D9D9D9;
+  border-bottom: 1rpx solid #D9D9D9;
+  padding: 0 20rpx;
+}
+/*获取验证码*/
+.code-box{
+  width: 100vw;
+  display: flex;
+}
+.code-input-box{
+  flex: 1;
+}
+.code-input-box input{
+  height: 80rpx;
+  border-top: 1rpx solid #D9D9D9;
+  border-bottom: 1rpx solid #D9D9D9;
+  padding: 0 20rpx;
+}
+.get-code{
+  flex: 1;
+  text-align: center;
+  background-color: var(--themeColor);
+  line-height: 80rpx;
+  color: white;
+}
+
+.button-box{
+  padding-top: 50rpx;
+}

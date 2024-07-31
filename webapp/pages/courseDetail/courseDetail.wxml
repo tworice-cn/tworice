@@ -1,0 +1,12 @@
+<!--pages/courseDetail/courseDetail.wxml-->
+<view class="main">
+  <view class="video-box">
+    <video src="{{host+info.path}}"></video>
+  </view>
+  <view class="author-box">
+    视频由“{{info.nickName}}”上传
+  </view>
+  <view class="title-box">
+    {{info.title}}
+  </view>
+</view>

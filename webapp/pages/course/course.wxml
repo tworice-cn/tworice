@@ -1,0 +1,7 @@
+<view class="main">
+  <view class="course-item" wx:for="{{list}}" wx:key="index" data-id="{{item}}" bindtap="toDetail">
+    <view class="item-id">课程编号：#{{item.id}}</view>
+    <view class="item-title">{{item.title}}</view>
+  </view>
+  <view class="none-more">-没有更多了-</view>
+</view>

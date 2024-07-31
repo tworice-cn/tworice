@@ -1,0 +1,39 @@
+<view class="top">
+  <view class="top-logo">
+    <image src="/icon/favicon.ico" mode=""/>
+  </view>
+</view>
+
+
+<view class="input-item">
+  <view class="input-text">您的邮箱</view>
+  <view class="input-box">
+    <input type="text" placeholder="请输入邮箱" bindinput="loginName"/>
+  </view>
+</view>
+<view class="input-item">
+  <view class="input-text">{{role==4?'您的姓名':'企业名称'}}</view>
+  <view class="input-box">
+    <input type="text" maxlength="8" placeholder="请输入您的真实姓名" bindinput="nickName"/>
+  </view>
+</view>
+<view class="input-item">
+  <view class="input-text">您的密码</view>
+  <view class="input-box">
+    <input type="password" placeholder="设置您的密码" bindinput="passWord"/>
+  </view>
+</view>
+
+<!-- 验证码 -->
+<view class="code-box">
+  <view class="code-input-box">
+    <input type="text" placeholder="请输入验证码" bindinput="captcha"/>
+  </view>
+  <view class="get-code" bindtap="send_captcha">
+    {{captchaText}}
+  </view>
+</view>
+
+<view class="button-box">
+  <button type="primary" bindtap="toReg">注册</button>
+</view>

@@ -1,0 +1,33 @@
+.container {
+  padding: 20px;
+}
+
+.package {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.name {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.price {
+  color: #f00;
+  margin-bottom: 5px;
+}
+
+.datetime {
+  display: flex;
+  justify-content: space-between;
+}
+
+.picker {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  /* width: 45%; */
+}

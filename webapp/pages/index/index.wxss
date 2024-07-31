@@ -1,0 +1,129 @@
+.search_row{
+  height: 120rpx;
+  padding: 20rpx;
+  background-color: var(--themeColor);
+}
+input{
+  height: 100%;
+  background-color: white;
+  border-radius: 40rpx;
+  padding: 0 40rpx;
+}
+
+.none-box{
+  line-height: 200rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: gray;
+}
+.card_item{
+  display: flex;
+  
+  border-bottom: 1rpx solid #ccc;
+  background-color: #fff;
+  margin-top: 40rpx;
+}
+.card_img{
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+}
+.card_content{
+  flex:4;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding-left: 50rpx;
+}
+.card_name{
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  color: #666;
+}
+.card_price_wrap{
+  display: flex;
+
+  /* 让子元素分在两边
+  justify-content: space-evenly; */
+
+}
+.card_price{
+  flex: 8;
+  color: var(--themeColor);
+  font-size: 34rpx;
+  text-align: left;
+}
+
+.goods_num{ 
+  width: 65rpx;
+  height: 45rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+.cart_num_tool{
+  text-align: right;
+  flex: 2;
+}
+.p_city{
+  font-size: 24rpx;
+  color: gray;
+}
+.item-nav{
+  padding: 50rpx;
+}
+.p_item{
+  padding: 0;
+}
+/*公告*/
+.index-notice{
+  height: 18vh;
+  width: 100vw;
+  padding: 8rpx;
+  box-sizing: border-box;
+}
+.notice-content{
+  width: 100%;
+  height: 100%;
+  border-radius: 20rpx;
+  box-sizing: border-box;
+  box-sizing: border-box;
+  overflow: hidden;
+  background-repeat: no-repeat;
+}
+.notice-bg{
+  box-sizing: border-box;
+  padding: 18rpx;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0,0,0,0.5);
+}
+.content-title{
+  color: white;
+  font-weight: 900;
+  font-size: 40rpx;
+  box-sizing: border-box;
+  padding-bottom: 10rpx;
+  height: 4vh;
+}
+.content-p{
+  color: white;
+  font-size: 24rpx;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  height: 8vh;
+}
+.content-date{
+  height: 6vh;
+  color: white;
+  font-size: 30rpx;
+  line-height: 3vh;
+  text-align: right;
+}

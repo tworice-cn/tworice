@@ -1,0 +1,25 @@
+/* pages/course/course.wxss */
+.main{
+  padding: 40rpx 30rpx;
+}
+
+.course-item{
+  margin-bottom: 15rpx;
+  padding: 20rpx;
+  border-radius: 20rpx;
+  background-color: rgb(221, 221, 221);
+}
+
+.item-id{
+  color: rgb(212, 120, 0);
+  font-size: 36rpx;
+  padding-bottom: 20rpx;
+}
+.item-title{
+  font-size: 28rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}

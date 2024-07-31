@@ -1,0 +1,67 @@
+/**app.wxss**/
+@import "./style/iconfont.wxss";
+
+view,view,text,swiper,swiper-item,image{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/*主题颜色 通过变量来实现*/
+page{
+    /*定义主题颜色*/
+    --themeColor:#00A3FF;
+    /*定义统一字体大小*/
+    font-size: 28rpx;
+    background-color: #F5F5F5;
+}
+
+image{
+    width: 100%;
+}
+
+.p_item{
+    padding: 30rpx;
+    background-color: #fff;
+    border-top: 1rpx solid var(--themeColor);
+}
+.p_top{
+    display: flex;
+    line-height: 60rpx;
+    
+}
+.p_top_left{
+    flex: 1;
+    font-weight: 600;
+}
+.p_top_right{
+    flex: 1;
+    text-align: right;
+    font-weight: 600;
+    color: chocolate;
+}
+.p_city{
+    line-height: 60rpx;
+}
+.p_content{
+    line-height: 60rpx;
+    color: gray;
+
+}
+.p_nickName{
+    line-height: 60rpx;
+    text-align:right;
+}
+.none-more{
+    line-height: 80rpx;
+    font-size: 0.7rem;
+    color: gray;
+    text-align:center;
+}
+
+.top-logo image{
+  width: 20vw;
+  height: 20vw;
+}
+
+
