@@ -9,7 +9,7 @@
         <version>1.2.3-RC1</version>
     </parent>
     <artifactId>tworice-admin</artifactId>
-    <version>1.2.3-RC1</version>
+    <version>1.2.3</version>
 
     <!--版本-->
     <properties>

@@ -9,3 +9,18 @@
         display: none !important;
     }
 }
+@media screen and (max-width: 500px) {
+    .index-main .index-body {
+        padding: 0 !important;
+    }
+}
+@media screen and (max-width: 500px) {
+    .index-header {
+        height: 60px !important;
+    }
+}
+@media screen and (max-width: 500px) {
+    .el-dialog {
+        width: 100%!important;
+    }
+}

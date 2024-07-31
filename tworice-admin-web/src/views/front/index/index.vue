@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-container class="index-main">
-      <el-header class="index-header portal-header" height="60px">
+      <el-header class="index-header portal-header" style="height: auto">
         <el-menu mode="horizontal" @select="handleSelect"  :default-active="$route.path" :router="true">
           <PortalMenu :menu="resources" class="portal-menu"></PortalMenu>
         </el-menu>

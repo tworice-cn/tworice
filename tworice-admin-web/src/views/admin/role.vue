@@ -2,7 +2,7 @@
     <div class="app-body">
         <el-col :span="24" class="role">
             <el-col :span="24" class="role-main">
-                <el-col :span="12" class="role-list">
+                <el-col :md="12" :xs="24" class="role-list">
                     <span class="title">角色列表</span>
                     <el-col :span="24" class="role-content">
                         <el-col :span="24" class="role-add">
@@ -37,9 +37,9 @@
                         </el-col>
                     </el-col>
                 </el-col>
-                <el-col :span="12" class="role-setUser">
+                <el-col :md="12" :xs="24" class="role-setUser">
                     <span class="title">设置人员</span>
-                    <el-col :span="24" class="role-content" v-if="currentRole">
+                    <el-col :span="24" class="role-content" v-if="currentRole.roleName">
                         <el-col :span="24" class="role-add">
                             <el-button :disabled="!currentRole.roleName" size="mini" type="primary" icon="el-icon-edit" @click.native="addUser">设置人员
                             </el-button>
@@ -55,6 +55,10 @@
                     <el-col :span="24" class="role-content" v-else>
                         请选择角色
                     </el-col>
+                    <div class="page-box">
+                        <el-pagination :hide-on-single-page="true" @current-change="changePage" background
+                                       layout="prev, pager, next" :total="total" :page-size="pageSize"></el-pagination>
+                    </div>
                 </el-col>
             </el-col>
             
@@ -123,8 +127,10 @@ export default {
             roleForm: {
                 id: -1,
                 roleName: ''
-            }
-            
+            },
+            page: 1, // 当前页码，从1开始
+            pageSize: 10, // 每页数据容量
+            total: 0, // 当前页数据条数
         }
     },
     methods: {
@@ -143,10 +149,29 @@ export default {
         handleCurrentChange(row) {
             this.adminLoad = true;
             this.currentRole = row;
-            this.$axios.get(this.$url + 'admin/system/role/adminList?roleId=' + row.id).then(
+            this.getUserListByRole();
+        },
+        /**
+         * 通过当前角色id获取用户列表
+         */
+        getUserListByRole() {
+            if(!this.currentRole.id){
+                return;
+            }
+            this.$axios({
+                url: this.$url + 'admin/system/role/adminList',
+                method: 'get',
+                params: {
+                    roleId: this.currentRole.id,
+                    page: this.page,
+                    pageSize: this.pageSize
+                }
+            }).then(
                 response => {
-                    if (response.data.status.code == 200) {
-                        this.admins = response.data.data.adminList;
+                    console.log(response)
+                    if (response.data.status.code === 200) {
+                        this.admins = response.data.data.list;
+                        this.total = response.data.data.total;
                     }
                     this.adminLoad = false;
                 }
@@ -352,6 +377,22 @@ export default {
             })
             
         },
+        /**
+         * 监听页码发生变化
+         */
+        changePage(e) {
+            this.page = e;
+            this.getUserListByRole();
+        },
+        
+        /**
+         * 调整页面数据容量
+         * @param size 容量
+         */
+        handleSizeChange(size) {
+            this.pageSize = size;
+            this.getUserListByRole();
+        },
     },
     mounted() {
         this.init();
@@ -365,27 +406,35 @@ export default {
     padding-top: 20px;
     
     .role-main {
-        //      padding-top: 30px;
-        //      box-sizing: border-box;
         font-size: 14px;
         
         .title {
             font-weight: 700;
         }
         
-        .role-list {
-            padding-right: 20px;
-        }
-        
-        .role-setUser {
-            padding-left: 20px;
-        }
+
         
         .role-content {
             .role-add {
                 padding: 20px 0 10px 0;
             }
         }
+    }
+}
+.role-setUser {
+    padding-left: 20px;
+}
+.role-list {
+    padding-right: 20px;
+}
+@media screen and (max-width: 500px) {
+    .role-setUser {
+        padding-left: 0;
+        padding-top: 30px;
+    }
+    
+    .role-list {
+        padding-right: 0;
     }
 }
 

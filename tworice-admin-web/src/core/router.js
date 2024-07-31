@@ -51,11 +51,11 @@ export const constantRoutes = [
         path: "/404",
         component: () => import("@/views/admin/404/404.vue"),
         meta: {title: "404"}
-    },
-    {
-        path: "*",
-        redirect: "/404"
     }
+    // {
+    //     path: "*",
+    //     redirect: "/404"
+    // }
 ];
 
 // 防止连续点击多次路由报错

@@ -2,7 +2,7 @@
     <div>
         <el-container class="index-main">
             <!-- 左侧导航 -->
-            <el-aside v-if="isAdmin" class="index-aside" :class="asideStatus?'fold':'unfold'"
+            <el-aside v-if="isAdmin" class="index-aside hidden-xs" :class="asideStatus?'fold':'unfold'"
                       :width="asideStatus?'64px':'200px'">
                 <el-menu :collapse-transition="false" @select="handleSelect" :unique-opened="true"
                          :collapse="asideStatus" :default-active="$route.path" class="el-menu-vertical-demo"
@@ -17,9 +17,9 @@
                 </el-menu>
             </el-aside>
             <el-container>
-                <el-header v-if="isAdmin" class="index-header" height="91px">
+                <el-header v-if="isAdmin" class="index-header" style="height: auto;">
                     <div class="index-header-box">
-                        <div class="header-left">
+                        <div class="header-left hidden-xs">
                             <i @click="asideStatus=!asideStatus"
                                :class="asideStatus?'el-icon-s-unfold':'el-icon-s-fold'"></i>
                             <div class="zhan"></div>
@@ -75,7 +75,7 @@
                         </div>
                     </div>
                     <!-- 标签 -->
-                    <div class="tabs-box">
+                    <div class="tabs-box hidden-xs">
                         <el-tabs v-model="editableTabsValue" type="card" closable @tab-remove="removeTab"
                                  @tab-click="clickTab">
                             <el-tab-pane v-for="(item) in editableTabs" :key="item.name" :label="item.title"
@@ -86,7 +86,7 @@
                     </div>
                 </el-header>
                 <!--用户-->
-                <el-header v-else class="index-header portal-header" height="60px">
+                <el-header v-else class="index-header portal-header" style="height: auto;">
                     <el-menu mode="horizontal" @select="handleSelect" :default-active="$route.path" :router="true">
                         <PortalMenu :menu="resources" class="portal-menu"></PortalMenu>
                     </el-menu>
