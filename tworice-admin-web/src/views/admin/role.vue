@@ -138,7 +138,7 @@ export default {
             this.roleLoad = true;
             this.$axios.get(this.$url + 'admin/system/role/list').then(
                 response => {
-                    if (response.data.status.code == 200) {
+                    if (response.data.status.code === 200) {
                         this.roles = response.data.data.roleList;
                     }
                     this.roleLoad = false;
@@ -168,7 +168,6 @@ export default {
                 }
             }).then(
                 response => {
-                    console.log(response)
                     if (response.data.status.code === 200) {
                         this.admins = response.data.data.list;
                         this.total = response.data.data.total;
@@ -219,7 +218,7 @@ export default {
          * movedKeys 被移动的ID
          */
         adminChange(value, direction, movedKeys) {
-            if (direction == 'right') {
+            if (direction === 'right') {
                 let format = new FormData();
                 movedKeys.forEach(
                     item => {
@@ -299,29 +298,28 @@ export default {
                 this.$refs.resourceTree.getCheckedNodes().forEach(
                     item => {
                         // 获取页面节点
-                        if (item.type == 2) {
+                        if (item.type === 2) {
                             checkedKeys.push(item.id);
                         }
                     }
                 )
                 // 如果更新后的权限列表和原权限列表相同的 则不提交至后台
-                if (checkedKeys.sort().toString() == this.defaultChecked.sort().toString()) {
+                if (checkedKeys.sort().toString() === this.defaultChecked.sort().toString()) {
                     return;
-                } else {
-                    // 构建参数
-                    let formData = new FormData();
-                    checkedKeys.forEach(item => {
-                        formData.append("resourcesId", item);
-                    })
-                    formData.append("roleId", this.currentRole.id);
-                    
-                    // 发起请求
-                    this.$axios({
-                        method: 'put',
-                        url: this.$url + 'admin/system/role/updateResources',
-                        data: formData
-                    })
                 }
+                // 构建参数
+                let formData = new FormData();
+                checkedKeys.forEach(item => {
+                    formData.append("resourcesId", item);
+                })
+                formData.append("roleId", this.currentRole.id);
+                
+                // 发起请求
+                this.$axios({
+                    method: 'put',
+                    url: this.$url + 'admin/system/role/updateResources',
+                    data: formData
+                })
             })
         },
         /**
@@ -329,7 +327,7 @@ export default {
          */
         editRole(row, i) {
             this.roleForm = row;
-            if (i == 1) {
+            if (i === 1) {
                 this.roleDialog = true;
             } else {
                 // 添加
