@@ -3,6 +3,7 @@ import log from "@/views/admin/log.vue";
 import {submitForm} from "@/api/feedback/feedback";
 import ReAuth from "@/views/login/common/reAuth.vue";
 import routerUtils from "@/util/RouterUtils";
+import StorageUtils from "@/util/StorageUtils";
 export default {
     props: [],
     components:{
@@ -31,6 +32,7 @@ export default {
                     nickName: '',
                     captcha: '',
                     key: '',
+                    inviteCode: ''
                 },
                 rules: {
                     loginName: [
@@ -267,11 +269,13 @@ export default {
         }
     },
     mounted() {
-        let loginForm = localStorage.getItem('loginForm')
+        if (this.$route.query.inviteCode) {
+            this.reg.form.inviteCode = this.$route.query.inviteCode;
+        }
+        let loginForm = StorageUtils.getLoginForm();
         if (loginForm) {
-            let loginStore=JSON.parse(loginForm);
-            this.login.loginName = loginStore.loginName;
-            this.login.password = loginStore.password;
+            this.login.loginName = loginForm.loginName;
+            this.login.password = loginForm.password;
         }
         this.initCaptcha();
     }

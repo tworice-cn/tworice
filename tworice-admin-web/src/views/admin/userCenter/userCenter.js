@@ -1,6 +1,7 @@
 import feedback from "@/components/feedback";
 import BackBox from "@/components/commons/BackBox.vue";
 import Descriptions from "../../../components/commons/Descriptions.vue";
+import StorageUtils from "@/util/StorageUtils";
 export default {
     name: "",
     props: [],
@@ -42,7 +43,8 @@ export default {
                 pageSize: 10,
                 total: 0,
             },
-            isMe: false
+            isMe: false,
+            inviteCode: ''
         };
     },
     methods: {
@@ -56,7 +58,7 @@ export default {
         submit() {
             this.$root.loading = true;
             // 判断昵称是否被修改
-            if (this.adminInfo.nickName != JSON.parse(window.localStorage.getItem('admin')).nickName) {
+            if (this.adminInfo.nickName !== StorageUtils.getNickName()) {
                 this.updateNickName();
             }
             if (!this.isChange) {
@@ -67,10 +69,7 @@ export default {
             let formData = new FormData();
             this.adminInfo.userId = this.userData.id;
             Object.keys(this.adminInfo).map((key) => {
-                if (
-                    this.adminInfo[key] != undefined &&
-                    this.adminInfo[key] != ""
-                ) {
+                if (this.adminInfo[key]) {
                     formData.append(key, this.adminInfo[key]);
                 }
             });
@@ -108,8 +107,8 @@ export default {
         },
         init() {
             let id = this.$route.params.id;
-            let admin = JSON.parse(window.localStorage.getItem("admin"))
-            if (admin.id == id) {
+            let userID = StorageUtils.getUserId();
+            if (userID === id) {
                 this.isMe = true;
             }
             this.userData = {
@@ -137,7 +136,6 @@ export default {
                     if (info) {
                         this.adminInfo = info;
                         this.adminInfo.roleName = info.roles[0].roleName;
-
                     }
                     this.initUserInfo();
                 });
@@ -152,6 +150,11 @@ export default {
             this.userInfo.push({icon:'el-icon-location-outline', name:'居住地', value: this.adminInfo.homePlace})
             this.userInfo.push({icon:'el-icon-office-building', name:'联系地址', value: this.adminInfo.contactAddress})
             this.userInfo.push({icon:'el-icon-tickets', name:'备注', value: this.adminInfo.adminNote})
+            if(this.isMe){
+                let inviteCode = StorageUtils.getInviteCode();
+                this.userInfo.push({icon:'el-icon-s-tools', name:'邀请码', value: inviteCode})
+                this.inviteCode = inviteCode;
+            }
         },
         initLogList() {
             let roles = JSON.parse(window.localStorage.getItem('roles'));
@@ -159,7 +162,6 @@ export default {
             roles.forEach(element => {
                 if (element.id < 3) {
                     state = true;
-                    return;
                 }
             });
             if (state) {
@@ -210,7 +212,24 @@ export default {
                     }
                 )
             }
-        }
+        },
+        /**
+         * 获取邀请码
+         */
+        getInviteCode() {
+            this.$root.loading = true;
+            this.$axios({
+                url: this.$url + "/admin/admin/invite",
+                method:"PUT"
+            }).then(res=>{
+                this.inviteCode = res.data.data.inviteCode;
+                StorageUtils.setInviteCode(res.data.data.inviteCode);
+            })
+        },
+
+        getInviteLink() {
+            return  window.location.origin + "/#/login?inviteCode=" + this.inviteCode;
+        },
     },
     mounted() {
         this.init();
