@@ -55,10 +55,10 @@
                     <el-col :span="24" class="role-content" v-else>
                         请选择角色
                     </el-col>
-                    <div class="page-box">
+                    <el-col :span="24" class="page-box">
                         <el-pagination :hide-on-single-page="true" @current-change="changePage" background
                                        layout="prev, pager, next" :total="total" :page-size="pageSize"></el-pagination>
-                    </div>
+                    </el-col>
                 </el-col>
             </el-col>
             
