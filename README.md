@@ -420,6 +420,27 @@ tworice:
 | 500+   | 系统处理错误               |
 |        |                            |
 
+### 4.12、生成式大模型
+
+配置项：
+
+```yaml
+tworice:
+	chatbot:
+		api-key: xxx
+		secret-key: xxx
+		client-type: baidu
+		model: ERNIE-Speed-128K
+```
+
+`client-type`取值范围：
+
+| 值    | 描述       |
+| ----- | ---------- |
+| baidu | 千帆大模型 |
+| sizhi | 思知       |
+|       |            |
+
 
 
 ## 5、第三方支持

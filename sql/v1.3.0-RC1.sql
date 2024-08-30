@@ -11,7 +11,7 @@
  Target Server Version : 80200 (8.2.0)
  File Encoding         : 65001
 
- Date: 09/08/2024 18:45:41
+ Date: 23/08/2024 18:12:15
 */
 
 SET NAMES utf8mb4;
@@ -257,7 +257,7 @@ CREATE TABLE `system_resources`  (
   `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '路由地址',
   `menu` tinyint NULL DEFAULT 1 COMMENT '是否菜单',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 116 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单资源表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 117 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单资源表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of system_resources
@@ -294,6 +294,7 @@ INSERT INTO `system_resources` VALUES (103, '部门管理', '/system/department'
 INSERT INTO `system_resources` VALUES (106, '用户反馈', '/infra/feedback', 3, 3, '', 2, 'views/admin/feedback/systemFeedback.vue', 1, 'feedback', 1);
 INSERT INTO `system_resources` VALUES (107, '反馈类型', '/infra/feedbackType', 3, 1, '', 2, 'views/admin/feedback/systemFeedbackType.vue', 1, 'feedbackType', 1);
 INSERT INTO `system_resources` VALUES (115, 'Netty', '/dev/ws', 65, 10, '', 2, 'views/dev/ws.vue', 1, 'ws', 1);
+INSERT INTO `system_resources` VALUES (116, '公告查看', '/infra/showNotice', 0, 114, '', 2, 'views/admin/showNotice.vue', 1, 'showNotice', 0);
 
 -- ----------------------------
 -- Table structure for system_role
