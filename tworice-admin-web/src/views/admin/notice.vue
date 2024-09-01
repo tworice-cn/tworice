@@ -68,7 +68,7 @@
                                inactive-color="#ff4949" :active-value='1' :inactive-value='0'></el-switch>
                 </el-form-item>
                 <el-form-item label="">
-                    <Editor ref="editor" v-model="form.content"></Editor>
+                    <Editor ref="editor" v-model="form.content" v-if="formVisible"></Editor>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
