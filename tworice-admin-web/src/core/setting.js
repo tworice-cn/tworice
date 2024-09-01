@@ -6,5 +6,6 @@ function Setting(){
       this.defaultTab='';                                    // 默认选中的Tab 请填写路由路径
       this.baseURL='/api/';
       this.loading=false;
+      this.uploadAgent = 'project';// 文件上传的代理地址
 }
 export default new Setting();

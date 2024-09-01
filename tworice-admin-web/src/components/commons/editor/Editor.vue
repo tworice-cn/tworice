@@ -30,7 +30,10 @@ export default Vue.extend({
                 MENU_CONF: {
                     uploadImage: {
                         server: this.$url + '/editor/editorUpload',
-                        fieldName: 'editorFile'
+                        fieldName: 'editorFile',
+                        meta:{
+                            agent:this.$setting.uploadAgent,
+                        }
                     }
                 },
             }
