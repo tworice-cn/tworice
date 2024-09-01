@@ -4,8 +4,8 @@ function Setting(){
       this.formLabelWidth="80px";
       this.needLogin=true;                                             // 是否需要登录才能访问系统
       this.defaultTab='';                                    // 默认选中的Tab 请填写路由路径
-      this.baseURL='/api/';
-      this.loading=false;
-      this.uploadAgent = 'project';// 文件上传的代理地址
+      this.baseURL = process.env.VUE_APP_API_BASE_URL;
+      this.loading = false;
+      this.uploadAgent = process.env.VUE_APP_UPLOAD_AGENT;
 }
 export default new Setting();
