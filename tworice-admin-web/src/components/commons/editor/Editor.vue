@@ -89,5 +89,5 @@ export default Vue.extend({
 })
 </script>
 <style >
-@import url(https://cdn.jsdelivr.net/npm/@wangeditor/editor@latest/dist/css/style.css);
+@import url(/css/wangeditor.css);
 </style >
