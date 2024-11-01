@@ -16,7 +16,7 @@
                               {{menuItem.name}}
                         </el-menu-item>
                   </el-submenu>
-                  <el-menu-item v-if="item.type==2" :key="item.id" :index="item.url">
+                  <el-menu-item v-if="item.type==2 && item.menu" :key="item.id" :index="item.url">
                         {{item.name}}
                   </el-menu-item>
             </template>
