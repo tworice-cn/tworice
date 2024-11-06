@@ -55,7 +55,7 @@ const request = (url, method, data) => {
 module.exports = {
   get: (url, data) => request(url, 'GET', data),
   post: (url, data) => request(url, 'POST', data),
-  deleted: (url, data) => request(url, 'DELETED', data),
+  deleted: (url, data) => request(url, 'DELETE', data),
   put: (url, data) => request(url, 'PUT', data),
   // 可以添加其他请求方法
 };
