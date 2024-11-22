@@ -279,6 +279,12 @@ export default {
         },
         init() {
             this.tableData = JSON.parse(localStorage.getItem('codeGeneration'));
+            this.initDataType();
+        },
+        initDataType() {
+            this.$axios.get(this.$url + "admin/codeGeneration/dbTypes").then(res=>{
+                this.typeList = res.data.data.dbTypes;
+            })
         },
         /*添加表格条目*/
         addField() {
