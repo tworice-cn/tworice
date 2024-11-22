@@ -78,6 +78,45 @@ export default {
         };
     },
     methods: {
+        /**
+         * 初始化
+         */
+        init() {
+            this.tableData = JSON.parse(localStorage.getItem('codeGeneration'));
+            this.initDataType();
+        },
+        /**
+         * 初始化动态数据类型
+         */
+        initDataType() {
+            this.$axios.get(this.$url + "admin/codeGeneration/dbTypes").then(res=>{
+                this.typeList = res.data.data.dbTypes;
+            })
+        },
+        /**
+         * 初始化数据表
+         */
+        initTables() {
+            this.$axios.get(
+                this.$url + "admin/codeGeneration/tables"
+            ).then((response) => {
+                this.dict = response.data.data.list;
+            });
+        },
+        /**
+         * 初始化字典
+         */
+        initDict() {
+            this.$axios.get(
+                this.$url + "/admin/dict/list?page=0&pageSize=100"
+            ).then((response) => {
+                this.dict = response.data.data.list;
+            });
+        },
+        /**
+         * 编辑表
+         * @param row
+         */
         edit(row){
             this.form.formData = row;
             this.form.formVisible = true;
@@ -85,6 +124,10 @@ export default {
             this.initDict();
             this.initTables();
         },
+        /**
+         * 删除表
+         * @param index
+         */
         del(index){
             this.$confirm("删除后无法恢复", "提示", {
                 confirmButtonText: "确定",
@@ -97,6 +140,9 @@ export default {
                 this.tableData = codeGeneration;
             });
         },
+        /**
+         * 暂存
+         */
         save() {
             let codeGeneration = JSON.parse(localStorage.getItem('codeGeneration')||'[]');
             codeGeneration.push(this.form.formData);
@@ -107,32 +153,29 @@ export default {
             });
             this.tableData = codeGeneration;
         },
+        /**
+         * 将表名称转成小驼峰命名
+         * @param e
+         */
         tapTableName(e) {
             let hump = this.$utils.lineToHump(e);
             this.form.formData.url = '/client/' + hump;
             this.form.formData.pageName = hump;
         },
+        /**
+         * 查询类型类型列表
+         * @param val
+         */
         queryTypeChange(val) {
-            if (val == '字典') {
+            if (val === '字典') {
                 this.initDict();
-            } else if (val == '数据表') {
+            } else if (val === '数据表') {
                 this.initTables();
             }
         },
-        initTables() {
-            this.$axios.get(
-                this.$url + "admin/codeGeneration/tables"
-            ).then((response) => {
-                this.dict = response.data.data.list;
-            });
-        },
-        initDict() {
-            this.$axios.get(
-                this.$url + "/admin/dict/list?page=0&pageSize=100"
-            ).then((response) => {
-                this.dict = response.data.data.list;
-            });
-        },
+        /**
+         * 增加代码生成的表
+         */
         add() {
             this.form.formVisible = true;
             this.form.formData = this.$options.data().form.formData;
@@ -140,6 +183,9 @@ export default {
             this.initDict();
             this.initTables();
         },
+        /**
+         * 关闭代码生成的表单
+         */
         cancel() {
             this.$confirm('确认关闭?', '提示', {
                 confirmButtonText: '确定',
@@ -149,6 +195,9 @@ export default {
                 this.form.formVisible = false;
             })
         },
+        /**
+         * 提交代码生成的表单，生成代码
+         */
         submit() {
             this.$root.loading = true;
             let formData = new FormData();
@@ -252,7 +301,7 @@ export default {
 
             return axios;
         },
-        /*构建数据表字典*/
+        /** 构建数据表字典 */
         buildTableDict(item, fieldHump) {
             let tableHump = utils.lineToHump(item.dict);
             let axios = fieldHump + "Init(){ this.$axios.get(this.$url +'/client/" + tableHump
@@ -277,16 +326,9 @@ export default {
                 data: formData,
             });
         },
-        init() {
-            this.tableData = JSON.parse(localStorage.getItem('codeGeneration'));
-            this.initDataType();
-        },
-        initDataType() {
-            this.$axios.get(this.$url + "admin/codeGeneration/dbTypes").then(res=>{
-                this.typeList = res.data.data.dbTypes;
-            })
-        },
-        /*添加表格条目*/
+        /**
+         * 添加表格条目
+         * */
         addField() {
             let field = {
                 field: "",
