@@ -59,7 +59,7 @@
                     <el-input v-model="form.name" @change="isChange = true" placeholder="展示名称"></el-input>
                 </el-form-item>
                 <el-form-item label="地址" :label-width="formLabelWidth" prop="url">
-                    <el-input v-model="form.url" @change="isChange = true" placeholder="请求地址"></el-input>
+                    <el-input v-model="form.url" @change="tabUrl" placeholder="请求地址以“/”开头"></el-input>
                 </el-form-item>
                 <el-form-item label="路由" :label-width="formLabelWidth" prop="path">
                     <el-input v-model="form.path" @change="isChange = true" placeholder="路由路径"></el-input>
@@ -154,6 +154,21 @@ export default {
         }
     },
     methods: {
+        /**
+         * 用户输入路径，自动填充path、component
+         * @param e
+         */
+        tabUrl(e) {
+            if(!e || this.form.type===1){return}
+            // 如果没有使用/开头，则补上
+            if(!e.startsWith("/")){
+                e = "/" + e;
+                this.form.url = e;
+            }
+            let lastPart = e.match(/[^\/]+$/)[0];
+            this.form.path = lastPart;
+            this.form.component = this.form.component.slice(0, this.form.component.lastIndexOf("/")) + "/" + lastPart + ".vue";
+        },
         // 表格初始化
         init() {
             this.$axios({
