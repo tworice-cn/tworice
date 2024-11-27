@@ -281,17 +281,16 @@ export default {
                     method: "POST",
                     data: formData,
                 }).then((res) => {
-                    if (res.data.status.code == 200) {
-                        if (this.form.formData.createServer) {
-                            this.createServer();
-                        }
+                    if (res.data.status.code === 200) {
+                        this.createServer();
                     }
                 });
-            } else if (this.form.formData.createServer) {
+            }else {
                 this.createServer();
-            } else {
                 this.$root.loading = false;
             }
+            // 生成代码默认暂存一版
+            this.save();
         },
         /**构建字典 */
         buildInitDict(item, fieldHump) {
@@ -312,6 +311,9 @@ export default {
 
         /**创建服务端 */
         createServer() {
+            if (!this.form.formData.createServer) {
+                return;
+            }
             let formData = new FormData();
             let parameters = JSON.stringify(
                 this.form.formData.paramTable
