@@ -12,7 +12,7 @@
                         </el-col>
                         <el-col :span="24">
                             <el-table size="mini" class="role-table" :header-cell-style="$setting.table_header"
-                                      v-loading="roleLoad" :data="roles" style="width: 100%" ref="roleTable"
+                                      v-loading="roleLoad" :data="rolePage.roleList" style="width: 100%" ref="roleTable"
                                       highlight-current-row @current-change="handleCurrentChange">
                                 <el-table-column prop="roleName" label="角色名称"></el-table-column>
                                 <el-table-column label="操作">
@@ -36,6 +36,10 @@
                             </el-table>
                         </el-col>
                     </el-col>
+                    <el-col :span="24" class="page-box">
+                        <el-pagination :hide-on-single-page="true" @current-change="roleChangePage" background
+                                       layout="prev, pager, next" :total="rolePage.total" :page-size="rolePage.pageSize"></el-pagination>
+                    </el-col>
                 </el-col>
                 <el-col :md="12" :xs="24" class="role-setUser">
                     <span class="title">设置人员</span>
@@ -46,7 +50,7 @@
                         </el-col>
                         <el-col :span="24">
                             <el-table :header-cell-style="$setting.table_header" v-loading="adminLoad"
-                                      empty-text="当前角色无人员" :data="admins" style="width: 100%" ref="roleTable">
+                                      empty-text="当前角色无人员" :data="userPage.userList" style="width: 100%" ref="roleTable">
                                 <el-table-column prop="nickName" label="人员姓名"></el-table-column>
                                 <el-table-column prop="loginName" label="人员账号"></el-table-column>
                             </el-table>
@@ -56,8 +60,8 @@
                         请选择角色
                     </el-col>
                     <el-col :span="24" class="page-box">
-                        <el-pagination :hide-on-single-page="true" @current-change="changePage" background
-                                       layout="prev, pager, next" :total="total" :page-size="pageSize"></el-pagination>
+                        <el-pagination :hide-on-single-page="true" @current-change="userChangePage" background
+                                       layout="prev, pager, next" :total="userPage.total" :page-size="userPage.pageSize"></el-pagination>
                     </el-col>
                 </el-col>
             </el-col>
@@ -108,9 +112,7 @@ export default {
     props: [],
     data() {
         return {
-            roles: [],// 角色列表
             currentRole: {"roleName": ''},// 当前选中角色行
-            admins: [],// 人员列表
             adminLoad: false,
             roleLoad: false,
             addUserDialog: false,// 设置人员
@@ -128,24 +130,47 @@ export default {
                 id: -1,
                 roleName: ''
             },
-            page: 1, // 当前页码，从1开始
-            pageSize: 10, // 每页数据容量
-            total: 0, // 当前页数据条数
+            userPage:{
+                page: 1, // 当前页码，从1开始
+                pageSize: 10, // 每页数据容量
+                total: 0, // 当前页数据条数
+                userList: [] // 当前页数据
+            },
+            rolePage:{
+                page: 1, // 当前页码，从1开始
+                pageSize: 10, // 每页数据容量
+                total: 0, // 当前页数据条数
+                roleList:[], // 当前页数据
+            }
+            
         }
     },
     methods: {
-        init() {
+        /**
+         * 初始化角色列表
+         */
+        initRole() {
             this.roleLoad = true;
-            this.$axios.get(this.$url + 'admin/system/role/list').then(
-                response => {
-                    if (response.data.status.code === 200) {
-                        this.roles = response.data.data.roleList;
+            this.$axios({
+                url:this.$url + 'admin/system/role/list',
+                method:'get',
+                params:{
+                    page: this.rolePage.page,
+                    pageSize: this.rolePage.pageSize
+                }
+            }).then( response => {
+                    if (response.data.status.code < 400) {
+                        this.rolePage.roleList = response.data.data.list;
+                        this.rolePage.total = response.data.data.total;
                     }
                     this.roleLoad = false;
                 }
             )
         },
-        // 点击角色行
+        /**
+         * 点击角色行
+         * @param row
+         */
         handleCurrentChange(row) {
             this.adminLoad = true;
             this.currentRole = row;
@@ -163,14 +188,14 @@ export default {
                 method: 'get',
                 params: {
                     roleId: this.currentRole.id,
-                    page: this.page,
-                    pageSize: this.pageSize
+                    page: this.userPage.page,
+                    pageSize: this.userPage.pageSize
                 }
             }).then(
                 response => {
                     if (response.data.status.code === 200) {
-                        this.admins = response.data.data.list;
-                        this.total = response.data.data.total;
+                        this.userPage.userList = response.data.data.list;
+                        this.userPage.total = response.data.data.total;
                     }
                     this.adminLoad = false;
                 }
@@ -202,7 +227,7 @@ export default {
                     
                     // 初始化已选中人员
                     result = [];
-                    this.admins.forEach(
+                    this.userPage.userList.forEach(
                         item => {
                             result.push(item.id);
                         }
@@ -348,7 +373,7 @@ export default {
                 data: format
             }).then(
                 response => {
-                    this.roles = response.data.data.roleList;
+                    this.rolePage.roleList = response.data.data.roleList;
                     this.roleDialog = false;
                 }
             )
@@ -369,18 +394,27 @@ export default {
                     data: format
                 }).then(
                     () => {
-                        this.init();
+                        this.initRole();
                     }
                 )
             })
             
         },
         /**
-         * 监听页码发生变化
+         * 监听用户列表页码发生变化
          */
-        changePage(e) {
-            this.page = e;
+        userChangePage(e) {
+            this.userPage.page = e;
             this.getUserListByRole();
+        },
+        
+        /**
+         * 监听角色列表页码发生变化
+         * @param e
+         */
+        roleChangePage(e) {
+            this.rolePage.page = e;
+            this.initRole();
         },
         
         /**
@@ -388,12 +422,12 @@ export default {
          * @param size 容量
          */
         handleSizeChange(size) {
-            this.pageSize = size;
+            this.userPage.pageSize = size;
             this.getUserListByRole();
         },
     },
     mounted() {
-        this.init();
+        this.initRole();
     }
 };
 </script>
@@ -410,7 +444,7 @@ export default {
             font-weight: 700;
         }
         
-
+        
         
         .role-content {
             .role-add {
