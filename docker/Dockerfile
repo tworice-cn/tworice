@@ -4,6 +4,6 @@ LABEL authors="TwoRice"
 COPY ./jar/tworice-admin.jar /jar/tworice-admin.jar
 COPY ./config/application*.yml /config/
 
-EXPOSE 88
+EXPOSE 88 18080
 # 启动应用程序
 CMD ["java", "-Xmx128m","-Xms128m", "-jar", "/jar/tworice-admin.jar","--spring.config.location=file:/config/"]
