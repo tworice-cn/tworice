@@ -159,15 +159,18 @@ export default {
          * @param e
          */
         tabUrl(e) {
-            if(!e || this.form.type===1){return}
-            // 如果没有使用/开头，则补上
+            if(!e ){return}
+            // 页面，如果没有使用/开头，则补上
             if(!e.startsWith("/")){
                 e = "/" + e;
                 this.form.url = e;
             }
+            
             let lastPart = e.match(/[^\/]+$/)[0];
             this.form.path = lastPart;
-            this.form.component = this.form.component.slice(0, this.form.component.lastIndexOf("/")) + "/" + lastPart + ".vue";
+            if(this.form.type===2){
+                this.form.component = this.form.component.slice(0, this.form.component.lastIndexOf("/")) + "/" + lastPart + ".vue";
+            }
         },
         // 表格初始化
         init() {
@@ -183,12 +186,15 @@ export default {
             )
         },
         
-        //添加模块
+        /**
+         * 添加模块
+         */
         addModule() {
             this.form = this.$options.data().form;
             this.formTitle = `在「根路径」下新增`;
             this.form.pid = 0;
             this.form.type = 1;
+            this.form.component = "views/admin/index.vue";
             this.dialogFormVisible = true;
         },
         

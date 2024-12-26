@@ -6,10 +6,10 @@
     <parent>
         <artifactId>tworice-cloud</artifactId>
         <groupId>cn.tworice</groupId>
-        <version>1.4.0-RELEASE</version>
+        <version>1.4.1</version>
     </parent>
     <artifactId>tworice-admin</artifactId>
-    <version>1.4.0-RELEASE</version>
+    <version>1.4.1</version>
 
     <!--版本-->
     <properties>
