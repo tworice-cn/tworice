@@ -9,4 +9,5 @@ services:
       - ./jar:/jar
       - ./upload:/upload
       - ./config:/config
+      - ./logs:/logs
     network_mode: "host" # 配置容器与宿主机共享网络，可根据实际情况修改
