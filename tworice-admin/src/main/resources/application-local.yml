@@ -43,11 +43,6 @@ spring:
           socketFactory:
             port: 465
             class: javax.net.ssl.SSLSocketFactory
-# 日志输出
-logging:
-  level:
-    root: info
-    cn.tworice: debug
 tworice:
   auth:
     sqlInjection: false
