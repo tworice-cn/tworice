@@ -1,13 +1,14 @@
 # 二饭单服务快速开发框架
 
  <p align="center">
-    <img src="https://img.shields.io/badge/beta-V1.2.2-green.svg" alt="Downloads">
+    <img src="https://img.shields.io/badge/RELEASE-V1.4.1-green.svg" alt="Downloads">
     <img src="https://img.shields.io/badge/JDK-1.8+-green.svg" alt="Build Status">
     <img src="https://img.shields.io/badge/Spring%20Cloud-Hoxton.SR12-blue.svg" alt="Coverage Status">
     <img src="https://img.shields.io/badge/Spring%20Boot-2.3.12.RELEASE-blue.svg" alt="Downloads">
     <img src="https://img.shields.io/badge/Vue-2.6.11-blue.svg" alt="Downloads">
      <img src="https://img.shields.io/badge/MySQL-8.0+-blue.svg" alt="Downloads">
 </p>
+
 
 
 
@@ -83,29 +84,9 @@
 
 ## 1、启动
 
-### 1.1、初始化Maven仓库
+### 1.1、导入SQL文件
 
-**版本`1.1`及之后版本请忽略这步。**
-
-将`Dependence`目录下的`tworice`目录放到本地Maven仓库的`cn`目录下。
-
-最终的Maven仓库目录结构应该如下图所示：
-
-```
-├── Maven仓库路径							// 你本机的本地Maven仓库
-│       └── ...
-│       └── cn
-│       	└── tworice
-│       		└── cloud-server
-│       		└── tworice-admin
-│       		└── ...
-```
-
-
-
-### 1.2、导入SQL文件
-
-本系统采用MySQL8.0，注意数据库版本。
+本系统采用`MySQL8.0`，注意数据库版本。
 
 SQL文件在`sql`目录下，文件以日期命名，请使用最新版本的SQL文件。
 
@@ -113,40 +94,52 @@ SQL文件在`sql`目录下，文件以日期命名，请使用最新版本的SQL
 
 
 
-### 1.3、启动服务端
+### 1.2、启动服务端
 
-使用IDEA工具导入项目目录`tworice-admin`。
+> 推荐使用IDEA开发工具
+
+使用IDEA开发工具打开项目根目录，并加载`tworice-admin`下的pom文件。
 
 等待加载依赖后启动`cn.tworice.Application`。
 
 
 
-### 1.4、启动客户端
+### 1.3、启动客户端
 
-① 使用IDEA或其他开发工具导入项目目录`tworice-admin-web`。
+> 客户端使用Vue2开发，推荐使用IDEA开发工具启动
 
-② 执行`npm install`安装依赖。
+#### 1.3.1、安装依赖
 
-③  在该目录下输入命令行`npm run serve`。
+在命令行模式进入`tworice-web`根目录下执行`npm install`安装依赖。
+
+#### 1.3.2、启动
+
+① 命令行形式启动：依赖安装完成后在该目录下输入命令行`npm run serve`启动。
+
+② IDEA运行：添加`npm`运行配置。
+
+![image-20250208211654786](https://gitee.com/StandFast/tworice/raw/master\IMG\IDEA启动客户端.png)
 
 
 
 ## 2、技术选型
 
-| 技术         | 说明                    | 官网                                                 |
-| ------------ | ----------------------- | ---------------------------------------------------- |
-| SpringBoot   | v2.4.3，容器+MVC框架    | https://spring.io/projects/spring-boot               |
-| MyBatis      | v2.1.4，ORM框架         | http://www.mybatis.org/mybatis-3/zh/index.html       |
-| MyBatis-Plus | v3.5.4，简化MyBatis开发 | [MyBatis-Plus (baomidou.com)](https://baomidou.com/) |
-| MySQL        | 数据库                  | https://www.oracle.com/kr/mysql/                     |
-| Hikari       | 数据库连接池            | https://github.com/alibaba/druid                     |
-| JWT          | JWT登录支持             | https://github.com/jwtk/jjwt                         |
-| Lombok       | 简化对象封装工具        | https://github.com/rzwitserloot/lombok               |
-| Swagger-UI   | 文档生成工具            | https://github.com/swagger-api/swagger-ui            |
-| zXing        | 谷歌二维码生成技术      | https://github.com/*zxing*/zxing                     |
-| EasyCaptcha  | Java图形验证码          | https://gitee.com/ele-admin/EasyCaptcha              |
-| wangEditor   | 富文本编辑器            | https://www.wangeditor.com/                          |
-| easyExcel    | 阿里巴巴Excel操作工具   | https://easyexcel.opensource.alibaba.com/            |
+| 技术         | 说明                          | 官网                                                 |
+| ------------ | ----------------------------- | ---------------------------------------------------- |
+| SpringBoot   | v2.3.12.RELEASE，容器+MVC框架 | https://spring.io/projects/spring-boot               |
+| MyBatis      | v3.5.13，ORM框架              | http://www.mybatis.org/mybatis-3/zh/index.html       |
+| MyBatis-Plus | v3.5.4，简化MyBatis开发       | [MyBatis-Plus (baomidou.com)](https://baomidou.com/) |
+| MySQL        | v8.0                          | https://www.oracle.com/kr/mysql/                     |
+| Hikari       | 数据库连接池                  | https://github.com/alibaba/druid                     |
+| JWT          | JWT登录支持                   | https://github.com/jwtk/jjwt                         |
+| Lombok       | 简化对象封装工具              | https://github.com/rzwitserloot/lombok               |
+| Swagger-UI   | 文档生成工具                  | https://github.com/swagger-api/swagger-ui            |
+| zXing        | 谷歌二维码生成技术            | https://github.com/*zxing*/zxing                     |
+| EasyCaptcha  | Java图形验证码                | https://gitee.com/ele-admin/EasyCaptcha              |
+| wangEditor   | 富文本编辑器                  | https://www.wangeditor.com/                          |
+| easyExcel    | 阿里巴巴Excel操作工具         | https://easyexcel.opensource.alibaba.com/            |
+| Node.JS      | v16.18.0                      | https://nodejs.org/                                  |
+| Vue          | v2.7.16                       | https://cn.vuejs.org/                                |
 
 
 
@@ -159,13 +152,11 @@ SQL文件在`sql`目录下，文件以日期命名，请使用最新版本的SQL
 
 
 
-
-
 ## 4、组件
 
 ### 4.1、时效Map
 
-项目中内嵌自研有时效的Map，即`AgingMap`，可用来取代Redis；如项目数据较为庞大请切换为Redis等其他NoSQL。
+项目中内嵌自研有时效的Map，即`AgingMap`，可用来取代`Redis`；如项目数据较为庞大请切换为`Redis`等其它`NoSQL`。
 
 
 
@@ -175,7 +166,7 @@ SQL文件在`sql`目录下，文件以日期命名，请使用最新版本的SQL
 
 文件上传分为开发环境和生产环境，采用`tworice.env`配置进行切换，取值范围`dev`、`prod`，分别采用不同的上传方式。
 
-文件的上传路径由配置文件`tworice.file.path`控制，如果是开发环境，默认为`\target\classes\static\`，建议不要修改；生产环境下建议修改该配置为`\static\`。
+文件的上传路径由配置文件`tworice.file.path`控制，如果是开发环境，默认为`项目根目录\upload\`，建议不要修改。
 
 
 
@@ -219,7 +210,7 @@ tworice:
 <dependency>
     <groupId>cn.tworice</groupId>
     <artifactId>tworice-admin-starter</artifactId>
-    <version>1.0</version>
+    <version>${tworice.version}</version>
 </dependency>
 ```
 
@@ -274,7 +265,7 @@ tworice:
 <dependency>
     <groupId>cn.tworice</groupId>
     <artifactId>tworice-backup-starter</artifactId>
-    <version>1.0</version>
+    <version>${tworice.version}</version>
 </dependency>
 ```
 
@@ -418,7 +409,6 @@ tworice:
 | 202    | 请求结果被加密             |
 | 300    | 登录请求需要进行二次验证   |
 | 500+   | 系统处理错误               |
-|        |                            |
 
 ### 4.12、生成式大模型
 
@@ -439,7 +429,6 @@ tworice:
 | ----- | ---------- |
 | baidu | 千帆大模型 |
 | sizhi | 思知       |
-|       |            |
 
 
 
@@ -457,7 +446,7 @@ Maven引入：
 <dependency>
     <groupId>cn.tworice</groupId>
     <artifactId>tworice-admin-starter</artifactId>
-    <version>${version}</version>
+    <version>${tworice.version}</version>
 </dependency>
 ```
 
@@ -549,13 +538,13 @@ type的取值：`arithmetic`（算数），`character`（字符）；字符验�
 ⑤ 在服务器进入docker目录，运行docker运行如下命令来构建镜像：
 
 ```sh
-docker build -t tworice-admin:1.0 .
+docker build -t tworice-admin:latest .
 ```
 
 ⑥ 启动容器
 
 ```bash
-docker run -d --name {替换为容器名称} -v {替换为jar目录绝对路径}:/jar -v {替换为config目录绝对路径}:/config -v {替换为文件上传目录绝对路径}:/upload -v {替换为日志文件目录绝对路径}:/logs -p {替换为外部端口}:88 tworice-admin:1.0
+docker run -d --name {替换为容器名称} -v {替换为jar目录绝对路径}:/jar -v {替换为config目录绝对路径}:/config -v {替换为文件上传目录绝对路径}:/upload -v {替换为日志文件目录绝对路径}:/logs -p {替换为外部端口}:88 tworice-admin:latest
 ```
 
 ⑦ 更新配置文件或jar包
