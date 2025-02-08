@@ -20,19 +20,19 @@
 
 本系统的采用RBAC权限模型，通俗点说就是：一个角色可以拥有多个菜单（一对多），一个人员账号可以绑定多个角色（一对多），所以人员账号就可以拥有多个菜单了（多对多）。
 
-<img src="https://gitee.com/StandFast/tworice/raw/1.0/IMG/角色管理.png" />
+<img src="IMG/角色管理.png" />
 
 本系统的【角色管理】中有两大功能，分别是【权限管理】和【设置人员】，设置人员又可以理解成为当前角色绑定用户账号。
 
 ### 0.2、权限管理
 
-<img src="https://gitee.com/StandFast/tworice/raw/1.0/IMG/权限管理.png" alt="image-20230421222410100" />
+<img src="IMG/权限管理.png" alt="image-20230421222410100" />
 
 权限管理是对当前角色设置访问权限，界面中展示的全部都是菜单选项，可以理解为【设置当前角色进入系统后可以看到的左侧菜单项】。未勾选的选项不会显示在当前角色的菜单栏。
 
 ### 0.3、设置人员
 
-![image-20230421231613140](https://gitee.com/StandFast/tworice/raw/1.0/IMG/角色设置人员.png)
+![设置角色人员](IMG/角色设置人员.png)
 
 此操作就是为角色绑定用户账号，左侧是待选列表，右侧是已经选了（已绑定）的用户账号。这里无需确认，每一次的【移除人员】和【添加人员】操作都会实时保存。
 
@@ -68,7 +68,7 @@
 
 “更新路由”操作表示将当前页面的路径添加到本地的 `VueRouter` 文件中，以便在前端项目中能够访问到这个新生成的页面。
 
-![image-20230421231613140](https://gitee.com/StandFast/tworice/raw/master/IMG/添加菜单.png)
+![新增菜单](IMG/添加菜单.png)
 
 ##### ④ 重新登录
 
@@ -118,7 +118,7 @@ SQL文件在`sql`目录下，文件以日期命名，请使用最新版本的SQL
 
 ② IDEA运行：添加`npm`运行配置。
 
-![image-20250208211654786](https://gitee.com/StandFast/tworice/raw/master\IMG\IDEA启动客户端.png)
+![IDEA启动客户端配置](IMG/IDEA启动客户端.png)
 
 
 
@@ -501,7 +501,7 @@ type的取值：`arithmetic`（算数），`character`（字符）；字符验�
 
 **A：**将`tworice.dev`配置设置为`true`，表示当前为开发模式，不进行效验。此时重启服务器，进入系统后重新将IP加入到白名单列表中后，将配置修改回去，再次重启服务器。
 
-![image-20230504112557711](https://gitee.com/StandFast/tworice/raw/1.0/IMG/开发模式.png)
+![image-20230504112557711](IMG/开发模式.png)
 
 
 
