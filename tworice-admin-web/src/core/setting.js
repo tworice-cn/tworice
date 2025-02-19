@@ -7,5 +7,9 @@ function Setting(){
       this.baseURL = process.env.VUE_APP_API_BASE_URL;
       this.loading = false;
       this.uploadAgent = process.env.VUE_APP_UPLOAD_AGENT;
+      this.uploadHeader={
+            token: window.localStorage.getItem("token"),
+            adminID: JSON.parse(window.localStorage.getItem("admin")).id,
+      }
 }
 export default new Setting();
