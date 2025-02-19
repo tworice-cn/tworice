@@ -47,6 +47,18 @@ export default {
             inviteCode: ''
         };
     },
+    computed: {
+        /**
+         * 判断是否为用户
+         * @returns {boolean}
+         */
+        isUser() {
+            if (this.adminInfo.roles.length > 0) {
+                return this.adminInfo.roles[0].id == 4;
+            }
+            return false;
+        },
+    },
     methods: {
         checkMenu(key){
             this.activeName=key;

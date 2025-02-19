@@ -42,6 +42,18 @@ export default {
     },
 
     /**
+     * 判断当前登录账户是否为用户
+     * @returns {boolean} true为用户，false为管理员
+     */
+    isUser() {
+        let roles = JSON.parse(window.localStorage.getItem('roles')||'[]');
+        if (roles.length > 0) {
+            return roles[0].id == 4;
+        }
+        return false;
+    },
+
+    /**
      * 关闭弹窗
      * @param done
      */
