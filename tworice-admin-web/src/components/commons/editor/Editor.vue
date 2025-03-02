@@ -8,9 +8,8 @@
 
 <script>
 import Vue from 'vue';
-import {loadEditor} from "@/components/commons/editor/EditorLoader";
+import { loadEditor } from "@/components/commons/editor/EditorLoader";
 
-let editor;
 export default Vue.extend({
     props: {
         value: {
@@ -22,7 +21,7 @@ export default Vue.extend({
         return {
             toolbarConfig: {},
             mode: 'default',
-            WangEditor:null,
+            wangEditor: null, // 存放编辑器库对象
         }
     },
     methods: {
@@ -33,60 +32,68 @@ export default Vue.extend({
                     uploadImage: {
                         server: this.$url + '/editor/editorUpload',
                         fieldName: 'editorFile',
-                        meta:{
-                            agent:this.$setting.uploadAgent,
+                        meta: {
+                            agent: this.$setting.uploadAgent,
                         }
                     }
                 },
-            }
-            editorConfig.onChange = (editor) => {
-                this.$emit('input', editor.getHtml())
-            }
-            editor = this.WangEditor.createEditor({
+                onChange: (editor) => {
+                    this.$emit('input', editor.getHtml());
+                }
+            };
+            
+            // 将编辑器实例挂载在组件实例上，避免放在 data 中引发响应性问题
+            this.editorInstance = this.wangEditor.createEditor({
                 selector: '#editor',
                 config: editorConfig,
                 html: this.value,
-                mode: this.mode // 或 'simple' 参考下文
-            })
-            const toolbar = this.WangEditor.createToolbar({
-                editor,
+                mode: this.mode
+            });
+            
+            this.wangEditor.createToolbar({
+                editor: this.editorInstance,
                 selector: '#toolbar',
                 config: this.toolbarConfig,
                 mode: this.mode
-            })
+            });
         },
-        
-        /**获取HTML代码 */
+        /** 获取 HTML 内容 */
         getHtml() {
-            return editor.getHtml();
+            return this.editorInstance ? this.editorInstance.getHtml() : '';
         },
-        /**获取文本内容 */
+        /** 获取纯文本内容 */
         getText() {
-            return editor.getText();
+            return this.editorInstance ? this.editorInstance.getText() : '';
         },
-        /**清空内容 */
+        /** 清空编辑器内容 */
         clearText() {
-            editor.clear();
+            if (this.editorInstance) {
+                this.editorInstance.clear();
+            }
         },
         /**
-         * 初始化内容
-         * htmlText为富文本内容
+         * 设置编辑器内容
+         * @param {String} htmlText - 富文本内容
          */
         setText(htmlText) {
-            this.html = htmlText;
+            if (this.editorInstance) {
+                this.editorInstance.setHtml(htmlText);
+            }
         },
     },
     beforeDestroy() {
-        if (this.editor == null) return;
-        this.editor.destroy() // 组件销毁时，及时销毁编辑器
+        if (this.editorInstance) {
+            this.editorInstance.destroy(); // 销毁编辑器实例
+        }
     },
     async mounted() {
         await loadEditor();
-        this.WangEditor = window.wangEditor;
-        this.initEditor()
+        this.wangEditor = window.wangEditor;
+        this.initEditor();
     }
-})
+});
 </script>
-<style >
+
+<style>
 @import url(/css/wangeditor.css);
-</style >
+</style>
