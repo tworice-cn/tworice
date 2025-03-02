@@ -9,6 +9,8 @@
 <script>
 import Vue from 'vue';
 import {loadEditor} from "@/components/commons/editor/EditorLoader";
+
+let editor;
 export default Vue.extend({
     props: {
         value: {
@@ -20,7 +22,7 @@ export default Vue.extend({
         return {
             toolbarConfig: {},
             mode: 'default',
-            Editor:null
+            WangEditor:null,
         }
     },
     methods: {
@@ -40,34 +42,31 @@ export default Vue.extend({
             editorConfig.onChange = (editor) => {
                 this.$emit('input', editor.getHtml())
             }
-            const editor = this.Editor.createEditor({
+            editor = this.WangEditor.createEditor({
                 selector: '#editor',
                 config: editorConfig,
                 html: this.value,
                 mode: this.mode // 或 'simple' 参考下文
             })
-            const toolbar = this.Editor.createToolbar({
+            const toolbar = this.WangEditor.createToolbar({
                 editor,
                 selector: '#toolbar',
                 config: this.toolbarConfig,
                 mode: this.mode
             })
         },
-        onCreated(editor) {
-            this.editor = Object.seal(editor) // 一定要用 Object.seal() ，否则会报错
-        },
         
         /**获取HTML代码 */
         getHtml() {
-            return this.editor.getHtml();
+            return editor.getHtml();
         },
         /**获取文本内容 */
         getText() {
-            return this.editor.getText();
+            return editor.getText();
         },
         /**清空内容 */
         clearText() {
-            this.editor.clear();
+            editor.clear();
         },
         /**
          * 初始化内容
@@ -83,7 +82,7 @@ export default Vue.extend({
     },
     async mounted() {
         await loadEditor();
-        this.Editor = window.wangEditor;
+        this.WangEditor = window.wangEditor;
         this.initEditor()
     }
 })
