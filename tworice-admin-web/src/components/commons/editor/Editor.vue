@@ -15,23 +15,49 @@ export default Vue.extend({
         value: {
             type: String,
             default: ''
+        },
+        mode:{
+            type: String,
+            default: 'default'
+        },
+        excludeKeys: {
+            type: Array,
+            default(){
+                return []
+            }
+        },
+        placeholder:{
+            type: String,
+            default(){
+                return '请输入内容...'
+            }
+        },
+        uploadImageUrl: {
+            type: String,
+            default(){
+                return this.$url + '/editor/editorUpload'
+            }
+        },
+        uploadFieldName: {
+            type: String,
+            default(){
+                return 'editorFile'
+            }
         }
     },
     data() {
         return {
-            toolbarConfig: {},
-            mode: 'default',
             wangEditor: null, // 存放编辑器库对象
         }
     },
     methods: {
         initEditor() {
             const editorConfig = {
-                placeholder: '请输入内容...',
+                placeholder: this.placeholder,
                 MENU_CONF: {
                     uploadImage: {
-                        server: this.$url + '/editor/editorUpload',
-                        fieldName: 'editorFile',
+                        server: this.uploadImageUrl,
+                        fieldName: this.uploadFieldName,
                         meta: {
                             agent: this.$setting.uploadAgent,
                         }
@@ -53,7 +79,9 @@ export default Vue.extend({
             this.wangEditor.createToolbar({
                 editor: this.editorInstance,
                 selector: '#toolbar',
-                config: this.toolbarConfig,
+                config: {
+                    excludeKeys: this.excludeKeys
+                },
                 mode: this.mode
             });
         },
