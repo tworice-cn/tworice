@@ -88,3 +88,17 @@
 .el-descriptions-item__label{
       min-width: 70px!important;
 }
+
+/* 解决tabs下拉菜单z-index问题 */
+.el-tabs__nav{
+      z-index: auto!important;
+}
+/* 解决card组件padding问题 */
+.el-card__body, .el-main{
+      padding: 0!important;
+}
+/* 设置back-box高度*/
+.back-box{
+      height: 60px;
+      padding-top: 20px;
+}
