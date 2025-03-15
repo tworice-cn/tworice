@@ -158,11 +158,64 @@
 
 ### 4.2、文件上传
 
-本项目目的是为了尽可能的轻量，不依赖第三方项目及应用，所以文件上传默认采用本地上传。
+#### 4.2.1、本地文件上传
 
-文件上传分为开发环境和生产环境，采用`tworice.env`配置进行切换，取值范围`dev`、`prod`，分别采用不同的上传方式。
+默认状态使用本地文件上传，目的是为了尽可能的轻量，不依赖第三方项目及应用，所以文件上传默认采用本地上传。
+
+本地文件上传分为**开发环境**和生产环境，采用`tworice.env`配置进行切换，取值范围`dev`、`prod`，分别采用不同的上传方式。
 
 文件的上传路径由配置文件`tworice.file.path`控制，如果是开发环境，默认为`项目根目录\upload\`，建议不要修改。
+
+使用：
+
+```java
+@Resource
+private UploadService uploadService;
+```
+
+
+
+#### 4.2.2、Minio文件上传
+
+① 引入Maven必要依赖
+
+```xml
+<dependency>
+    <groupId>com.squareup.okhttp3</groupId>
+    <artifactId>okhttp</artifactId>
+    <version>${okhttp3.version}</version>
+</dependency>
+```
+
+② 配置客户端
+
+```yml
+tworice:
+	file:
+        client: minio
+        accessKey: XXXXXXXXXX
+        secretKey: XXXXXXXXXXXXXXXXX
+        bucket: XXXXXXXX
+        endpoint: http://123.123.123.123:39000
+```
+
+③ 引入实例
+
+```java
+@Resource
+private UploadService uploadService;
+```
+
+或直接引入客户端实例：
+
+```java
+private final FileClient fileClient;
+
+@Autowired
+public MusicService(@Lazy FileClient fileClient) {
+    this.fileClient = fileClient;
+}
+```
 
 
 
@@ -386,7 +439,7 @@ public ChatLog decrypt(ChatLog entity) {
 
 #### 4.10.1、二次验证
 
-```
+```yml
 tworice:
 	login:
 		reAuth: false
