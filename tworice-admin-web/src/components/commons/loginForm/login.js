@@ -1,11 +1,27 @@
-import setting from "@/core/setting";
-import log from "@/views/admin/log.vue";
 import {submitForm} from "@/api/feedback/feedback";
-import ReAuth from "@/views/login/common/reAuth.vue";
+import ReAuth from "@/components/commons/loginForm/reAuth.vue";
 import routerUtils from "@/util/RouterUtils";
 import StorageUtils from "@/util/StorageUtils";
 export default {
-    props: [],
+    name: "LoginForm",
+    props: {
+        regText: { // 注册按钮文字
+            type: String,
+            default: '注册'
+        },
+        loginText: { // 登录按钮文字
+            type: String,
+            default: '登录'
+        },
+        showReg: { // 是否允许注册
+            type: Boolean,
+            default: true
+        },
+        showLabel: { // 是否显示label提示
+            type: Boolean,
+            default: true
+        },
+    },
     components:{
         ReAuth
     },

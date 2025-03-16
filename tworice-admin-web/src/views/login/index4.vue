@@ -16,99 +16,23 @@
                         <el-col :span="24" class="content-title">
                             登 录
                         </el-col>
-                        <el-form @submit="loginSubmit">
-                            <el-col :span="24" class="content-form">
-                                <el-col :span="24">
-                                    <el-input ref='userInput' v-model="login.loginName" placeholder="请输入邮箱或账号"
-                                              suffix-icon="el-icon-user"
-                                              type="text" @blur="isEmpty('u')"
-                                              @keyup.enter.native="loginSubmit"></el-input>
-                                </el-col>
-                                <el-col :span="24">
-                                    <div ref="userCheck" class="form-rule"></div>
-                                </el-col>
-                                <el-col :span="24">
-                                    <el-input v-model="login.password" class="pw-input" placeholder="请输入密码"
-                                              suffix-icon="el-icon-lock"
-                                              type="password" @blur="isEmpty('p')"
-                                              @keyup.enter.native="loginSubmit"></el-input>
-                                </el-col>
-                                <el-col :span="24">
-                                    <div ref="pwCheck" class="form-rule"></div>
-                                </el-col>
-                                <el-col :span="24">
-                                    <el-col :span="12">
-                                        <el-input ref='captchaInput' v-model="login.captcha" maxlength="6"
-                                                  placeholder="请输入右侧验证码"
-                                                  type="text" @blur="isEmpty('c')"
-                                                  @keyup.enter.native="loginSubmit"></el-input>
-                                    </el-col>
-                                    <el-col :span="12" class="captcha-box">
-                                        <img ref="captcha" alt="" height="40px" src="" title="点击换一张"
-                                             @click="initCaptcha">
-                                    </el-col>
-                                </el-col>
-                                <el-col :span="24" class="form-item">
-                                    <el-col :span="12" class="item-left">
-                                        <el-checkbox v-model="login.remember">记住我</el-checkbox>
-                                    </el-col>
-                                    <el-col :span="12" class="item-right">
-                                        <el-link type="primary" @click="forgetPwd">忘记密码？</el-link>
-                                    </el-col>
-                                </el-col>
-                                <el-col :span="24">
-                                    <div ref="captchaCheck" class="form-rule"></div>
-                                </el-col>
-                            </el-col>
-                            <el-col
-                                :class="login.loginName==''||login.password==''||login.captcha==''?'content-submit-disabled':''"
-                                :span="24"
-                                class="content-submit"
-                                @click.native="loginSubmit">登录
-                            </el-col>
-                        </el-form>
-                        <el-col :span="24" class="reg-box">
-                            <el-link @click="toReg">注 册</el-link>
-                        </el-col>
+                        <LoginForm></LoginForm>
                     </el-col>
                 </el-col>
             </el-col>
             <el-col :span="24" class="login-bottom"></el-col>
         </el-col>
-        
-        <!-- 弹出层 -->
-        <el-dialog :before-close="$utils.handleClose" :visible.sync="reg.dialogVisible" title="注册" width="30%"
-                   :append-to-body="true">
-            <el-form ref="reg" :model="reg.form" :rules="reg.rules" size="mini">
-                <el-form-item :label-width="formLabelWidth" label="邮箱" prop="loginName">
-                    <el-input v-model="reg.form.loginName" placeholder="登录邮箱" @change="isChange = true"></el-input>
-                </el-form-item>
-                <el-form-item :label-width="formLabelWidth" label="密码" prop="passWord">
-                    <el-input v-model="reg.form.passWord" placeholder="登录密码" @change="isChange = true"></el-input>
-                </el-form-item>
-                <el-form-item :label-width="formLabelWidth" label="昵称" prop="nickName">
-                    <el-input v-model="reg.form.nickName" placeholder="您的昵称" @change="isChange = true"></el-input>
-                </el-form-item>
-                <el-col :span="24" class="reg-captcha-box">
-                    <el-col :span="13" class="reg-captcha-input-box">
-                        <el-input v-model="reg.form.captcha" maxlength="6" placeholder="请输入验证码"
-                                  type="text"></el-input>
-                    </el-col>
-                    <el-col :span="11" class="send-captcha-box" @click.native="regCaptcha">
-                        {{ reg.send_captcha }}
-                    </el-col>
-                </el-col>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-                        <el-button @click="reg.dialogVisible = false">取 消</el-button>
-                        <el-button type="primary" @click="submitReg">确 定</el-button>
-                  </span>
-        </el-dialog>
     </div>
 </template>
 
 <script>
-export {default} from './login.js';
+import LoginForm from '@/components/commons/loginForm/LoginForm.vue'
+
+export default {
+    components: {
+        LoginForm
+    },
+}
 </script>
 
 <style lang="less">
