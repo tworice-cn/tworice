@@ -1,3 +1,8 @@
+/**
+ * 动态懒加载加载js文件，
+ * @param url
+ * @returns {Promise<unknown>}
+ */
 export function loadScript(url) {
     return new Promise((resolve, reject) => {
         const script = document.createElement('script');

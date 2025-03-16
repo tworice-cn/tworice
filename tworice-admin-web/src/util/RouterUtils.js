@@ -1,4 +1,3 @@
-// import router,{constantRoutes} from "@/core/router";
 import router from "@/core/router";
 import Layout from '@/views/admin/index.vue'
 

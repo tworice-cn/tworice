@@ -11,9 +11,11 @@ Vue.config.productionTip = false;
 // 全局设置
 import setting from './core/setting.js'
 import utils from './util/Utils.js'
+import storage from './util/StorageUtils'
 import screenfull from './util/Screenfull.js'
 Vue.prototype.$setting=setting;
 Vue.prototype.$utils=utils;
+Vue.prototype.$storage=storage;
 Vue.prototype.$url = setting.baseURL;
 Vue.prototype.$screenfull=screenfull;// 全屏组件
 
@@ -32,7 +34,7 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
 import { Message,Notification } from 'element-ui';
-Vue.prototype.$msg=Message;
+Vue.prototype.$msg = Message;
 
 // Loading加载界面
 import Loading from './components/commons/loading.vue'
