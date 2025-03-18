@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="app-body">
         <el-col :span="24" class="home-top">
             <el-col :span="24" class="back">
                 <el-page-header @back="$router.go(-1)" content="公告详情" class="back"></el-page-header>

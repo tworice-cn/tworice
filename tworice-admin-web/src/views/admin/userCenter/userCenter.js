@@ -2,10 +2,11 @@ import feedback from "@/components/feedback";
 import BackBox from "@/components/commons/BackBox.vue";
 import Descriptions from "../../../components/commons/Descriptions.vue";
 import StorageUtils from "@/util/StorageUtils";
+
 export default {
     name: "",
     props: [],
-    components: {feedback, BackBox,Descriptions},
+    components: {feedback, BackBox, Descriptions},
     data() {
         return {
             activeName: 'userInfo',
@@ -14,29 +15,29 @@ export default {
             formVisible: false,
             adminInfo: {},
             isChange: false,
-            userMenu:[
+            userMenu: [
                 {
-                    "name":'个人信息',
-                    "key":'userInfo',
-                    "me":false
+                    "name": '个人信息',
+                    "key": 'userInfo',
+                    "me": false
                 },
                 {
-                    "name":'操作日志',
-                    "key":'userLog',
-                    "me":true
+                    "name": '操作日志',
+                    "key": 'userLog',
+                    "me": true
                 },
                 {
-                    "name":'系统公告',
-                    "key":'systemNotice',
-                    "me":true
+                    "name": '系统公告',
+                    "key": 'systemNotice',
+                    "me": true
                 },
                 {
-                    "name":'反馈建议',
-                    "key":'feedback',
-                    "me":true
+                    "name": '反馈建议',
+                    "key": 'feedback',
+                    "me": true
                 },
             ],
-            userInfo:[], // 展示到用户中的
+            userInfo: [], // 展示到用户中的
             notice: {
                 list: [],
                 page: 1,
@@ -60,8 +61,36 @@ export default {
         },
     },
     methods: {
-        checkMenu(key){
-            this.activeName=key;
+        /**
+         * 编辑登录名
+         */
+        editLoginName() {
+            this.$prompt('请输入新登录账号', '修改登录账号', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                inputPattern: /^[A-Za-z0-9]{2,8}$/,
+                inputErrorMessage: '登录账号应是2~8位的字母、数字组成'
+            }).then(({value}) => {
+                this.$axios({
+                    url: this.$url + "/admin/admin/updateLoginName",
+                    method: "PUT",
+                    params: {
+                        id: this.adminInfo.userId,
+                        loginName: value
+                    }
+                }).then(res => {
+                    if (res.data.status.code < 300) {
+                        this.initAdminInfo();
+                        this.$msg({
+                            type: 'success',
+                            message: res.data.status.message
+                        })
+                    }
+                })
+            });
+        },
+        checkMenu(key) {
+            this.activeName = key;
         },
         showNotice(item) {
             // 跳转到showNotice路由并携带id参数
@@ -152,19 +181,27 @@ export default {
                     this.initUserInfo();
                 });
         },
-        initUserInfo(){
+        initUserInfo() {
             this.userInfo = [];
-            this.userInfo.push({icon:'el-icon-user', name:'昵称', value: this.adminInfo.nickName})
-            this.userInfo.push({icon:'el-icon-coordinate', name:'角色', value: this.adminInfo.roleName})
-            this.userInfo.push({icon:'el-icon-male', name:'性别', value: this.adminInfo.adminSex === 1 ? '男' : this.adminInfo.adminSex === 2 ? '女' : '未知'})
-            this.userInfo.push({icon:'el-icon-mobile-phone', name:'手机号', value: this.adminInfo.adminPhone})
-            this.userInfo.push({icon:'el-icon-message', name:'邮箱', value: this.adminInfo.adminEmail})
-            this.userInfo.push({icon:'el-icon-location-outline', name:'居住地', value: this.adminInfo.homePlace})
-            this.userInfo.push({icon:'el-icon-office-building', name:'联系地址', value: this.adminInfo.contactAddress})
-            this.userInfo.push({icon:'el-icon-tickets', name:'备注', value: this.adminInfo.adminNote})
-            if(this.isMe){
+            this.userInfo.push({icon: 'el-icon-user', name: '昵称', value: this.adminInfo.nickName})
+            this.userInfo.push({icon: 'el-icon-coordinate', name: '角色', value: this.adminInfo.roleName})
+            this.userInfo.push({
+                icon: 'el-icon-male',
+                name: '性别',
+                value: this.adminInfo.adminSex === 1 ? '男' : this.adminInfo.adminSex === 2 ? '女' : '未知'
+            })
+            this.userInfo.push({icon: 'el-icon-mobile-phone', name: '联系方式', value: this.adminInfo.adminPhone})
+            this.userInfo.push({icon: 'el-icon-message', name: '邮箱', value: this.adminInfo.adminEmail})
+            this.userInfo.push({icon: 'el-icon-location-outline', name: '居住地', value: this.adminInfo.homePlace})
+            this.userInfo.push({
+                icon: 'el-icon-office-building',
+                name: '联系地址',
+                value: this.adminInfo.contactAddress
+            })
+            this.userInfo.push({icon: 'el-icon-tickets', name: '备注', value: this.adminInfo.adminNote})
+            if (this.isMe) {
                 let inviteCode = StorageUtils.getInviteCode();
-                this.userInfo.push({icon:'el-icon-s-tools', name:'邀请码', value: inviteCode})
+                this.userInfo.push({icon: 'el-icon-s-tools', name: '邀请码', value: inviteCode})
                 this.inviteCode = inviteCode;
             }
         },
@@ -232,15 +269,15 @@ export default {
             this.$root.loading = true;
             this.$axios({
                 url: this.$url + "/admin/admin/invite",
-                method:"PUT"
-            }).then(res=>{
+                method: "PUT"
+            }).then(res => {
                 this.inviteCode = res.data.data.inviteCode;
                 StorageUtils.setInviteCode(res.data.data.inviteCode);
             })
         },
 
         getInviteLink() {
-            return  window.location.origin + "/#/login?inviteCode=" + this.inviteCode;
+            return window.location.origin + "/#/login?inviteCode=" + this.inviteCode;
         },
     },
     mounted() {

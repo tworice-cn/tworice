@@ -51,7 +51,7 @@
 /* 页面导航标签 */
 .tabs-box{
       background-color: #F2F3F5;
-      height: 30px;
+      height: 33px;
       overflow: hidden;
 }
 .el-tabs__item{
@@ -64,6 +64,7 @@
 /* 公共的样式 */
 .app-body{
       height: 100%;
+      padding: 20px 30px;
 }
 .min-height{
       min-height: 1vh;
@@ -99,6 +100,5 @@
 }
 /* 设置back-box高度*/
 .back-box{
-      height: 60px;
       padding-top: 20px;
 }

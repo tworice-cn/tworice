@@ -51,31 +51,31 @@
                             </el-tag>
                             <div class="zhan role-box"></div>
                             <span>
-                                                <el-tag class="username-box">
-                                                      <el-dropdown placement="bottom" trigger="click"
-                                                                   class="username-drop-down">
-                                                            <i class="el-icon-arrow-down"></i>
-                                                            <el-dropdown-menu slot="dropdown">
-                                                                  <el-dropdown-item v-if="loginStatus"
-                                                                                    icon="el-icon-user"
-                                                                                    @click.native="showUser('/admin/userCenter')">个人中心</el-dropdown-item>
-                                                                  <el-dropdown-item v-if="loginStatus"
-                                                                                    icon="el-icon-edit"
-                                                                                    @click.native="editPwd">修改密码</el-dropdown-item>
-                                                                  <el-dropdown-item icon="el-icon-switch-button"
-                                                                                    :divided="loginStatus"
-                                                                                    @click.native="exitSystem">{{
-                                                                          loginStatus ? '安全退出' : '登 录'
-                                                                      }}</el-dropdown-item>
-                                                            </el-dropdown-menu>
-                                                      </el-dropdown>
-                                                      {{ loginStatus ? admin.nickName : '未登录' }}
-                                                </el-tag>
-                                          </span>
+                                <el-tag class="username-box">
+                                      <el-dropdown placement="bottom" trigger="click"
+                                                   class="username-drop-down">
+                                            <i class="el-icon-arrow-down"></i>
+                                            <el-dropdown-menu slot="dropdown">
+                                                  <el-dropdown-item v-if="loginStatus"
+                                                                    icon="el-icon-user"
+                                                                    @click.native="showUser('/admin/userCenter')">个人中心</el-dropdown-item>
+                                                  <el-dropdown-item v-if="loginStatus"
+                                                                    icon="el-icon-edit"
+                                                                    @click.native="editPwd">修改密码</el-dropdown-item>
+                                                  <el-dropdown-item icon="el-icon-switch-button"
+                                                                    :divided="loginStatus"
+                                                                    @click.native="exitSystem">{{
+                                                          loginStatus ? '安全退出' : '登 录'
+                                                      }}</el-dropdown-item>
+                                            </el-dropdown-menu>
+                                      </el-dropdown>
+                                      {{ loginStatus ? admin.nickName : '未登录' }}
+                                </el-tag>
+                            </span>
                         </div>
                     </div>
                     <!-- 标签 -->
-                    <div class="tabs-box hidden-xs">
+                    <div class="tabs-box hidden-xs" v-if="editableTabs.length > 0">
                         <el-tabs v-model="editableTabsValue" type="card" closable @tab-remove="removeTab"
                                  @tab-click="clickTab">
                             <el-tab-pane v-for="(item) in editableTabs" :key="item.name" :label="item.title"
