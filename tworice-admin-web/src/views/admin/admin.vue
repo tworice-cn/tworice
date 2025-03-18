@@ -27,6 +27,7 @@
             <el-table-column prop="id" label="编号"></el-table-column>
             <el-table-column prop="nickName" label="姓名"></el-table-column>
             <el-table-column prop="loginName" label="登录账号"></el-table-column>
+            <el-table-column prop="email" label="邮箱"></el-table-column>
             <el-table-column prop="status" label="状态" width="80">
                 <template slot-scope="scope">
                     {{ scope.row.status === 1 ? '正常' : '禁用' }}

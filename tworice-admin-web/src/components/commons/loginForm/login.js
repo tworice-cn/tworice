@@ -2,6 +2,8 @@ import {submitForm} from "@/api/feedback/feedback";
 import ReAuth from "@/components/commons/loginForm/reAuth.vue";
 import routerUtils from "@/util/RouterUtils";
 import StorageUtils from "@/util/StorageUtils";
+import ElTabs from "@/components/commons/tabs/ElTabs.vue"
+import ElTabPane from "@/components/commons/tabs/ElTabPane.vue"
 export default {
     name: "LoginForm",
     props: {
@@ -21,12 +23,24 @@ export default {
             type: Boolean,
             default: true
         },
+        showLoginModel: { // 是否显示label提示
+            type: Boolean,
+            default: false
+        },
     },
     components:{
-        ReAuth
+        ReAuth,
+        ElTabs,
+        ElTabPane
     },
     data() {
         return {
+            loginMode:{
+                EMAIL:'邮箱',
+                PHONE:'手机号',
+                ID:'用户ID',
+                LOGIN_NAME:'账号'
+            },
             showState:'login',
             formLabelWidth: '60px',
             login: {
@@ -34,7 +48,8 @@ export default {
                 password: '',
                 captcha: '',
                 key: '',
-                remember: false
+                remember: false,
+                loginModel:'LOGIN_NAME'
             },
             reg: {
                 time: 30,
@@ -43,7 +58,7 @@ export default {
                 submitButton: true,
                 interval: '',// 倒计时
                 form: {
-                    loginName: '',
+                    email: '',
                     passWord: '',
                     nickName: '',
                     captcha: '',
@@ -51,7 +66,7 @@ export default {
                     inviteCode: ''
                 },
                 rules: {
-                    loginName: [
+                    email: [
                         {required: true, message: '请输入登录邮箱', trigger: 'blur'},
                         {min: 6, message: '长度应大于或等于6 个字符', trigger: 'blur'}
                     ],
@@ -68,23 +83,21 @@ export default {
                     ],
                 },
             },
-
         }
     },
     methods: {
+        handleClick(e){
+            console.log(e)
+        },
         submitForm,
         /**提交注册 */
         submitReg() {
             this.$refs['reg'].validate(validate => {
                 if (validate) {
                     // 提交注册
-                    let formData = new FormData();
-                    Object.keys(this.reg.form).forEach(item => {
-                        formData.append(item, this.reg.form[item]);
-                    })
                     this.$axios({
                         url: this.$url + '/admin/login/reg',
-                        data: formData,
+                        params: this.reg.form,
                         method: 'post'
                     }).then(res => {
                         this.$msg({
@@ -112,29 +125,30 @@ export default {
             if (this.reg.send_captcha != '发送验证码') {
                 return;
             }
-            if (this.reg.form.loginName == '') {
+            if (this.reg.form.email == '') {
                 this.$msg({
                     type: 'error',
                     message: '邮箱不能为空'
                 })
-            } else {
-                this.$root.loading = true;
-                this.$axios.get(this.$url + '/admin/login/regCaptcha?email=' + this.reg.form.loginName).then(res => {
-                    this.$msg({
-                        type: 'info',
-                        message: res.data.status.message
-                    })
-                    if (res.data.status.code == 200) {
-                        this.reg.form.key = res.data.data.key;
-                        // 初始化倒计时
-                        this.reg.time = 30;
-                        this.reg.interval = setInterval(() => {
-                            this.updateTime();
-                        }, 1000);
-                    }
-
-                })
+                return;
             }
+
+            this.$root.loading = true;
+            this.$axios.get(this.$url + '/admin/login/regCaptcha?email=' + this.reg.form.email).then(res => {
+                this.$msg({
+                    type: 'info',
+                    message: res.data.status.message
+                })
+                if (res.data.status.code == 200) {
+                    this.reg.form.key = res.data.data.key;
+                    // 初始化倒计时
+                    this.reg.time = 30;
+                    this.reg.interval = setInterval(() => {
+                        this.updateTime();
+                    }, 1000);
+                }
+
+            })
         },
         /**注册 */
         toReg() {
@@ -146,15 +160,10 @@ export default {
                 return
             }
             this.$root.loading = true;
-            let format = new FormData();
-            format.append("loginName", this.login.loginName);
-            format.append("password", this.login.password);
-            format.append("verCode", this.login.captcha);
-            format.append("key", this.login.key);
             this.$axios({
                 method: 'post',
                 url: this.$url + '/admin/login/',
-                data: format
+                params: this.login
             }).then(
                 response => {
                     if(response.data.data.reAuth){
@@ -254,12 +263,12 @@ export default {
         // 初始化验证码
         initCaptcha() {
             let param = "";
-            if (this.reg.form.key != '') {
+            if (this.reg.form.key !== '') {
                 param += '?code=' + this.reg.form.key
             }
             this.$axios.get(this.$url + '/admin/login/captcha' + param).then(
                 res => {
-                    if (res.data.status.code == 204) {
+                    if (res.data.status.code === 204) {
                         this.$msg({
                             type: 'warning',
                             message: res.data.status.message
@@ -269,9 +278,7 @@ export default {
                         this.$refs.captcha.src = res.data.data.captcha;
                     }
                 }
-            ).catch(() => {
-                // this.initCaptcha()
-            })
+            )
         },
 
         /* 忘记密码 */

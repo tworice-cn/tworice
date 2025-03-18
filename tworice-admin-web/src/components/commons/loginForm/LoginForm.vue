@@ -1,11 +1,19 @@
 <template>
     <div>
+        <el-col :span="24" v-if="showLoginModel">
+            <el-tabs v-model="login.loginModel">
+                <el-tab-pane name="LOGIN_NAME" label="账号登录"></el-tab-pane>
+                <el-tab-pane name="EMAIL" label="邮箱登录"></el-tab-pane>
+                <el-tab-pane name="ID" label="唯一标识登录"></el-tab-pane>
+            </el-tabs>
+        </el-col>
+
         <el-col :span="24">
             <el-form @submit="loginSubmit" v-if="showState==='login'">
                 <el-col :span="24" class="content-form">
-                    <el-col :span="24" class="content-form-prompt" v-if="showLabel">用户名</el-col>
+                    <el-col :span="24" class="content-form-prompt" v-if="showLabel">{{loginMode[login.loginModel]}}</el-col>
                     <el-col :span="24">
-                        <el-input ref='userInput' v-model="login.loginName" placeholder="请输入邮箱或账号"
+                        <el-input ref='userInput' v-model="login.loginName" :placeholder="'请输入'+loginMode[login.loginModel]"
                                   suffix-icon="el-icon-user"
                                   type="text" @blur="isEmpty('u')" @keyup.enter.native="loginSubmit"></el-input>
                     </el-col>
@@ -58,14 +66,14 @@
         <el-dialog :before-close="$utils.handleClose" :visible.sync="reg.dialogVisible" title="注册" width="30%"
                    :append-to-body="true">
             <el-form ref="reg" :model="reg.form" :rules="reg.rules" size="mini">
-                <el-form-item :label-width="formLabelWidth" label="邮箱" prop="loginName">
-                    <el-input v-model="reg.form.loginName" placeholder="登录邮箱" @change="isChange = true"></el-input>
+                <el-form-item :label-width="formLabelWidth" label="邮箱" prop="email">
+                    <el-input v-model="reg.form.email" placeholder="登录邮箱"></el-input>
                 </el-form-item>
                 <el-form-item :label-width="formLabelWidth" label="密码" prop="passWord">
-                    <el-input v-model="reg.form.passWord" placeholder="登录密码" @change="isChange = true"></el-input>
+                    <el-input v-model="reg.form.passWord" placeholder="登录密码"></el-input>
                 </el-form-item>
                 <el-form-item :label-width="formLabelWidth" label="昵称" prop="nickName">
-                    <el-input v-model="reg.form.nickName" placeholder="您的昵称" @change="isChange = true"></el-input>
+                    <el-input v-model="reg.form.nickName" placeholder="您的昵称"></el-input>
                 </el-form-item>
                 <el-col :span="24" class="reg-captcha-box">
                     <el-col :span="13" class="reg-captcha-input-box">

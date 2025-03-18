@@ -6,16 +6,16 @@
     <parent>
         <artifactId>tworice-cloud</artifactId>
         <groupId>cn.tworice</groupId>
-        <version>1.4.2</version>
+        <version>1.5.0</version>
     </parent>
     <artifactId>tworice-admin</artifactId>
-    <version>1.4.2</version>
+    <version>1.5.0</version>
 
     <!--版本-->
     <properties>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <java.version>8</java.version>
-        <tworice.version>1.4.2</tworice.version>
+        <tworice.version>1.5.0</tworice.version>
     </properties>
 
     <dependencies>
