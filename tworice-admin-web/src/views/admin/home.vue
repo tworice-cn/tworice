@@ -5,7 +5,7 @@
 </template>
 
 <script>
-// import BigScreenMonitor from "@/components/BigScreenMonitor.vue";
+// import BigScreenMonitor from "@/components/business/BigScreenMonitor.vue";
 export default {
   // components:{
   //   BigScreenMonitor

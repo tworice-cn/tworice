@@ -1,5 +1,5 @@
 <script setup>
-import feedback from "@/components/feedback.vue";
+import feedback from "@/components/business/Feedback.vue";
 </script>
 
 <template>
