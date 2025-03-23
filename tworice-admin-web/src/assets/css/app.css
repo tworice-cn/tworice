@@ -102,3 +102,7 @@
 .back-box{
       padding-top: 20px;
 }
+/* 去掉tabs默认下边框 */
+body .el-tabs--card > .el-tabs__header {
+      border-bottom: none !important;
+}
