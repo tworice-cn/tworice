@@ -58,12 +58,12 @@ export {default} from './userCenter';
                             </template>
                             {{ adminInfo.roleName }}
                         </el-descriptions-item>
-                        <el-descriptions-item>
+                        <el-descriptions-item v-if="isMe">
                             <template slot="label">
                                 <i class="el-icon-user-solid"></i>
                                 登录账号
                             </template>
-                            <el-button icon="el-icon-edit" size="mini" @click="editLoginName">{{ adminInfo.loginName }}</el-button>
+                            <el-button  icon="el-icon-edit" size="mini" @click="editLoginName">{{ $route.params.id }}</el-button>
                         </el-descriptions-item>
                         <el-descriptions-item>
                             <template slot="label">

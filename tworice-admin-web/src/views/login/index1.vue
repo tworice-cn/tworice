@@ -64,7 +64,7 @@ export default {
             position: relative;
             height: 40px;
             color: white;
-            background: #00A3FF;
+            background: var(--themeColor);
             line-height: 40px;
             text-align: center;
             // letter-spacing: 10px;

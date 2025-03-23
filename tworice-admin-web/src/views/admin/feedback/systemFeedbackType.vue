@@ -147,7 +147,7 @@ export default {
         },
         initRole(){
             list().then(res=>{
-                this.roleList = res.data.data.roleList;
+                this.roleList = res.data.data.list;
             })
         },
         handleSizeChange(size) {

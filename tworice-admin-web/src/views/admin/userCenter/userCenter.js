@@ -75,7 +75,7 @@ export default {
                     url: this.$url + "/admin/admin/updateLoginName",
                     method: "PUT",
                     params: {
-                        id: this.adminInfo.userId,
+                        id: this.$route.params.id,
                         loginName: value
                     }
                 }).then(res => {
