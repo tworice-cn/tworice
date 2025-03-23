@@ -31,7 +31,7 @@ export { default } from './userCenter';
 			</el-col>
 			<el-col :span="18" class="right-box">
 				<el-col :span="24" class="info-box" v-if="activeName=='feedback'">
-					<feedback></feedback>
+					<Feedback></Feedback>
 				</el-col>
 				<el-col :span="24" class="info-box" v-if="activeName=='userInfo'">
 					<el-col :span="24" class="info-title">

@@ -27,7 +27,7 @@ export {default} from './userCenter';
                 <el-tab-pane label="反馈建议" name="feedback" v-if="isMe"></el-tab-pane>
             </el-tabs>
             <el-col :span="24" class="info-box" v-if="activeName=='feedback'">
-                <feedback></feedback>
+                <Feedback></Feedback>
             </el-col>
             <el-col :span="24" class="info-box" v-if="activeName=='userInfo'">
                 <el-col :span="24" class="info-title">

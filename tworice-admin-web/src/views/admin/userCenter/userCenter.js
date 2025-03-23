@@ -1,12 +1,12 @@
-import feedback from "@/components/feedback";
+import Feedback from "@/components/business/Feedback";
 import BackBox from "@/components/commons/BackBox.vue";
-import Descriptions from "../../../components/commons/Descriptions.vue";
+import Descriptions from "@/components/commons/Descriptions.vue";
 import StorageUtils from "@/util/StorageUtils";
 
 export default {
     name: "",
     props: [],
-    components: {feedback, BackBox, Descriptions},
+    components: {Feedback, BackBox, Descriptions},
     data() {
         return {
             activeName: 'userInfo',
