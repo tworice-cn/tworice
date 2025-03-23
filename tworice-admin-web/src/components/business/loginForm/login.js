@@ -1,5 +1,5 @@
 import {submitForm} from "@/api/feedback/feedback";
-import ReAuth from "@/components/commons/loginForm/reAuth.vue";
+import ReAuth from "@/components/business/loginForm/reAuth.vue";
 import routerUtils from "@/util/RouterUtils";
 import StorageUtils from "@/util/StorageUtils";
 import ElTabs from "@/components/commons/tabs/ElTabs.vue"

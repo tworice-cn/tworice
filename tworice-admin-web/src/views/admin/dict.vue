@@ -94,7 +94,7 @@
     </div>
 </template>
 <script>
-import DictValue from '../../components/commons/DictValue.vue'
+import DictValue from '@/components/business/DictValue.vue'
 import paginationMixin from "@/mixins/paginationMixin";
 
 export default {

@@ -20,7 +20,7 @@ export default {
 };
 </script>
 
-<style scope>
+<style scoped>
 #loading-main {
     width: 100vw;
     height: 100vh;

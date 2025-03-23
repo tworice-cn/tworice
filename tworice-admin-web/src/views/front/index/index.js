@@ -1,6 +1,6 @@
 import BreadCrumb from "@/components/commons/BreadCrumb.vue";
-import Menu from "@/components/commons/menu.vue";
-import PortalMenu from "@/components/commons/portalMenu.vue";
+import Menu from "@/components/commons/menu/Menu.vue";
+import PortalMenu from "@/components/commons/menu/PortalMenu.vue";
 import system from "@/components/commons/system/system.js";
 import log from "@/views/admin/log.vue";
 

@@ -37,7 +37,7 @@ import { Message,Notification } from 'element-ui';
 Vue.prototype.$msg = Message;
 
 // Loading加载界面
-import Loading from './components/commons/loading.vue'
+import Loading from './components/commons/Loading.vue'
 Vue.component("Loading",Loading);//注册全局组件
 
 // Vue路由
