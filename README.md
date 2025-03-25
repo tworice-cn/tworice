@@ -173,6 +173,14 @@
 private UploadService uploadService;
 ```
 
+本地上传可配置文件上传加密，增加以下配置可激活文件加密：
+
+```yml
+tworice:
+	file:
+		cryption: true
+```
+
 
 
 #### 4.2.2、Minio文件上传
@@ -221,6 +229,8 @@ public MusicService(@Lazy FileClient fileClient) {
 
 ### 4.3、系统登录
 
+#### 4.3.1、登录验证码
+
 ```yml
 tworice:
   login:
@@ -233,6 +243,22 @@ tworice:
 1、验证码的有效时间包括登录的图形验证码和注册时的邮箱验证码。
 
 2、超级管理员账户默认拥有所有权限，不受数据库限制。格式如：`账号-密码`。
+
+
+
+#### 4.3.2、登录表单
+
+界面中统一使用`LoginForm`作为核心登录表单。该组件的配置属性如下表所示。
+
+| 参数             | 说明              | 类型    | 可选值 | 默认值 |
+| ---------------- | ----------------- | ------- | ------ | ------ |
+| reg-text         | 注册按钮文字      | String  |        | 注册   |
+| login-text       | 登录按钮文字      | String  |        | 登录   |
+| show-reg         | 是否允许注册      | Boolean |        | true   |
+| show-label       | 是否现实label提示 | Boolean |        | true   |
+| show-login-model | 是否显示登录选项  | Boolean |        | false  |
+
+
 
 
 
