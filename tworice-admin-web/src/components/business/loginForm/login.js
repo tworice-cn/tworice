@@ -232,8 +232,8 @@ export default {
                 return;
             }
             let path='/admin';
-            if (roles[0].id == 4) {
-                path='/home';
+            if (roles[0].id == 4 && this.$setting.defaultTab) {
+                path = this.$setting.defaultTab;
             }
             this.$router.push(path);
             window.localStorage.setItem("index", path);

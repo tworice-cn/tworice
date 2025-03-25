@@ -29,7 +29,7 @@ export {default} from './userCenter';
             <el-col :span="24" class="info-box" v-if="activeName=='feedback'">
                 <Feedback></Feedback>
             </el-col>
-            <el-col :span="24" class="info-box" v-if="activeName=='userInfo'">
+            <el-col :span="24" class="info-box" v-if="activeName==='userInfo'">
                 <el-col :span="24" class="info-title">
                     <el-col :span="12" class="title-left">用户信息</el-col>
                     <el-col :span="12" class="title-right"><i class="el-icon-edit" @click="formVisible=true"
@@ -42,7 +42,7 @@ export {default} from './userCenter';
                                 <i class="el-icon-s-flag"></i>
                                 唯一标识
                             </template>
-                            {{ adminInfo.userId }}
+                            {{ $route.params.id }}
                         </el-descriptions-item>
                         <el-descriptions-item>
                             <template slot="label">
@@ -63,7 +63,7 @@ export {default} from './userCenter';
                                 <i class="el-icon-user-solid"></i>
                                 登录账号
                             </template>
-                            <el-button  icon="el-icon-edit" size="mini" @click="editLoginName">{{ $route.params.id }}</el-button>
+                            <el-button  icon="el-icon-edit" size="mini" @click="editLoginName">{{ adminInfo.loginName }}</el-button>
                         </el-descriptions-item>
                         <el-descriptions-item>
                             <template slot="label">
