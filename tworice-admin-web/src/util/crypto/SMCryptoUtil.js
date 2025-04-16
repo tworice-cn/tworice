@@ -71,7 +71,7 @@ export default {
      * @param {String} key SM4 密钥（要求16字节，16进制字符串或普通字符串，根据配置）
      * @returns {String} 解密后的明文
      */
-    sm4Decrypt(cipherText, key) {
+    sm4Decrypt(cipherText, key, iv) {
         try {
             key = key || KEY;
             iv = iv || IV;
