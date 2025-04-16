@@ -2,9 +2,9 @@
     <div>
         <el-col :span="24" v-if="showLoginModel">
             <el-tabs v-model="login.loginModel">
-                <el-tab-pane name="LOGIN_NAME" label="账号登录"></el-tab-pane>
-                <el-tab-pane name="EMAIL" label="邮箱登录"></el-tab-pane>
-                <el-tab-pane name="ID" label="唯一标识登录"></el-tab-pane>
+                <el-tab-pane v-if="loginModel.includes('LOGIN_NAME')" name="LOGIN_NAME" label="账号登录"></el-tab-pane>
+                <el-tab-pane v-if="loginModel.includes('EMAIL')" name="EMAIL" label="邮箱登录"></el-tab-pane>
+                <el-tab-pane v-if="loginModel.includes('ID')" name="ID" label="唯一标识登录"></el-tab-pane>
             </el-tabs>
         </el-col>
 

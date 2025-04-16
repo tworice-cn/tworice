@@ -23,9 +23,13 @@ export default {
             type: Boolean,
             default: true
         },
-        showLoginModel: { // 是否显示label提示
+        showLoginModel: { // 是否显示登录选项
             type: Boolean,
             default: false
+        },
+        loginModel: { // 是否显示label提示
+            type: Array,
+            default: ['LOGIN_NAME']
         },
     },
     components:{

@@ -99,7 +99,43 @@ export default {
 </script>
 
 <style scoped>
-.send-captcha-box{
-  position: relative;
+.send-captcha-box {
+    position: relative;
+}
+/* 发送验证码 */
+.send-captcha-box {
+    height: 40px;
+    line-height: 40px;
+    font-weight: 700;
+    background-color: var(--themeColor);
+    color: white;
+    text-align: center;
+    cursor: pointer;
+}
+/* 登录按钮 */
+.content-submit {
+    position: relative;
+    height: 40px;
+    color: white;
+    background: var(--themeColor);
+    line-height: 40px;
+    text-align: center;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.content-submit-disabled::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, .5);
+    border-radius: 3px;
+    content: '';
+    cursor: not-allowed;
+}
+
+.reg-captcha-box {
+    margin-bottom: 30px;
 }
 </style>
