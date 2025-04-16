@@ -67,7 +67,7 @@
             </el-col>
             
             <!-- 弹出层 -->
-            <el-dialog :title="'当前角色：'+this.currentRole.roleName" :visible.sync="addUserDialog" width="50%"
+            <el-dialog :title="'当前角色：'+this.currentRole.roleName" :visible.sync="addUserDialog" width="60%"
                        :before-close="$utils.handleClose">
                 <div class="userTransfer">
                     <!-- 穿梭框 -->
@@ -372,9 +372,9 @@ export default {
                 url: this.$url + "admin/system/role/editRole",
                 data: format
             }).then(
-                response => {
-                    this.rolePage.roleList = response.data.data.roleList;
+                () => {
                     this.roleDialog = false;
+                    this.initRole();
                 }
             )
         },
@@ -469,6 +469,8 @@ export default {
         padding-right: 0;
     }
 }
-
-
+.userTransfer {
+    display: flex;
+    justify-content: center;
+}
 </style>
