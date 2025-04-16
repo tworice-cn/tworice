@@ -20,6 +20,9 @@ export default {
         await loadECharts();
         const chart = echarts.init(this.$refs.pieChart);
         const option = {
+            tooltip: {
+                trigger: 'item'
+            },
             series: [
                 {
                     type: 'pie',
