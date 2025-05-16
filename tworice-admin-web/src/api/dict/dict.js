@@ -1,7 +1,7 @@
 import Vue from 'vue';
 export function dictList(dictId){
     return Vue.prototype.$axios({
-        url: 'admin/dictValue/list?dict='+dictId,
+        url: `admin/dictValue/list?dict=${dictId}&pageSize=1000`,
         method: 'GET'
-    })
+    });
 }
