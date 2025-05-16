@@ -5,11 +5,13 @@
                 <el-tab-pane v-if="loginModel.includes('LOGIN_NAME')" name="LOGIN_NAME" label="账号登录"></el-tab-pane>
                 <el-tab-pane v-if="loginModel.includes('EMAIL')" name="EMAIL" label="邮箱登录"></el-tab-pane>
                 <el-tab-pane v-if="loginModel.includes('ID')" name="ID" label="唯一标识登录"></el-tab-pane>
+                <el-tab-pane v-if="loginModel.includes('EMAIL_CAPTCHA')" name="EMAIL_CAPTCHA" label="邮箱验证码登录"></el-tab-pane>
+                <el-tab-pane v-if="loginModel.includes('FACE')" name="FACE" label="人脸识别登录"></el-tab-pane>
             </el-tabs>
         </el-col>
 
         <el-col :span="24">
-            <el-form @submit="loginSubmit" v-if="showState==='login'">
+            <el-form @submit="loginSubmit" v-if="showState==='login' && ['LOGIN_NAME','EMAIL','ID'].includes(login.loginModel)">
                 <el-col :span="24" class="content-form">
                     <el-col :span="24" class="content-form-prompt" v-if="showLabel">{{loginMode[login.loginModel]}}</el-col>
                     <el-col :span="24">
@@ -50,6 +52,7 @@
                         <div ref="captchaCheck" class="form-rule"></div>
                     </el-col>
                 </el-col>
+                
                 <el-col :class="login.loginName===''||login.password===''||login.captcha===''?'content-submit-disabled':''"
                         :span="24"
                         class="content-submit"
@@ -61,6 +64,8 @@
             </el-form>
             <ReAuth v-if="showState==='reAuth'" :loginName="login.loginName" :reAuthKey="login.key"
                     :loginSuccess="checkLoginResult"></ReAuth>
+            <EmailCaptcha v-if="login.loginModel === 'EMAIL_CAPTCHA'" :loginSuccess="checkLoginResult"></EmailCaptcha>
+            <Face v-if="login.loginModel === 'Face'" :loginSuccess="checkLoginResult"></Face>
         </el-col>
         <!-- 弹出层 -->
         <el-dialog :before-close="$utils.handleClose" :visible.sync="reg.dialogVisible" title="注册" width="30%"

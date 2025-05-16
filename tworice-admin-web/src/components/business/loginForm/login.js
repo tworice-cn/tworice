@@ -1,5 +1,7 @@
 import {submitForm} from "@/api/feedback/feedback";
 import ReAuth from "@/components/business/loginForm/reAuth.vue";
+import EmailCaptcha from "./EmailCaptcha.vue";
+import Face from "./Face.vue";
 import routerUtils from "@/util/RouterUtils";
 import StorageUtils from "@/util/StorageUtils";
 import ElTabs from "@/components/commons/tabs/ElTabs.vue"
@@ -35,7 +37,9 @@ export default {
     components:{
         ReAuth,
         ElTabs,
-        ElTabPane
+        ElTabPane,
+        EmailCaptcha,
+        Face
     },
     data() {
         return {
@@ -43,7 +47,8 @@ export default {
                 EMAIL:'邮箱',
                 PHONE:'手机号',
                 ID:'用户ID',
-                LOGIN_NAME:'账号'
+                LOGIN_NAME:'账号',
+                EMAIL_CAPTCHA:'邮箱',
             },
             showState:'login',
             formLabelWidth: '60px',
