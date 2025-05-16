@@ -14,12 +14,20 @@ export default {
         data: {
             type: Array,
             required: true
+        },
+        title: {
+            type: String,
+            default: ''
         }
     },
     async mounted() {
         await loadECharts();
         const chart = echarts.init(this.$refs.pieChart);
         const option = {
+            title: {
+                text: this.title,
+                left: 'center'
+            },
             tooltip: {
                 trigger: 'item'
             },

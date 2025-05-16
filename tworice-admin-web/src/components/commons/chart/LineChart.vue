@@ -14,12 +14,29 @@ export default {
         data: {
             type: Array,
             required: true
+        },
+        title: {
+            type: String,
+            default: ''
         }
     },
     async mounted() {
         await loadECharts();
         const chart = echarts.init(this.$refs.lineChart);
         const option = {
+            title: {
+                text: this.title,
+                left: 'center'
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    crossStyle: {
+                        color: '#999'
+                    }
+                }
+            },
             xAxis: {
                 type: 'category',
                 data: this.data.map(item => item.name)
