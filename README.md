@@ -1,7 +1,7 @@
 # 二饭单服务快速开发框架
 
  <p align="center">
-    <img src="https://img.shields.io/badge/RELEASE-V1.4.1-green.svg" alt="Downloads">
+    <img src="https://img.shields.io/badge/RELEASE-V1.5.0-green.svg" alt="Downloads">
     <img src="https://img.shields.io/badge/JDK-1.8+-green.svg" alt="Build Status">
     <img src="https://img.shields.io/badge/Spring%20Cloud-Hoxton.SR12-blue.svg" alt="Coverage Status">
     <img src="https://img.shields.io/badge/Spring%20Boot-2.3.12.RELEASE-blue.svg" alt="Downloads">
