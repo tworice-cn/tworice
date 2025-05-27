@@ -64,24 +64,37 @@ service.interceptors.request.use(function (config) {
       return Promise.reject(error);
 });
 // 添加一个响应拦截器
+let isNotificationActive = false;
 service.interceptors.response.use(
     function (response) {
           vue.loading=false;
           if (response.data.status) {
                 vue.loading=false;
                 let code=parseInt(response.data.status.code);
-                if(code>=400){
-                      Notification({ title: '提示', type: code===400?'info':(code===401?'warning':'error'), message: response.data.status.message });
-                      if(code === 401) {router.push('/login');}
-                      return Promise.reject(response);
-                } else if(code === 201){ // 显示通知
-                      Message({ type:'success', message:response.data.status.message });
-                      response.data.status.code=200;
-                } else if(code === 202){ // 数据进行了加密
-                      if(response.data.data.crypt){
-                            response.data.data=JSON.parse(Crypt.decrypt(response.data.data));
+                if (code >= 400 && isNotificationActive === false) {
+                      isNotificationActive = true;
+                      const notification = Notification({
+                            title: '提示',
+                            type: code === 400 ? 'info' : (code === 401 ? 'warning' : 'error'),
+                            message: response.data.status.message,
+                            duration: 3000
+                      });
+                      // 监听通知关闭事件以重置状态
+                      notification.onClose = () => {
+                            isNotificationActive = false;
+                      };
+                      if (code === 401) {
+                            router.push('/login');
                       }
-                      response.data.status.code=200;
+                      return Promise.reject(response);
+                } else if (code === 201) { // 显示通知
+                      Message({type: 'success', message: response.data.status.message});
+                      response.data.status.code = 200;
+                } else if (code === 202) { // 数据进行了加密
+                      if (response.data.data.crypt) {
+                            response.data.data = JSON.parse(Crypt.decrypt(response.data.data));
+                      }
+                      response.data.status.code = 200;
                 }
           }
           return response;
