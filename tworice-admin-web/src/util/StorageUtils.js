@@ -70,4 +70,32 @@ export default {
     getLoginForm: function () {
         return this.getStorage('loginForm');
     },
+
+    /**
+     * 设置Storage的统一写法
+     * @param key
+     * @param value
+     */
+    setStorage: function (key, value) {
+        // 检查值是否为字符串类型
+        if (typeof value !== 'string') {
+            // 对非字符串值进行转换
+            try {
+                value = JSON.stringify(value);
+            } catch (error) {
+                console.error('JSON 序列化失败:', error);
+                // 如果转换失败，使用安全回退方案
+                value = String(value);
+            }
+        }
+        localStorage.setItem(key, value);
+    },
+
+    /**
+     * 设置token
+     * @param token
+     */
+    setToken: function (token) {
+        this.setStorage('token', token);
+    },
 }

@@ -3,10 +3,10 @@ import App from './App.vue'
 import './assets/css/icon.css'
 import '@/assets/css/app.css'
 import '@/assets/css/layout.css'
-import Crypt from "@/components/commons/crypt/crypt";
 import 'default-passive-events'
 import RouterUtils from './util/RouterUtils.js'
 Vue.config.productionTip = false;
+import { createAxiosService } from '@/core/axios-service'
 
 // 全局设置
 import setting from './core/setting.js'
@@ -44,66 +44,9 @@ Vue.component("Loading",Loading);//注册全局组件
 import router from '@/core/router.js'
 
 // Axios
-import axios from 'axios'
-let service = axios.create({
-    baseURL: Vue.prototype.$url,
-    timeout: 30000,// 超时
-    withCredentials: false,// 禁用 Cookie 等信息
-})
-service.defaults.headers.common['token'] = '';
-service.defaults.headers.common['adminID'] = '';
-service.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
-// 添加一个请求拦截器
-service.interceptors.request.use(function (config) {
-      let token = window.localStorage.getItem('token')||'';
-      let admin = JSON.parse(window.localStorage.getItem('admin')||'{}');
-      config.headers.common['token'] = token;
-      config.headers.common['adminID'] = admin.id;
-      return config;
-}, function (error) {
-      return Promise.reject(error);
-});
-// 添加一个响应拦截器
-let isNotificationActive = false;
-service.interceptors.response.use(
-    function (response) {
-          vue.loading=false;
-          if (response.data.status) {
-                vue.loading=false;
-                let code=parseInt(response.data.status.code);
-                if (code >= 400 && isNotificationActive === false) {
-                      isNotificationActive = true;
-                      const notification = Notification({
-                            title: '提示',
-                            type: code === 400 ? 'info' : (code === 401 ? 'warning' : 'error'),
-                            message: response.data.status.message,
-                            duration: 3000
-                      });
-                      // 监听通知关闭事件以重置状态
-                      notification.onClose = () => {
-                            isNotificationActive = false;
-                      };
-                      if (code === 401) {
-                            router.push('/login');
-                      }
-                      return Promise.reject(response);
-                } else if (code === 201) { // 显示通知
-                      Message({type: 'success', message: response.data.status.message});
-                      response.data.status.code = 200;
-                } else if (code === 202) { // 数据进行了加密
-                      if (response.data.data.crypt) {
-                            response.data.data = JSON.parse(Crypt.decrypt(response.data.data));
-                      }
-                      response.data.status.code = 200;
-                }
-          }
-          return response;
-    },()=> {
-          Notification({ title: '提示', type: 'warning', message: '服务器连接异常' })
-          vue.loading=false;
-    }
-)
-Vue.prototype.$axios = service;
+// 创建 Axios 实例
+const service = createAxiosService(router, setting.baseURL)
+Vue.prototype.$axios = service
 
 window.onbeforeunload = function () {//刷新会触发这个事件
       if(window.localStorage.getItem("resources")){

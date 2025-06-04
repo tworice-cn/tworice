@@ -38,7 +38,7 @@ public class VerifyExecutor implements VerifyManger {
 
     @Override
     public boolean online(String key, String token) {
-        return this.onlineMap.put(key, token)!=null;
+        return this.onlineMap.put(key, token) != null;
     }
 
     @Override
