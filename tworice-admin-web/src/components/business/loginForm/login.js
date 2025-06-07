@@ -31,7 +31,9 @@ export default {
         },
         loginModel: { // 是否显示label提示
             type: Array,
-            default: ['LOGIN_NAME']
+            default: ()=>{
+                ['LOGIN_NAME']
+            }
         },
     },
     components:{
