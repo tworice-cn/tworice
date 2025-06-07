@@ -1,6 +1,6 @@
 <view class="top">
   <view class="top-logo">
-    <image src="/icon/favicon.ico" mode=""/>
+    <image src="/icon/favicon.png" mode=""/>
   </view>
 </view>
 

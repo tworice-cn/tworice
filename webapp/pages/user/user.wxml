@@ -4,7 +4,7 @@
       <view class="top-left">
         <navigator url="/pages/userInfo/userInfo">
           <view class="avatar">
-            <image src="/icon/favicon.ico" mode=""/>
+            <image src="/icon/favicon.png" mode=""/>
           </view>
         </navigator>
       </view>
