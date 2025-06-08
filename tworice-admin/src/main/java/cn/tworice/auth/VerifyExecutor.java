@@ -34,11 +34,25 @@ public class VerifyExecutor implements VerifyManger {
      **/
     private final AgingMap<String, String> onlineMap = new AgingMap<>();
 
+    /**
+     * 存储过渡时的旧Token
+     */
+    private final AgingMap<String, String> tempMap = new AgingMap<>();
+
     private final Map<String, List<String>> ADMIN_RESOURCES = new HashMap<>();
 
     @Override
     public boolean online(String key, String token) {
         return this.onlineMap.put(key, token) != null;
+    }
+
+    @Override
+    public boolean refresh(String key, String newToken) {
+        String oldToken = onlineMap.get(key);
+        if (oldToken != null) {
+            tempMap.put(key, oldToken, 1000 * 60);
+        }
+        return this.online(key, newToken);
     }
 
     @Override
@@ -53,6 +67,9 @@ public class VerifyExecutor implements VerifyManger {
 
     @Override
     public boolean exist(String key, String token) {
+        if (this.tempMap.exist(key, token)) {
+            return true;
+        }
         return this.onlineMap.exist(key,token);
     }
 

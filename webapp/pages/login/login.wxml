@@ -20,7 +20,7 @@
   <!-- 验证码 -->
   <view class="code-box">
     <view class="code-input-box">
-      <input type="text" placeholder="请输入验证码" bindinput="inputCaptcha"/>
+      <input type="text" placeholder="请输入验证码" value="{{verCode}}" bindinput="inputCaptcha"/>
     </view>
     <view class="get-code" bindtap="send_captcha">
       <image bindtap="initCaptcha" src="{{captcha}}" mode="heightFix"></image>

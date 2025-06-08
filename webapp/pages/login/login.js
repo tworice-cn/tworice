@@ -14,7 +14,7 @@ Page({
     },
     initCaptcha() {
         getApp().request.get('/admin/login/captcha').then(res => {
-            if (res.data.status.code == 204) {
+            if (res.data.status.code === 204) {
                 wx.showModal({
                     title: '提示',
                     content: '获取验证码失败',
@@ -27,7 +27,8 @@ Page({
             } else {
                 this.setData({
                     key: res.data.data.key,
-                    captcha: res.data.data.captcha
+                    captcha: res.data.data.captcha,
+                    verCode: ''
                 })
             }
         })
@@ -57,9 +58,8 @@ Page({
                     icon: 'success'
                 })
             } else {
-                console.log(res);
                 wx.showToast({
-                    title: '登录失败',
+                    title: res.data.status.message,
                     icon: 'none'
                 })
                 this.initCaptcha();
@@ -75,7 +75,7 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
-        wx.clearStorageSync();
+        // wx.clearStorageSync();
         this.initCaptcha();
     },
     inputName(e) {

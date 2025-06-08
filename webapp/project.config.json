@@ -33,7 +33,15 @@
     "packNpmManually": false,
     "packNpmRelationList": [],
     "minifyWXSS": true,
-    "ignoreUploadUnusedFiles": true
+    "ignoreUploadUnusedFiles": true,
+    "compileWorklet": false,
+    "minifyWXML": true,
+    "localPlugins": false,
+    "disableUseStrict": false,
+    "useCompilerPlugins": false,
+    "condition": false,
+    "swc": false,
+    "disableSWC": true
   },
   "compileType": "miniprogram",
   "condition": {
@@ -65,5 +73,6 @@
     "ignore": [],
     "include": []
   },
-  "appid": "wx6a99e55c9e5a8edb"
+  "appid": "wx6a99e55c9e5a8edb",
+  "simulatorPluginLibVersion": {}
 }
