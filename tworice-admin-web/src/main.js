@@ -13,11 +13,12 @@ import setting from './core/setting.js'
 import utils from './util/Utils.js'
 import storage from './util/StorageUtils'
 import screenfull from './util/Screenfull.js'
-Vue.prototype.$setting=setting;
-Vue.prototype.$utils=utils;
-Vue.prototype.$storage=storage;
+
+Vue.prototype.$setting = setting;
+Vue.prototype.$utils = utils;
+Vue.prototype.$storage = storage;
 Vue.prototype.$url = setting.baseURL;
-Vue.prototype.$screenfull=screenfull;// 全屏组件
+Vue.prototype.$screenfull = screenfull; // 全屏组件
 
 // 增删改查通用方法
 import CRUD from "@/api/CRUD";
@@ -33,26 +34,15 @@ import '@/assets/theme/arco-pro-theme.less'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
-import { Message,Notification } from 'element-ui';
+import { Message } from 'element-ui';
 Vue.prototype.$msg = Message;
 
 // Loading加载界面
 import Loading from './components/commons/Loading.vue'
-Vue.component("Loading",Loading);//注册全局组件
+Vue.component("Loading", Loading);//注册全局组件
 
 // Vue路由
 import router from '@/core/router.js'
-
-// Axios
-// 创建 Axios 实例
-const service = createAxiosService(router, setting.baseURL)
-Vue.prototype.$axios = service
-
-window.onbeforeunload = function () {//刷新会触发这个事件
-      if(window.localStorage.getItem("resources")){
-            sessionStorage.setItem("RefreshRouter", false);
-                  }
-};
 // 设置全局前置守卫配置
 router.beforeEach((to, from, next) => {
       RouterUtils.refreshRouter(router,to).then(() => {
@@ -70,17 +60,29 @@ router.beforeEach((to, from, next) => {
             next()
       })
 });
-
 // 初始化Vue
-let vue=new Vue({
+let vue = new Vue({
       router,
       render: h => h(App),
-      data(){
-            return{
-                  loading:setting.loading // 全局属性，通过$root
+      data() {
+            return {
+                  loading: setting.loading // 全局属性，通过$root
             }
       }
-}).$mount('#app');
+})
+// Axios
+// 创建 Axios 实例
+const service = createAxiosService(router, setting, vue);
+Vue.prototype.$axios = service
+
+window.onbeforeunload = function () {//刷新会触发这个事件
+      if(window.localStorage.getItem("resources")){
+            sessionStorage.setItem("RefreshRouter", false);
+      }
+};
+
+// 挂载Vue实例
+vue.$mount('#app');
 
 // 导出
 export default Vue.prototype;

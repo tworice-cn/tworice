@@ -3,7 +3,8 @@ import Crypt from "@/components/commons/crypt/crypt";
 import { Notification, Message } from 'element-ui';
 import storage from '@/util/StorageUtils'
 
-export function createAxiosService(router, baseURL) {
+export function createAxiosService(router, setting, vue) {
+    let baseURL = setting.baseURL;
     // 1. 创建 Axios 实例
     const service = axios.create({
         baseURL,
@@ -37,6 +38,7 @@ export function createAxiosService(router, baseURL) {
                 // 同时更新 Axios 默认请求头的 token
                 service.defaults.headers.common.token = newToken;
             }
+            vue.$root.loading = false;
 
             if (response.data.status) {
                 const code = parseInt(response.data.status.code)
@@ -49,7 +51,9 @@ export function createAxiosService(router, baseURL) {
                         type: code === 400 ? 'info' : (code === 401 ? 'warning' : 'error'),
                         message: response.data.status.message,
                         duration: 3000,
-                        onClose: () => { isNotificationActive = false }
+                        onClose: () => {
+                            isNotificationActive = false
+                        }
                     })
 
                     // 401 跳转登录页
