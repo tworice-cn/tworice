@@ -76,7 +76,7 @@ export default {
     refreshRouter: function (router,to) {
         return new Promise((resolve, reject) => {
             try {
-                if (sessionStorage.getItem("RefreshRouter") && !JSON.parse(sessionStorage.getItem("RefreshRouter")) && window.localStorage.getItem("resources")) {
+                if (window.localStorage.getItem("resources") && !JSON.parse(sessionStorage.getItem("RefreshRouter"))) {
                     sessionStorage.setItem("RefreshRouter", true);
                     this.addRoutes(JSON.parse(window.localStorage.getItem("resources"))).then(() => {
                         router.push(to);
