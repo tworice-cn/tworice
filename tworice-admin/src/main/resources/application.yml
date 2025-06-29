@@ -4,7 +4,7 @@ spring:
   application:
     name: 我的应用
   profiles:
-    active: dev
+    active: local
   servlet:
     multipart: #配置文件上传时的文件大小限制等
       enabled: true
