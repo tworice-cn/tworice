@@ -1,4 +1,4 @@
-# 二饭单服务快速开发框架
+# TwoRice单服务快速开发框架
 
  <p align="center">
     <img src="https://img.shields.io/badge/RELEASE-V1.5.0-green.svg" alt="Downloads">
@@ -10,11 +10,11 @@
 </p>
 
 
-
-
 ## 0、简介
 
-本系统基于SpringBoot、MyBatis、Vue & Element实现的后台系统，支持RBAC动态菜单&权限；
+本系统基于SpringBoot、MyBatis、Vue & Element实现的后台系统，支持RBAC动态菜单&权限；完全无保留的开源。
+
+封装的系统依赖以及插件等源码地址：[Gitee：快速构建单服务及微服务项目](https://gitee.com/StandFast/tworice-cloud)
 
 ### 0.1、角色管理
 
