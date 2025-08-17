@@ -116,7 +116,7 @@
                     <transition name="el-fade-in" v-if="routerShow">
                         <router-view v-show="routerShow" v-on:handleSelect="handleSelect"></router-view>
                     </transition>
-                    <el-col :span="24" v-else>欢迎使用二饭管理系统</el-col>
+                    <el-col :span="24" v-else>欢迎使用Tworice快速开发框架</el-col>
                 </el-main>
             </el-container>
         </el-container>

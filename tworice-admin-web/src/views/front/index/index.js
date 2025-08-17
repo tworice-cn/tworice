@@ -196,10 +196,6 @@ export default {
         }
     },
     mounted(){
-        // if(this.$route.path!='/admin'){
-        //       this.$router.push('/admin');
-        // }
-
         this.systemInit();
     }
 };

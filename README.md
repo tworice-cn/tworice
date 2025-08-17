@@ -1,4 +1,4 @@
-# TwoRice单服务快速开发框架
+# TwoRice单服务管理系统
 
  <p align="center">
     <img src="https://img.shields.io/badge/RELEASE-V1.5.0-green.svg" alt="Downloads">
